@@ -1,0 +1,25 @@
+@import 'vars';
+
+div.photo {
+  float: right;
+  margin: 1em 0 1em 1em; 
+  font-size: 80%;
+  font-style: italic;
+  font-family: $sans;
+
+  p.credit {
+    color: #808080;
+    font-size: 80%;  
+    text-align: right;
+  }
+} 
+
+div.fullPhoto {
+  @extend .photo;
+  float: none;
+  margin: 1em 0;
+}
+
+img {
+  max-width: 100%;
+}

@@ -1,8 +1,36 @@
 module Mfweb::Article
 
+module PhotoHandlers
+  def handle_photo anElement
+    width = anElement['width']
+    css_class = case anElement['layout'] 
+                  when "full" then "fullPhoto"
+                  when "right" then "photo"
+                  when nil then "photo"
+                  else raise "unknown photo layout: " + anElement
+                end
+    @html.element('div', {:class => css_class, 
+                    :style => "width: #{width}px;" }) do
+      attrs = {:src => anElement['src']}
+      @html.element('img', attrs){}
+      render_photo_credit anElement
+      @html.p('photoCaption') {apply anElement}
+    end
+  end
+  def render_photo_credit anElement
+    if anElement['credit']
+      @html.p('credit') do
+        @html << "photo: " + anElement['credit']
+      end
+    end
+  end
+end
+
 class PaperTransformer < Mfweb::Core::Transformer
   include Mfweb::Core::HtmlUtils
   include Mfweb::Core::XpathFunctions
+  include PhotoHandlers
+
   def initialize output, root, maker
     raise 'heck' unless output
     super output, root
@@ -185,29 +213,6 @@ class PaperTransformer < Mfweb::Core::Transformer
     text = name.gsub(/[A-Z]/, ' \&')
     text += 's' if 'plural' == anElement['mode'] 
     @html.a_ref(href){@html.text text}
-  end
-  def handle_photo anElement
-    width = anElement['width']
-    css_class = case anElement['layout'] 
-                  when "full" then "fullPhoto"
-                  when "right" then "photo"
-                  when nil then "photo"
-                  else raise "unknown photo layout: " + anElement
-                end
-    @html.element('div', {:class => css_class, 
-                    :style => "width: #{width}px;" }) do
-      attrs = {:src => anElement['src']}
-      @html.element('img', attrs){}
-      render_photo_credit anElement
-      @html.p('photoCaption') {apply anElement}
-    end
-  end
-  def render_photo_credit anElement
-    if anElement['credit']
-      @html.p('credit') do
-        @html << "photo: " + anElement['credit']
-      end
-    end
   end
   def handle_sidebar anElement
     @html.div('sidebar') {apply anElement}
@@ -554,5 +559,7 @@ class FigureReader
     end
   end
 end
+
+
 
 end

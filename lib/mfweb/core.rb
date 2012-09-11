@@ -15,5 +15,6 @@ require 'mfweb/core/rakeutils.rb'
 require 'mfweb/core/site.rb'
 require 'mfweb/core/transformer.rb'
 require 'mfweb/core/xpathFunctions.rb'
+require 'mfweb/core/maker'
 
 

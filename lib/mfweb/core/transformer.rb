@@ -136,6 +136,8 @@ end
 
 #==== Transformer Page Renderer ================
 
+#TODO replace with the default maker that's easier to use
+
 class TransformerPageRenderer 
   def initialize infile, outfile, transformerClass, skeleton
     @in_file = infile
@@ -163,7 +165,5 @@ class TransformerPageRenderer
     @transformer_class.new(@html, @root, self)
   end
 end
-
-
 
 end

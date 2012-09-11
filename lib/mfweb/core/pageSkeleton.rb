@@ -6,6 +6,7 @@ class PageSkeleton
     @footer = footer
     @css = cssArray
     @js = []
+    @js_inline = []
     @banner_photo = nil
     @is_draft = false
   end
@@ -26,11 +27,15 @@ class PageSkeleton
         end
         @html << @footer
         @js.each {|url| @html.js url}
+        @js_inline.each {|f| emit_inline_js f}
       end
     end
   end
   def emit_file file_name, title, &block
     File.open(file_name, 'w') {|f| emit(f, title, &block)}
+  end
+  def emit_inline_js file_name
+    @html.js_inline(File.read(file_name))
   end
   def emit_doctype
     @html << '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' << "\n"
@@ -55,6 +60,11 @@ class PageSkeleton
   def with_js *arg
     result = self.dup
     result.instance_variable_set(:@js, arg.flatten)
+    return result
+  end
+  def with_inline_js *arg
+    result = self.dup
+    result.instance_variable_set(:@js_inline, arg.flatten)
     return result
   end
   def as_draft

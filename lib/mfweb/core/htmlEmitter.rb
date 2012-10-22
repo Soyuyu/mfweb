@@ -66,6 +66,12 @@ class HtmlEmitter
     element_block 'script', {:type => 'text/javascript', 
       :src => uri}
   end
+  def js_inline code
+    element_block 'script', {:type => 'text/javascript'} do
+      @out << code
+    end
+  end
+
   def text arg
     @out <<  arg if arg
   end

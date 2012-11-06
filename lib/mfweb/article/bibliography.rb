@@ -55,6 +55,7 @@ end
 
 class BibRef
   attr_accessor :name, :isbn, :text
+  include  Mfweb::Core::HtmlUtils
   def initialize
     @url = nil
   end
@@ -73,6 +74,16 @@ class BibRef
   end
   def cite= arg
     @cite = arg
+  end
+  def link_around htmlEmitter, anElement
+    text = anElement.text.empty? ? cite : anElement.text
+    if @url
+      htmlEmitter.a_ref(@url){htmlEmitter.text text}
+    elsif @isbn
+      htmlEmitter << amazon(@isbn, text)
+    else
+      htmlEmitter.text text
+    end
   end
 end
 class NullBibRef < BibRef

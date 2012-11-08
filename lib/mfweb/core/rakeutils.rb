@@ -7,24 +7,6 @@ end
 QUIET = {:verbose => false}
 
 
-#==== logging ================
-
-require 'logger'
-$logger = Logger.new(STDOUT)
-$logger.level = Logger::INFO
-$logger.formatter = proc do |sev, time, progname, msg|
-  ('INFO' == sev) ? 
-    "#{msg}\n" : 
-    "[#{sev}] #{msg}\n"
-end
-
-def log message = nil
-  if message
-    $logger.info message
-  else
-    $logger
-  end
-end
 
 #----------------------------------------------------------------
 

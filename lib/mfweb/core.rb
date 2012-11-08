@@ -5,6 +5,7 @@ require 'date'
 
 module Mfweb; end
 
+require 'mfweb/core/logging.rb'
 require 'mfweb/core/transformer.rb'
 require 'mfweb/core/extensions.rb'
 require 'mfweb/core/htmlEmitter.rb'

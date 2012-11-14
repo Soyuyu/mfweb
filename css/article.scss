@@ -203,6 +203,7 @@ div.frontMatter {
     font-family: $sans;
     background-color: $light-gray_background;
     line-height: $default-line-height;
+    padding: 1em;
   }
 
   div.soundbyte {
@@ -210,10 +211,6 @@ div.frontMatter {
     font-size: $paper-font-size;
     font-style: italic;
     width: 20em;
-  }
-
-  div.sidebar p {
-    margin: 1em;
   }
 
 div.footnote-list {

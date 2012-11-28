@@ -52,6 +52,14 @@ class FootnoteServer
   def body key
     @notes[key].body
   end
+
+  def text key
+    @notes[key].text
+  end
+
+  def [] key
+    return @notes[key]
+  end
 end
 
 class Footnote 
@@ -76,6 +84,15 @@ class Footnote
       @element.elements.reject{|e| "H" == e.name || 'h' == e.name }
   end
   
+  def text
+    raise "footnote [%s] should only have text" % key unless text_only?
+    return @element.children[0].text
+  end
+
+  def text_only?
+    (1 == @element.children.size) and @element.children[0].text?
+  end
+
   def to_s
     "%s" % key
   end

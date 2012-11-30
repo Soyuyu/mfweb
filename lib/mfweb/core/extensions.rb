@@ -13,6 +13,11 @@ def parse_date aString
   Date.parse(aString)
 end
 
+def deprecated messageString
+  log.warn "Deprecation: " + messageString + "\n" + caller[0..1].join("\n")
+end
+
+
 class Array
   def even_elements
     result = []

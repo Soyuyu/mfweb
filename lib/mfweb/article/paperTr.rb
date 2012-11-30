@@ -232,7 +232,7 @@ class PaperTransformer < Mfweb::Core::Transformer
     return aString.gsub("/", "_")
   end
   def handle_book anElement
-    emit_amazon anElement, anElement['isbn']
+   @html.amazon(anElement['isbn']){apply anElement}
   end
   def handle_tbd anElement
     if draft?
@@ -309,7 +309,7 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
 
   def handle_amazon anElement
-    emit_amazon anElement, anElement['key']
+   @html.amazon(anElement['key']){apply anElement}
   end    
 
   def handle_br anElement

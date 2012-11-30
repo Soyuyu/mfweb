@@ -124,6 +124,7 @@ class Transformer
   end
 
   def emit_amazon anElement, asin
+    deprecated "use HtmlEmitter.amazon"
     @html.amazon(asin) {apply anElement}
   end
 end

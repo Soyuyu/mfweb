@@ -67,7 +67,7 @@ class PaperTransformerTester < Test::Unit::TestCase
 
   def test_amazon
     input = "<book isbn = '0321826620'>my book</book>"
-    expected = "<a href = 'http://www.amazon.com/gp/product/0321826620?ie=UTF8&amp;tag=martinfowlerc-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321826620'>my book</a><img alt = '' border = '0' height = '1' src = 'http://www.assoc-amazon.com/e/ir?t=martinfowlerc-20&amp;l=as2&amp;o=1&amp;a=0321601912' style = 'border:none !important; margin:0px !important;' width = '1'></img>"
+    expected = "<a href = \"http://www.amazon.com/gp/product/0321826620?ie=UTF8&amp;tag=martinfowlerc-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=0321826620\">my book</a><img src=\"http://www.assoc-amazon.com/e/ir?t=martinfowlerc-20&amp;l=as2&amp;o=1&amp;a=0321601912\" width=\"1\" height=\"1\" border=\"0\" alt=\"\" style=\"border:none !important; margin:0px !important;\"/>"
     assert_equal(expected, transform(input))    
   end
 end

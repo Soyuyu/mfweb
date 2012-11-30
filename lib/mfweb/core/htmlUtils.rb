@@ -76,15 +76,21 @@ module HtmlUtils
   #   return base[0..width]
   # end
 
-  def amazon isbn, text
-#    "** amazon link **"
-    %[<a href = "http://www.amazon.com/gp/product/#{isbn}?ie=UTF8&tag=martinfowlerc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=#{isbn}">#{text}</a><img src="http://www.assoc-amazon.com/e/ir?t=martinfowlerc-20&l=as2&o=1&a=0321601912" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"/>]
+  def amazon asin, text
+    amazon_pre(asin) + text + amazon_post
+  end
+
+  def amazon_pre asin
+    %[<a href = "http://www.amazon.com/gp/product/#{asin}?ie=UTF8&amp;tag=martinfowlerc-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=#{asin}">]
+  end
+  def amazon_post 
+    '</a><img src="http://www.assoc-amazon.com/e/ir?t=martinfowlerc-20&amp;l=as2&amp;o=1&amp;a=0321601912" width="1" height="1" border="0" alt="" style="border:none !important; margin:0px !important;"/>'
   end
 end
 
 def informit isbn, text
-  %[<a href="http://click.linksynergy.com/fs-bin/click?id=tEHDyk1X8h0&subid=&offerid=145238.1&type=10&tmpid=3559&RD_PARM1=http%253A%252F%252Fwww.informit.com%252Fstore%252Fproduct.aspx%253Fisbn%253D#{isbn}">#{text}</a>
-<img alt="icon" width="1" height="1" src="http://ad.linksynergy.com/fs-bin/show?id=tEHDyk1X8h0&bids=145238.1&type=10">]
+  %[<a href="http://click.linksynergy.com/fs-bin/click?id=tEHDyk1X8h0&amp;subid=&amp;offerid=145238.1&amp;type=10&amp;tmpid=3559&amp;RD_PARM1=http%253A%252F%252Fwww.informit.com%252Fstore%252Fproduct.aspx%253Fisbn%253D#{isbn}">#{text}</a>
+<img alt="icon" width="1" height="1" src="http://ad.linksynergy.com/fs-bin/show?id=tEHDyk1X8h0&amp;bids=145238.1&amp;type=10">]
 end
 
   def css fileName

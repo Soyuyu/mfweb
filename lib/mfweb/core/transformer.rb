@@ -15,7 +15,7 @@ module Mfweb::Core
 # it to #@copy_set
 
 class Transformer
-
+  include Mfweb::Core::HtmlUtils
 
   def initialize output, root
     @html = output  #an instance of HtmlEmitter
@@ -123,14 +123,8 @@ class Transformer
     @html << aNode.to_s
   end
 
-  # TODO fix duplciation between this and htmlutils
-  def emit_amazon anElement, isbn
-    href = "http://www.amazon.com/gp/product/%s?ie=UTF8&tag=martinfowlerc-20&linkCode=as2&camp=1789&creative=9325&creativeASIN=%s" % [isbn, isbn]
-    @html.a_ref(href) {apply anElement}
-    pixel_attrs = {:src => 'http://www.assoc-amazon.com/e/ir?t=martinfowlerc-20&l=as2&o=1&a=0321601912', 
-      :width=>'1',  :height=>'1',  :border=>'0',  :alt=>'', 
-      :style=>'border:none !important; margin:0px !important;'}
-    @html.element('img', pixel_attrs){}
+  def emit_amazon anElement, asin
+    @html.amazon(asin) {apply anElement}
   end
 end
 

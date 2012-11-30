@@ -3,8 +3,10 @@ module Mfweb::Core
 # anything more fancy.
 
 require 'delegate'
+require 'cgi'
 
 class HtmlEmitter
+  include HtmlUtils
   SPAN_ELEMENTS = %w[i b a code img th td]
   def initialize output = ""
     @out = output
@@ -77,6 +79,9 @@ class HtmlEmitter
   end
   def << arg
     @out << arg 
+  end
+  def escape arg
+    @out << CGI.escapeHTML(arg)
   end
   def cdata arg
     @out << substituteXmlEntities(arg)
@@ -196,6 +201,11 @@ class HtmlEmitter
   def markdown src
     require 'kramdown'
     @out << Kramdown::Document.new(src).to_html
+  end
+  def amazon asin
+    @out << amazon_pre(asin)
+    yield
+    @out << amazon_post
   end
 end
 

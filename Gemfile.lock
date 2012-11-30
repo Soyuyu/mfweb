@@ -2,15 +2,17 @@ GEM
   remote: http://rubygems.org/
   specs:
     builder (3.1.4)
-    kramdown (0.14.0)
+    kramdown (0.14.1)
     nokogiri (1.5.5)
-    sass (3.2.1)
+    rake (10.0.2)
+    sass (3.2.3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
-  builder (= 3.1.4)
-  kramdown (= 0.14.0)
-  nokogiri (= 1.5.5)
-  sass (= 3.2.1)
+  builder
+  kramdown
+  nokogiri
+  rake
+  sass

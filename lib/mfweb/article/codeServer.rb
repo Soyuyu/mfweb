@@ -92,7 +92,7 @@ class Fragmentor
       end
 
       if line =~ /<codeFragment/
-        line =~ /name\s*=\s*"(\w*)"/
+        line =~ /name\s*=\s*"(\S*)"/
         fragNames << $1
         fragsByName[$1] = ""
       end

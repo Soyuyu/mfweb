@@ -4,7 +4,7 @@ class PageSkeleton
   def initialize header, footer, cssArray
     @header = header
     @footer = footer
-    @css = cssArray
+    @css = Array cssArray
     @js = []
     @js_inline = []
     @banner_photo = nil

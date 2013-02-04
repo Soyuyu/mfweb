@@ -31,7 +31,7 @@ def xslTask src, relativeTargetDir, taskSymbol, style, css = 'global.css'
   targetDir = BUILD_DIR + relativeTargetDir
   target = File.join(targetDir, File.basename(src, '.xml') + '.html')
   task taskSymbol => target
-  file target => [src, style, :base] do |t|
+  file target => [src, style, BANNER] do |t|
     puts "xsl: " + src
     mkdir_p targetDir, QUIET
     bare_html = `xsltproc #{style} #{src}`
@@ -64,7 +64,7 @@ def markdown_task src, relativeTargetDir, taskSymbol, title
   targetDir = BUILD_DIR + relativeTargetDir
   target = File.join(targetDir, src.pathmap('%n.html'))
   task taskSymbol => target
-  file target => [src, :base] do |t|
+  file target => [src, BANNER] do |t|
     skeleton = Site.skeleton.with_css('/global.css')
     build_markdown src, target, skeleton, title
   end

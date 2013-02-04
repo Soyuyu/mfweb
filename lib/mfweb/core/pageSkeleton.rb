@@ -17,6 +17,7 @@ class PageSkeleton
     @html.html do
       @html.head do
         @html.title title
+        emit_encoding
         @css.each{|uri| @html.css uri}
       end
       @html.body do
@@ -39,7 +40,9 @@ class PageSkeleton
   end
   def emit_doctype
     @html << '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">' << "\n"
-
+  end
+  def emit_encoding
+    @html << '<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />'
   end
   def with_css *arg
     result = self.dup

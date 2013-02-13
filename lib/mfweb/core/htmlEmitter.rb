@@ -16,7 +16,7 @@ class HtmlEmitter
     @out.close
   end
 	def HtmlEmitter.open fileName, &block
-    File.open(fileName, 'w') do |out|
+    File.open(fileName, 'w:utf-8') do |out|
       yield self.new(out)
     end
   end

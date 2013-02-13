@@ -7,7 +7,7 @@ class PaperTransformerTester < Test::Unit::TestCase
 
   def strip_revision_footer aString
     result = StringIO.new
-    aString.each do |line|
+    aString.each_line do |line|
       if line == "<div class = 'appendix'>\n"
         break
       else

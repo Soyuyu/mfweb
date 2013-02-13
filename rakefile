@@ -9,6 +9,6 @@ end
 task :test do
   $: << 'lib'
   require 'rake/runtest'
-  Rake.run_tests "test/**/*Tester.rb"
+  Rake.run_tests "./test/**/*Tester.rb"
 end
 

@@ -287,9 +287,19 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.a_name anElement['ID']
   end
   def handle_quote anElement
-    @html.element('blockquote') do
+    attrs = copy_some_attributes anElement, 'class' => 'class'
+    @html.element('blockquote', attrs) do
       apply anElement
-      @html.p('quote-attribution') {render_cite anElement}
+      @html.p('quote-attribution') do
+        text = lambda {@html.text anElement['credit']}
+        case
+        when anElement['href'] then 
+          @html.a_ref(anElement['href'], &text)
+        when anElement.has_attribute?('isbn') then
+          @html.amazon(anElement['isbn'], &text)
+        else render_cite anElement
+        end
+      end
     end
   end
   def render_cite anElement

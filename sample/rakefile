@@ -12,7 +12,7 @@ require 'rake/clean'
 CLOBBER.include BUILD_DIR
 
 # default task deletes build directory and rebuilds it
-task :default => [:clobber, :articles]
+task :default => [:clobber, :articles, :home]
 
 # replace default task with following line to avoid clean rebuilds of output
 # task :default => [:articles]
@@ -86,3 +86,15 @@ task :server do
   s.start
 end
 
+home_page =  BUILD_DIR + 'index.html'
+task :home => home_page
+file home_page do |t|
+  # a very crude home page
+  File.open(t.name, 'w') do |f|
+    f << "<h1>A crude home page</h1>"
+    f << "<ul>"
+    f << "<li><a href = 'articles/simpleArticle.html'>Simple</a></li>"
+    f << "<li><a href = 'articles/flexible.html'>Flexible</a></li>"
+    f << "</ul>"
+  end
+end

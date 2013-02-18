@@ -37,7 +37,7 @@ FileList['articles/flexible/flexible-article.xml'].each do |src|
 	target = File.join(BUILD_DIR + 'articles', 'flexible.html')
 	file target => [src] do
     skeleton = Mfweb::Core::Site.skeleton.with_css('flexible.css')
-    transformer = 'articles/flexible/flexible.rb'
+    transformer = './articles/flexible/flexible.rb'
     require transformer
 		maker = Mfweb::Article::ArticleMaker.new(src, target, skeleton, FlexibleTr)
 		maker.code_server = Mfweb::Article::CodeServer.new 'articles/flexible/code/'
@@ -54,14 +54,6 @@ FileList['articles/flexible/flexible-article.xml'].each do |src|
 end
 
 
-
-
-
-
-
-
-
-
 task :test do
   require 'rake/runtest'
   Rake.run_tests "../test/**/*Tester.rb"
@@ -73,3 +65,24 @@ task :diff do
     system "diff -q #{f} ~/active/web/lib/#{f.pathmap('%f')}"
   end
 end
+
+desc "run webrick server on build directory"
+task :server do
+  require 'webrick'
+  include WEBrick
+
+  port = 2929
+
+  puts "URL: http://#{Socket.gethostname}:#{port}"
+  mime_types = WEBrick::HTTPUtils::DefaultMimeTypes
+  mime_types.store 'js', 'application/javascript'
+  mime_types.store 'svg', 'image/svg+xml'
+
+  s = HTTPServer.new(:Port            => port,
+                     :MimeTypes => mime_types,
+                     :DocumentRoot    => BUILD_DIR)
+
+  trap("INT"){ s.shutdown }
+  s.start
+end
+

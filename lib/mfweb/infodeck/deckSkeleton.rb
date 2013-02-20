@@ -1,7 +1,7 @@
-module InfoDeck
+module Mfweb::InfoDeck
   class DeckSkeleton
     include Mfweb::Core::HtmlUtils
-    attr_accessor :js_files
+    attr_accessor :js_files, :maker
     def initialize 
       @css = []
     end
@@ -80,7 +80,8 @@ module InfoDeck
     end
     def emit_help_panel
       @html.div('deck-help-panel') do
-        @html << Kramdown::Document.new(File.read('lib/infodeck/help.markdown')).to_html
+        helpfile = @maker.asset 'help.markdown'
+        @html << Kramdown::Document.new(File.read(helpfile)).to_html
       end
     end
     def emit_goto_panel
@@ -117,7 +118,9 @@ module InfoDeck
       @html.js 'contents.js'
     end
     def emit_google_analytics
-      @html << File.read('partials/footer/google-analytics.html')
+      if @maker.google_analytics_file
+        @html << File.read(@maker.google_analytics_file)
+      end
     end
     def emit_loading_slide
       @html.div("deck-loading-message") do

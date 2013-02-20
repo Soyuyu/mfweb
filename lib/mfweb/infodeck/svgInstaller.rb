@@ -1,4 +1,4 @@
-module InfoDeck
+module Mfweb::InfoDeck
   class SvgInstaller
     def initialize input_file, output_dir
       @input_file = input_file

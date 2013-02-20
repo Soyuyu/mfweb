@@ -1,4 +1,4 @@
-module InfoDeck
+module Mfweb::InfoDeck
   class BuildTransformer < DeckTransformer
     attr_reader :build
     def initialize *args

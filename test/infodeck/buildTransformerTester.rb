@@ -1,11 +1,10 @@
 require 'test/unit'
 require 'stringio'
 require 'mfweb/core'
-require 'infodeck/deckTransformer'
-require 'test/infodeck/testSupport'
-require 'infodeck/buildTransformer'
+require 'mfweb/infodeck'
+require './test/infodeck/testSupport'
 
-module InfoDeck
+module Mfweb::InfoDeck
 
   class BuildTransformerTester < Test::Unit::TestCase
     include TestTransform

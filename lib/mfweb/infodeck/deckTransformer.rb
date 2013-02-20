@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-module InfoDeck
+module Mfweb::InfoDeck
 
 class DeckTransformer < Mfweb::Core::Transformer
   attr_reader :builds
@@ -90,7 +90,7 @@ class DeckTransformer < Mfweb::Core::Transformer
   end
 
   def check_only_allowed_fonts_in_svg  svg_doc, file_name
-    styles = svg_doc.css('text').map{|e| SvgManipulators::SvgManipulator.new(svg_doc).style(e)}
+    styles = svg_doc.css('text').map{|e| SvgManipulator.new(svg_doc).style(e)}
     unless styles.all?{|s|@maker.allowed_fonts.include?(s['font-family'])}
       log.warn "non-allowed font present in svg file: %s" % file_name 
     end

@@ -1,4 +1,4 @@
-module InfoDeck
+module Mfweb::InfoDeck
   class BuildCollector
     def initialize
       @builds = []

@@ -1,6 +1,6 @@
-module InfoDeck
+module Mfweb::InfoDeck
   module TestTransform
-    TEST_DIR = 'lib/test/infodeck/'
+    TEST_DIR = 'test/infodeck/'
     def transform input
       @emitter = Mfweb::Core::HtmlEmitter.new
       Dir.chdir(TEST_DIR) do
@@ -26,7 +26,7 @@ module InfoDeck
   class MakerStub
     attr_reader :lede_font
     def initialize
-      @lede_font = SvgFont.load('Marydale.svg')
+      @lede_font = Mfweb::InfoDeck::SvgFont.load('/Users/martin/active/web/decks/Marydale.svg')
     end
     def img_file file_name
       'img/' + file_name

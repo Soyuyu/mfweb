@@ -2,10 +2,10 @@ require 'test/unit'
 require 'stringio'
 require 'infodeck/fontpath'
 
-module InfoDeck
+module Mfweb::InfoDeck
 class FontPathTester < Test::Unit::TestCase
 
-  TEST_FONT = 'decks/Marydale.svg'
+  TEST_FONT = '/Users/martin/active/web/decks/Marydale.svg'
 
   def setup
     @fp = SvgFont.new(Nokogiri::XML(File.read(TEST_FONT)))

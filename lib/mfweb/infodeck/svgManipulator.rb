@@ -1,4 +1,4 @@
-module SvgManipulators
+module Mfweb::InfoDeck
 
 class SvgManipulator
     def initialize anSvgElement

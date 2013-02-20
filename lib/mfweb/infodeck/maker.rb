@@ -1,40 +1,11 @@
-require 'rubygems'
-require 'nokogiri'
-require 'rake/ext/string'
-require 'kramdown'
-require 'stringio'
-require 'builder'
-require 'sass'
-require 'json'
 
-require 'mfweb/core'
-
-module InfoDeck
-  include Mfweb::Core
-end
-
-#TODO move codeserver to core
-require 'mfweb/article'
-
-require 'infodeck/deckSkeleton'
-require 'infodeck/deckTransformer'
-require 'infodeck/fontpath'
-require 'infodeck/svgManipulator'
-require 'infodeck/svgInstaller'
-require 'infodeck/regexpHighlighter'
-require 'infodeck/regexpHighlighterTr'
-require 'infodeck/javascriptEmitter'
-require 'infodeck/buildCollector'
-require 'infodeck/buildTransformer'
-
-
-module InfoDeck
+module Mfweb::InfoDeck
 
   class DeckMaker
     include Mfweb::Core
     include FileUtils
     attr_reader :lede_font
-    attr_accessor :lede_font_file, :code_server
+    attr_accessor :lede_font_file, :code_server, :asset_server, :google_analytics_file
     def initialize input_file, output_dir
       @input_file = input_file
       @output_dir = output_dir
@@ -43,6 +14,9 @@ module InfoDeck
       @gen_dir = File.join('gen', input_dir)
       @js = JavascriptEmitter.new
       @build_collector = BuildCollector.new
+      @asset_server = AssetServer.new('.')
+      @css_paths = %w[lib/mfweb/infodeck css]
+      @google_analytics_file = 'partials/footer/google-analytics.html'
     end
 
     
@@ -66,6 +40,7 @@ module InfoDeck
       js_files.each {|f| install f}
       skeleton = DeckSkeleton.new
       skeleton.js_files = js_files.map{|f| f.pathmap("%f")}
+      skeleton.maker = self
       coffee_src = File.join(input_dir, 'deck.coffee')
       if File.exist?(coffee_src)
         coffee_target = File.join(@output_dir, 'deck.js')
@@ -80,6 +55,11 @@ module InfoDeck
       generate_contents
       File.open(File.join(@output_dir, 'contents.js'), 'w') {|f| f << @js.to_js}
     end 
+
+    def asset name
+      @asset_server[name]
+      #return MFWEB_DIR + 'lib/mfweb/infodeck/' + name
+    end
 
 
     def input_dir
@@ -127,13 +107,12 @@ module InfoDeck
 
     def base_scss
         local_scss = File.join input_dir, 'deck.scss'
-        return File.exist?(local_scss) ? local_scss : 'lib/infodeck/infodeck.scss'
+        return File.exist?(local_scss) ? local_scss : asset('infodeck.scss')
     end
 
     def build_css
-      paths = %w[lib/infodeck/ mfweb/css/]
       sass = Sass::Engine.new(File.read(base_scss), 
-                              :syntax => :scss, :load_paths => paths)
+                              :syntax => :scss, :load_paths => @css_paths)
       File.open("#{@output_dir}/infodeck.css", 'w') {|out| out << sass.render}
     end
 

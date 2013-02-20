@@ -2,7 +2,7 @@ require 'test/unit'
 require 'stringio'
 require 'infodeck/maker'
 
-module InfoDeck
+module Mfweb::InfoDeck
 
   class MakerTester < Test::Unit::TestCase
     include InfoDeck
@@ -11,8 +11,10 @@ module InfoDeck
 
     def run_test_maker
       mkdir_p BUILD_DIR, :verbose => false
-      maker = DeckMaker.new('lib/test/infodeck/makertest/deck.xml', BUILD_DIR)
-      maker.lede_font_file = 'decks/Marydale.svg'
+      maker = DeckMaker.new('test/infodeck/makertest/deck.xml', BUILD_DIR)
+      maker.asset_server = AssetServer.new("lib/mfweb/infodeck")
+      maker.lede_font_file = '/Users/martin/active/web/decks/Marydale.svg'
+      maker.google_analytics_file = nil
       maker.run
       @result = Nokogiri::HTML(File.read(BUILD_DIR + '/index.html', encoding: 'utf-8'))
     end

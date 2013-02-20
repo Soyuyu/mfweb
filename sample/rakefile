@@ -53,18 +53,7 @@ FileList['articles/flexible/flexible-article.xml'].each do |src|
   copyGraphicsTask 'articles/flexible', 'articles/flexible', :articles
 end
 
-
-task :test do
-  require 'rake/runtest'
-  Rake.run_tests "../test/**/*Tester.rb"
-end
-
-task :diff do
-  cd "../mfweb"
-  Dir['*.rb'].each do |f|
-    system "diff -q #{f} ~/active/web/lib/#{f.pathmap('%f')}"
-  end
-end
+require 'mfweb/infodeck/infodeck.rake'
 
 desc "run webrick server on build directory"
 task :server do

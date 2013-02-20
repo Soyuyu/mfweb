@@ -1,4 +1,4 @@
-module InfoDeck
+module Mfweb::InfoDeck
   class RegexpHighlighter
     def initialize input = nil, regexp = nil, span = nil
       @input = input

@@ -1,8 +1,7 @@
 require 'test/unit'
-require 'stringio'
-require 'infodeck/regexpHighlighter'
+require 'mfweb/infodeck'
 
-module InfoDeck
+module Mfweb::InfoDeck
 
   class DeckTransformerTester < Test::Unit::TestCase
     def test_simple_highlight

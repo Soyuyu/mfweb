@@ -1,7 +1,7 @@
 
 #see <http://stackoverflow.com/questions/7742148/how-to-convert-text-to-svg-paths>
 
-module InfoDeck
+module Mfweb::InfoDeck
 class SvgFont
   def self.load fileName
     return self.new(Nokogiri::XML(File.read(fileName)))

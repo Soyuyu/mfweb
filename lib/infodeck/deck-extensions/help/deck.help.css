@@ -1,0 +1,39 @@
+.deck-help-panel {
+  background-color: linen;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  z-index: 10;
+  overflow: hidden;
+  height: 0;
+  width: 0;
+  font-size: smaller;
+  text-align: left;
+  transition: all 1s ease-in-out;
+  -moz-transition: all 1s ease-in-out;
+  -webkit-transition: all 1s ease-in-out;
+}
+.deck-help-panel p, .deck-help-panel h1 {
+  margin: 5px 10px;
+}
+.deck-help-panel li {
+  margin-right: 10px;
+}
+.deck-help-panel h1 {
+  font-size: larger;
+}
+.deck-help-panel p.deck-help {
+  border: 2px solid blue;
+  cursor: pointer;
+  border-radius: 10px;
+  padding: 3px;
+  text-align: center;
+  width: 5em;
+  color: blue;
+  margin: 20px auto 0 50px;
+}
+
+.deck-help-visible {
+  height: 400px;
+  width: 500px;
+}

@@ -1,0 +1,65 @@
+.banner {
+  background-color: black;
+  width: 960px;
+  margin: 0px auto;
+  color: white;
+  position: relative;
+  min-height: $banner-height;
+
+  .deck-status {
+    cursor: pointer; 
+    position: absolute;
+    font-size: 14px;
+    bottom: 2px;
+    right: 30px;
+    margin: 0px; 
+  }
+  
+  .deck-permalink {
+    cursor: pointer; 
+    position: absolute;
+    font-size: 14px;
+    bottom: 2px;
+    right: 10px;
+  }
+
+  .deck-prev-link, .deck-next-link, .deck-help {
+    position: absolute;
+    top: 5px;
+    height: 25px;
+    width: 25px;
+    cursor: pointer;
+  }
+
+  .deck-prev-link {
+    left: 400px;
+  }
+
+  .deck-next-link {
+    left: 450px;
+  }
+
+	.deck-nav-disabled {
+		display:none;
+	}
+
+  .deck-help {
+    left: 600px;
+  }
+  
+  .logo {
+    height: 30px;
+    width: 125px;
+    left: 10px;
+    position: absolute;
+  }
+
+  .deck-permalink {
+    @extend .clickable;
+    color: white;
+    text-decoration: none;
+    margin-left: 20px;
+  }
+
+  
+}

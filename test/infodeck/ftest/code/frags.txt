@@ -1,0 +1,3 @@
+#<codeFragment name = "highlight">
+Some text with some highlighted text and lovely < red in it
+#</codeFragment>

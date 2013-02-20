@@ -1,0 +1,53 @@
+.deck-touch-panel {
+  left: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: 45;
+  background-color: rgba(136,136,136, 0.7);
+  position: absolute;
+  display: none;
+  top: $body-margin + $banner-height;
+
+  .button {
+    cursor: pointer; 
+    position: absolute;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+    border: thick solid white;
+    opacity: 0.7;
+    vertical-align: middle;
+    width: 100px;
+    height: 50px;
+    line-height: 50px;
+    border-radius: 10px;
+   }
+
+  .button.previous, .button.next {
+    padding-top: 10em;
+    height: 100%;
+    border-radius: 0;
+    line-height: 20px;
+    // width set by javascript to match active area
+    .extra { font-size: 80% }
+  }
+  .button.previous {
+     left: 0;
+  }
+  .button.next {
+    right: 0;
+   }
+  .button.first {
+    left: 200px;
+    top: 50px;
+  }
+  .button.last {
+    right: 200px;
+    top: 50px;
+  }
+  .button.goto {
+    left: 400px;
+    top: 50px;
+    line-height: 1.1em;
+  }
+}

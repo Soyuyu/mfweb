@@ -1,0 +1,37 @@
+@mixin translate($x: 0, $y: 0, $z: 0) {
+	-webkit-transform:translate3d($x, $y, $z);
+	-moz-transform:translate($x, $y);
+	-ms-transform:translate($x, $y);
+	-o-transform:translate($x, $y);
+	transform:translate3d($x, $y, $z);
+}
+
+@mixin transform($val) {
+	-webkit-transform:$val;
+	-moz-transform:$val;
+	-ms-transform:$val;
+	-o-transform:$val;
+	transform:$val;
+}
+
+@mixin transition($val) {
+	-webkit-transition:$val;
+	-moz-transition:$val;
+	-ms-transition:$val;
+	-o-transition:$val;
+	transition:$val;
+}
+
+@mixin transition-duration ($value) {
+  -moz-transition-duration: $value;
+  -webkit-transition-duration: $value;
+  -o-transition-duration: $value;
+  transition-duration: $value;
+}
+
+@mixin transition-delay ($value) {
+  -moz-transition-delay: $value;
+  -webkit-transition-delay: $value;
+  -o-transition-delay: $value;
+  transition-delay: $value;
+}

@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
+<deck title = "This is the title">
+  <deck src = 'included.xml'/>
+</deck>

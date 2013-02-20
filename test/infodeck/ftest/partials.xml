@@ -1,0 +1,7 @@
+<deck>
+<partial id = "part">
+  <block right="50">
+    <p>This block is inside a partial</p>
+  </block>
+</partial>
+</deck>

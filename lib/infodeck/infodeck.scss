@@ -1,0 +1,344 @@
+@import 'reset.css';
+@import 'mixins';
+@import 'vars';
+
+$background-purple: #e5d5fe;
+$slide-width: 960px;
+$slide-height: 590px;
+$code-fonts: 'Inconsolata', monospace;
+$shadow: 3px 3px 4px #555;  
+$body-margin: 5px;
+$banner-height: 30px;
+
+@import 'touch_panel';
+
+
+.clickable {
+  color: $purple;
+  text-decoration: none;
+  cursor: pointer; 
+}
+
+.fadeable {
+  @include transition-duration(500ms);
+  @include transition(opacity 500ms ease-in-out);
+}
+
+$overlay-color: hsla(34, 50, 90, 0.9);
+.overlay {
+  padding: 30px;
+  background-color: $overlay-color;
+  box-shadow: $shadow;
+}
+
+
+
+html, body {
+  text-align: center; // needed to get IE to center divs
+  line-height: 1.2;
+  height: auto;
+}
+
+body {
+  background-color: gray;
+  font-family: arial, helvetica, clean, sans-serif;
+  margin:$body-margin;
+}
+
+
+#deck-container {
+  position: relative;
+  min-height: 100%;
+  overflow: hidden;
+  margin: 0px auto;
+  padding: 0px;
+  height: $slide-height;
+  width: $slide-width;
+
+
+
+  .slide {
+    background-color: white;
+    font-size: 15px;
+    position: absolute;
+	  top:0;
+	  left:0;
+	  -webkit-box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  box-sizing: border-box;
+	  width: $slide-width;   
+    height: $slide-height;
+		-webkit-transition:-webkit-transform 500ms ease-in-out;
+		-moz-transition:-moz-transform 500ms ease-in-out;
+		-ms-transition:-ms-transform 500ms ease-in-out;
+		-o-transition:-o-transform 500ms ease-in-out;
+		transition:transform 500ms ease-in-out;
+  } 
+
+  .slide.current * {
+    @extend .fadeable;
+  }
+
+	.slide.next {
+		@include translate(200%);
+	}
+
+	.slide.previous {
+		@include translate(-200%);
+	}
+
+
+  b {
+    font-weight: bold;
+  }
+  i {
+    font-style: italic;
+  }
+  code {
+    font-family: $code-fonts;
+  }
+
+  pre .highlight {
+    background-color: yellow;
+  }
+
+  svg.lede {
+    fill: $purple;
+    position: relative;
+  }
+
+
+  .tile .diagram, .tile .lede, .tile img {
+    position: static;
+    float: left;
+  }
+
+  .tile {
+    width: 20em;
+    
+    h2 {
+      text-align: left;
+      font-size: 120%;
+    }
+
+    ul {
+      list-style: square outside;
+      ul {
+        margin: 0 0 0 2em;
+        list-style: circle outside;
+      }
+      p {
+        margin: 0 0 0 2em;
+      }
+    }
+
+    li {
+      margin: 0px 0px 0px 2em;
+      padding: 0.25em 0;
+      vertical-align: middle;
+    }
+
+    p,  ul {
+      clear: both;
+      text-align: left;
+      margin: 0;
+    }
+
+    p {
+      padding: 0.5em 0em;
+    }
+
+    li p {
+      padding: 0.5em 0em;
+    }
+
+    pre {
+      font-family:  $code-fonts;
+      text-align: left;
+      border: none;
+    }
+
+ }
+
+  .callout {
+    background-color: #EEEEEE;
+    padding: 0em 0.5em 0em 0.5em;
+    box-shadow: 3px 3px 4px #555;
+  }
+
+  .todo {
+    background-color: #D1E4FF;
+  }
+
+  a {
+    @extend .clickable;
+  }
+
+  .quote {
+    position: static;
+    margin-top: 1em;
+    .text {
+      font-style: italic;
+    }
+    img {
+      float: left;
+      padding: 0.5em 10px 0.5em 0;
+      vertical-align: top;
+    }
+    p {
+      clear: none;
+    }
+  }
+ 
+
+  .draft-marker {
+    position: absolute;
+    bottom: 80px;
+    right: 50px;
+    font-size: 150%;
+    opacity: 0.1;
+    @include transform(rotate(-45deg));
+  }
+
+  #cover img.draft-notice {
+    width: 300px;
+    top: 20px;
+    left: 200px;
+  }
+
+    .deck-help {
+      @extend .clickable;
+    }
+
+}
+
+/* override auto margins set by deck.core.css */
+.slide img {
+  margin: 0;
+}
+
+.tile {
+  position: absolute;
+}
+
+.slide > .lede, .slide > svg, .slide > .tile, .slide > img, 
+.slide > a > img, .slide > .diagram, .slide > .head {
+  position: absolute;
+  left: 30px;
+}
+
+
+.slide > .header-position {
+  top:  40px; 
+  left: 20px;
+}
+
+.slide > .full-slide {
+  top: 0;
+  left: 0;
+  width: $slide-width;
+  height: $slide-height;
+}
+
+.hidden, .hidden *{
+  opacity: 0;
+}
+
+.charred {
+  opacity: 0.3;
+}
+
+a.link-mark {
+  text-decoration: none;
+}
+
+
+
+.deck-help-panel {
+  background-color: linen;
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  z-index: 10;
+  overflow: hidden;
+  height: 0;
+  width: 0;
+  font-size: smaller;
+  text-align: left;
+  $transition-params: 1s ease-in-out;
+  transition: all $transition-params;
+  -moz-transition: all $transition-params;
+  -webkit-transition: all $transition-params;
+  
+  p, h1, ul, li {
+    margin: 0.5em 1em;
+  }
+
+  ul {
+    list-style: square inside;
+  }
+
+  h1 {
+    font-size: larger;
+  }
+
+  p.deck-help {
+    border: 2px solid blue;
+    cursor: pointer;    
+    border-radius: 10px;
+    padding: 3px;
+    text-align: center;
+    width: 5em;
+    color: blue;
+    margin: 20px auto 0 50px;
+  }
+}
+
+.deck-help-visible {
+  height: 600px; /* won't fit if bigger */
+  width: 450px;
+}
+
+@import 'banner';
+
+/* Default timing for all transitions  */
+
+
+
+.deck-loading-message {
+  z-index: -100;
+  position: absolute;
+}
+
+.deck-goto-panel {
+  display: none;
+  background-color: $dark-gray-background;
+  position: absolute;
+  top: 300px;
+  left: 400px;
+  padding: 10px;
+  z-index: 50;
+  label {
+    color: white;
+  }
+  
+}
+
+.deck-goto-panel.show {
+  display: block;
+}
+
+.deck-curtain {
+  @extend .fadeable;
+  background-color: $dark-gray-background;
+  z-index: 100;
+  opacity: 0;
+  min-height: $slide-height;
+  min-width: $slide-width;
+  position: absolute;
+}
+
+.deck-curtain.dropped {
+  opacity: 1;
+}
+

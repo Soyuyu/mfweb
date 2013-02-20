@@ -1,0 +1,171 @@
+start = deck
+
+
+any = element * {any}*
+
+deck = element deck {
+     attribute status {'draft'}?,
+     attribute title {text}?,
+     (attribute src {text} | deck.contents *)
+} 
+
+deck.contents = slide | partial | deck
+
+partial = element partial {
+    attribute id {text},
+    slide.content*
+}
+
+slide = element slide {
+    attribute id {text},
+    attribute class {text}?,
+    slide.content*,
+    immediate-build?,
+    build*
+}
+
+slide.content = 
+    lede
+    | tile
+    | diagram
+    | img
+    | include_element
+
+lede = element lede {
+    position,
+    attribute src {text} ?,
+    attribute font-size {text} ?,
+    attribute max-width {text} ?,
+    attribute class {text}?,
+    text
+}
+
+diagram = element diagram {
+    attribute src {text},
+    attribute manipulator {text}?, 
+    attribute class {text}?,
+    position?,
+    dimensions
+}
+
+img = element img {
+    attribute src {text},
+    attribute href {text}?,
+    attribute asin {text}?,
+    attribute class {text}?,
+    attribute style {text}?,
+    dimensions,
+    position? 
+}
+
+include_element = element include {
+   attribute ref {text},
+   class?
+}
+        
+
+position =     
+    attribute left {text}?,
+    attribute top {text}?,
+    attribute bottom {text}?,
+    attribute right {text}?,
+    attribute position {'heading' | 'h-center' | 'full'}?
+
+dimensions = 
+    attribute height {text}?,
+    attribute width {text}?
+
+tile.content = 
+    tile
+    | p
+    | lede
+    | ul
+    | diagram
+    | img
+    | element h {inline}
+    | insertCode
+    | table
+    | quote
+
+quote = element quote {
+  attribute name {text},
+  attribute affiliation {text}?,
+  attribute photo {text}?,
+  inline
+}
+
+tile = element tile {
+    position,
+    attribute width {text}?,
+    attribute style {"callout"}?,
+    class?,
+    tile.content*
+}
+
+inline = inline.content *
+inline.content = 
+    text
+    | element b {inline}
+    | element i {inline}
+    | element code {inline}
+    | element a {attribute href {text}, inline}
+    | element span {attribute class {text}?, inline}
+    | element todo {inline}
+    | linkMark
+    | element amazon {attribute asin {text}, inline}
+
+
+p = element p {inline}
+ul = element ul {class?, (ul | li | p)*}
+li = element li {inline, tile.content*} 
+
+linkMark = element linkMark {
+     attribute href {text},
+     attribute title {text}?
+}
+
+build = element build {build.content*}
+immediate-build = element immediate-build {build.content*}
+
+build.content = 
+    element add-class {selector, attribute class {text}}
+    | element remove-class {selector, attribute class {text}}
+    | element hide {selector}
+    | element char {selector}
+    | show
+    | element js-builder {attribute target {text}}
+
+selector = attribute selector {text}
+
+class = attribute class {text}
+
+show = show.empty | show.full
+
+show.full = element show {
+    attribute class {text},
+    slide.content*
+}
+
+show.empty = element show {selector, empty}
+
+insertCode = element insertCode {
+  attribute file { text },
+  attribute fragment { text }?,
+  attribute label { text }?,
+  attribute useClassName { text }?,
+  regexpHighlight *
+}
+
+regexpHighlight = element regexpHighlight {
+  attribute class {text},
+  attribute regexp {text}
+}
+
+table = element table {
+  attribute class {text}?,
+  element tr {tr.content*} *
+}
+
+tr.content = 
+  element td {inline} 
+  | element th {inline}

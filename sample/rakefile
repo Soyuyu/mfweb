@@ -12,10 +12,10 @@ require 'rake/clean'
 CLOBBER.include BUILD_DIR
 
 # default task deletes build directory and rebuilds it
-task :default => [:clobber, :articles, :home]
+task :default => [:clobber, :articles, :decks, :home]
 
 # replace default task with following line to avoid clean rebuilds of output
-# task :default => [:articles]
+# task :default => [:articles, :articles, :decks, :home]
 
 # define the articles task
 desc "build articles"
@@ -54,6 +54,7 @@ FileList['articles/flexible/flexible-article.xml'].each do |src|
 end
 
 require 'mfweb/infodeck/infodeck.rake'
+require './decks/infodeck/rake'
 
 desc "run webrick server on build directory"
 task :server do
@@ -84,6 +85,7 @@ file home_page do |t|
     f << "<ul>"
     f << "<li><a href = 'articles/simpleArticle.html'>Simple</a></li>"
     f << "<li><a href = 'articles/flexible.html'>Flexible</a></li>"
+    f << "<li><a href = 'articles/infodeck'>Infodeck</a></li>"
     f << "</ul>"
   end
 end

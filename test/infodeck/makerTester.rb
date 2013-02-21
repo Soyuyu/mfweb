@@ -13,8 +13,10 @@ module Mfweb::InfoDeck
       mkdir_p BUILD_DIR, :verbose => false
       maker = DeckMaker.new('test/infodeck/makertest/deck.xml', BUILD_DIR)
       maker.asset_server = AssetServer.new("lib/mfweb/infodeck")
+      #TODO get rid of hard links to marydale
       maker.lede_font_file = '/Users/martin/active/web/decks/Marydale.svg'
       maker.google_analytics_file = nil
+      maker.mfweb_dir = "./"
       maker.run
       @result = Nokogiri::HTML(File.read(BUILD_DIR + '/index.html', encoding: 'utf-8'))
     end

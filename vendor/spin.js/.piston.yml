@@ -1,0 +1,8 @@
+--- 
+repository_class: Piston::Git::Repository
+lock: false
+repository_url: git://github.com/fgnass/spin.js.git
+format: 1
+handler: 
+  branch: gh-pages
+  commit: 63b791dd1e7139694f1caf02726dab1ac33e0177

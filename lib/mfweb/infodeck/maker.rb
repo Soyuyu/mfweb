@@ -5,7 +5,8 @@ module Mfweb::InfoDeck
     include Mfweb::Core
     include FileUtils
     attr_reader :lede_font
-    attr_accessor :lede_font_file, :code_server, :asset_server, :google_analytics_file
+    attr_accessor :lede_font_file, :code_server, 
+       :asset_server, :google_analytics_file, :css_paths, :mfweb_dir
     def initialize input_file, output_dir
       @input_file = input_file
       @output_dir = output_dir
@@ -17,12 +18,16 @@ module Mfweb::InfoDeck
       @asset_server = AssetServer.new('.')
       @css_paths = %w[lib/mfweb/infodeck css]
       @google_analytics_file = 'partials/footer/google-analytics.html'
+      @mfweb_dir = "mfweb/"
     end
 
     
     
 
     def run
+      unless File.exists? @mfweb_dir + 'lib/mfweb/infodeck.rb'
+        raise "unable to find mfweb library at <#{@mfweb_dir}>" 
+      end
       lede_font_file = @lede_font_file || input_dir + 'lede-font.svg'
       @lede_font = SvgFont.load(lede_font_file)
       @root = Nokogiri::XML(File.read(@input_file)).root
@@ -30,8 +35,8 @@ module Mfweb::InfoDeck
       mkdir_p @gen_dir, :verbose => false
       import_local_ruby
       install_svg
-      install 'lib/infodeck/public/*'
-      install 'lib/infodeck/modernizr.custom.js'
+      install @mfweb_dir + 'lib/mfweb/infodeck/public/*'
+      install @mfweb_dir + 'lib/mfweb/infodeck/modernizr.custom.js'
       build_css
       install_graphics
       install_jquery_svg
@@ -96,7 +101,7 @@ module Mfweb::InfoDeck
     def install glob
       files = Dir[glob]
       files.each do |f|
-        log "missing file to install %s", f unless File.exist? f
+        log.warn "missing file to install %s", f unless File.exist? f
         cp f, @output_dir, :verbose => false
       end
     end
@@ -122,7 +127,7 @@ module Mfweb::InfoDeck
 
     def install_jquery_svg
       (JQUERY_CSS_FILES + JQUERY_SVG_FILES).each do |f|
-        install 'vendor/deck.js/libs/jquerysvg/' + f
+        install @mfweb_dir + 'vendor/jquerysvg/' + f
       end
     end     
 

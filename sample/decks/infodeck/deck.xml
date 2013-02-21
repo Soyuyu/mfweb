@@ -1,0 +1,12 @@
+<deck title = "Infodeck">
+  <slide id="cover">
+    <tile>
+      <p>A simple bit of text just to display something</p>
+    </tile>
+  </slide>
+  <slide id="second">
+    <tile>
+      <p> A second slide in case I need one to avoid the spinner</p>
+    </tile>
+  </slide>
+</deck>

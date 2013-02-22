@@ -2,6 +2,7 @@
 module Mfweb::InfoDeck
 
 class DeckTransformer < Mfweb::Core::Transformer
+  include Mfweb::InfoDeck
   attr_reader :builds
   def initialize out_emitter, in_root, maker
     super(out_emitter, in_root)
@@ -126,7 +127,7 @@ class DeckTransformer < Mfweb::Core::Transformer
 
   def manipulate_svg anElement, svg_doc
     return unless anElement['manipulator']
-    SvgManipulators.const_get(anElement['manipulator']).new(svg_doc).run
+    Mfweb::InfoDeck.const_get(anElement['manipulator']).new(svg_doc).run
   end
 
 

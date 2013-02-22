@@ -4,17 +4,13 @@ module Mfweb::InfoDeck
   class DeckMaker
     include Mfweb::Core
     include FileUtils
-    attr_reader :lede_font
+    attr_reader :lede_font, :output_dir
     attr_accessor :lede_font_file, :code_server, 
        :asset_server, :google_analytics_file, :css_paths, :mfweb_dir
     def initialize input_file, output_dir
       @input_file = input_file
       @output_dir = output_dir
       @partials = {}
-      @code_server = Mfweb::Article::CodeServer.new(input_dir + 'code/')
-      @gen_dir = File.join('gen', input_dir)
-      @js = JavascriptEmitter.new
-      @build_collector = BuildCollector.new
       @asset_server = AssetServer.new('.')
       @css_paths = %w[lib/mfweb/infodeck css]
       @google_analytics_file = 'partials/footer/google-analytics.html'
@@ -25,9 +21,14 @@ module Mfweb::InfoDeck
     
 
     def run
+      mkdir_p output_dir, :verbose => false
       unless File.exists? @mfweb_dir + 'lib/mfweb/infodeck.rb'
         raise "unable to find mfweb library at <#{@mfweb_dir}>" 
       end
+      @code_server = Mfweb::Article::CodeServer.new(input_dir + 'code/')
+      @gen_dir = File.join('gen', input_dir)
+      @js = JavascriptEmitter.new
+      @build_collector = BuildCollector.new
       lede_font_file = @lede_font_file || input_dir + 'lede-font.svg'
       @lede_font = SvgFont.load(lede_font_file)
       @root = Nokogiri::XML(File.read(@input_file)).root

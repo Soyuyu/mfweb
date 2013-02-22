@@ -1,3 +1,5 @@
+$: << 'lib'
+
 task :default => [:sample]
 
 task :sample do
@@ -14,3 +16,5 @@ Rake::TestTask.new do |t|
   t.verbose = false
   t.warning = false
 end
+
+require './test/infodeck/rake'

@@ -5,7 +5,7 @@ require 'infodeck/fontpath'
 module Mfweb::InfoDeck
 class FontPathTester < Test::Unit::TestCase
 
-  TEST_FONT = '/Users/martin/active/web/decks/Marydale.svg'
+  TEST_FONT = 'sample/decks/IndieFlower.svg'
 
   def setup
     @fp = SvgFont.new(Nokogiri::XML(File.read(TEST_FONT)))
@@ -25,18 +25,13 @@ class FontPathTester < Test::Unit::TestCase
     assert_equal expected, actual
   end
   def test_dims
-    # these asserts fail here, but give right answers on slide
-    # couldn't figure out why but moved on.
     result = convert("Cross-Platform Toolkits", "36", "900")
-    assert_in_delta 57.6, result.height, 0.001
-    assert_in_delta 342.252, result.width, 0.001
+    assert_in_delta 64.786, result.height, 0.001
+    assert_in_delta 351.668, result.width, 0.001
   end
   def test_can_render_single_quote
     result = convert("don't")
-    assert_in_delta 66.024, result.width, 0.001
-  end
-  def xtest_can_get_single_quote
-    
+    assert_in_delta 68.484, result.width, 0.001
   end
   def extract_font_size result
     trans = Nokogiri::XML(result).at('/g')['transform']
@@ -45,17 +40,17 @@ class FontPathTester < Test::Unit::TestCase
   def test_default_font_size
     result = convert("a word").content
     actual = extract_font_size(result).to_f
-    assert_in_delta 0.036, actual , 0.001
+    assert_in_delta 0.0351, actual , 0.001
   end
   def test_requested_font_size
     result = convert("a word", '50').content
     actual = extract_font_size(result).to_f
-    assert_in_delta 0.050, actual , 0.001
+    assert_in_delta 0.0488, actual , 0.001
   end
   def test_percentage_font_size
     result = convert("a word", '150%').content
     actual = extract_font_size(result).to_f
-    assert_in_delta 0.054, actual , 0.001
+    assert_in_delta 0.0527, actual , 0.001
   end
   def test_adding_svg_attribute
     expected = "777777"

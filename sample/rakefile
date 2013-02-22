@@ -86,6 +86,7 @@ file home_page do |t|
     f << "<li><a href = 'articles/simpleArticle.html'>Simple</a></li>"
     f << "<li><a href = 'articles/flexible.html'>Flexible</a></li>"
     f << "<li><a href = 'articles/infodeck'>Infodeck</a></li>"
+    f << "<li><a href = 'jasmine/test.html'>Infodeck Jasmine Page</a></li>"
     f << "</ul>"
   end
 end

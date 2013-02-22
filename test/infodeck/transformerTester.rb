@@ -64,8 +64,8 @@ class DeckTransformerTester < Test::Unit::TestCase
   def test_lede_to_text
     transform_slide("<lede>Cross-Platform Toolkits</lede>")
     svg = @html.at_css('svg')
-    assert_in_delta 57.6, svg['height'].to_f, 0.1
-    assert_in_delta 342.252, svg['width'].to_f, 0.001
+    assert_in_delta 64.7859, svg['height'].to_f, 0.1
+    assert_in_delta 351.668, svg['width'].to_f, 0.001
   end
   def test_transforms_img
     transform_slide("<img src = 'foo.jpg' width = '50' left = '20%'/>")

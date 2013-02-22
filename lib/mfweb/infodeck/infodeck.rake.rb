@@ -11,7 +11,7 @@ namespace :infodeck do
     input_file = File.join input_dir, 'deck.xml'
     maker_class ||= Mfweb::InfoDeck::DeckMaker
     maker = maker_class.new(input_file,output_dir)
-    maker.lede_font_file = 'decks/raleway.svg'
+    maker.lede_font_file = 'decks/IndieFlower.svg'
     maker.asset_server =
       Mfweb::InfoDeck::AssetServer.new('.', 
                                        MFWEB_DIR + 'lib/mfweb/infodeck')

@@ -8,6 +8,7 @@ class SvgFont
   end
   def initialize svg_doc
     raise "input is not Nokogiri" unless svg_doc.kind_of? Nokogiri::XML::Node
+    raise "cannot see svg root in input" unless svg_doc.at_xpath("/svg") # see [^1]
     @svg_doc = svg_doc
     @glyph_cache = {}
   end
@@ -153,3 +154,11 @@ end
 if __FILE__ == $0
   FontPath::App.new.run
 end
+
+
+# Notes
+#
+# [^1]: Looks like if you have an svg file with a namespace
+# declaration such as `<svg xmlns="http://www.w3.org/2000/svg">` then
+# this xpath will choke. I haven't dug into why, I just changed the
+# xvg file to remove the namespace declaration

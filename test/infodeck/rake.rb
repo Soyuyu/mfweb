@@ -1,6 +1,10 @@
 BUILD_DIR = 'sample/build/'
 MFWEB_DIR = './'
 
+require 'rake/clean'
+CLOBBER.include BUILD_DIR
+
+
 require 'mfweb/infodeck/infodeck.rake'
 
 namespace :infodeck do
@@ -8,17 +12,18 @@ namespace :infodeck do
     log "building test deck for jasmine tests"
     src = 'test/infodeck/jasmine/'
     target = BUILD_DIR + 'jasmine/'
-    mkdir_p target
-    FileList['vendor/jasmine-1.3.1/*', 'vendor/jasmine-jquery*'].each {|f| install f, target}
+    mkdir_p target, QUIET
+    FileList['vendor/jasmine-1.3.1/*', 'vendor/jasmine-jquery*'].each {|f| install f, target, QUIET}
     maker = Mfweb::InfoDeck::DeckMaker.new(src+'deck.xml', target)
-    puts "REPLACE MARYDALE" #TODO
-    maker.lede_font_file = '/Users/martin/active/web/decks/Marydale.svg'
+    maker.lede_font_file = 'sample/decks/IndieFlower.svg'
     maker.asset_server = Mfweb::InfoDeck::AssetServer.new("lib/mfweb/infodeck")
     maker.mfweb_dir = './'
     maker.google_analytics_file = nil
-    sh "coffee  -j #{target}/infodeck-tester.js -c #{src}*.coffee"
+    sh "coffee  -j #{target}/infodeck-tester.js -c #{src}*.coffee", QUIET
     maker.run
     create_jasmine_file src, target
+    log "use `rake server` to launch webserver to run tests at "
+    log "http://localhost:2929/jasmine/test.html"
   end
 
 

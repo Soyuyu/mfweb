@@ -1,4 +1,4 @@
-<deck title="Infodeck Tests" status="draft">
+<deck title="Infodeck Tests" >
     <partial id="tw-logo">
     <img src = "TW.svg" top="30" right="20" width="200" href="http://www.thoughtworks.com/"/>
   </partial>
@@ -13,7 +13,6 @@
     <p>December 7 2012</p>
     </tile>
     <img src="mf.jpg" width = "100" top = "450" left = "200"/>
-    <img src="draft.svg" width="300" top="10" left="200" />
    </slide>
    <slide id = "contents">
      <lede top="10">Our agenda</lede>

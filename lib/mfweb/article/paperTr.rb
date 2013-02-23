@@ -415,7 +415,7 @@ class FullAuthorTransformer < Mfweb::Core::Transformer
     url = xpath_only('author-url', authorElement)
     @html.p('name') do
       if url
-        @html.a_ref(url.text) {@html.text name.text }
+        @html.element('a', href: url.text, rel: 'author') {@html.text name.text }
       else
         @html.text name.text
       end

@@ -140,10 +140,13 @@ module Mfweb::InfoDeck
       "$('%s').%s('%s');" % [full_selector, @backwards_function, @cssClass]
     end
     def setup_forwards_js
-      backwards_js
+      set_transition_timing + "\n" + backwards_js
     end
     def setup_backwards_js
-      forwards_js
+      set_transition_timing + "\n" + forwards_js
+    end
+    def set_transition_timing
+      "$('%s').addClass('fadeable');" % [full_selector]
     end
   end
 

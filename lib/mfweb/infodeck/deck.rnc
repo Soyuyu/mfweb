@@ -26,6 +26,7 @@ slide = element slide {
 
 slide.content = 
     lede
+    | deckTitle
     | tile
     | diagram
     | img
@@ -169,3 +170,8 @@ table = element table {
 tr.content = 
   element td {inline} 
   | element th {inline}
+
+deckTitle = element deckTitle { 
+  position,
+  text
+}

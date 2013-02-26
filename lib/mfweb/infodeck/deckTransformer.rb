@@ -50,7 +50,10 @@ class DeckTransformer < Mfweb::Core::Transformer
   end
 
   def handle_lede anElement
-    attrs = {} 
+    emit_lede anElement, {}
+  end
+
+  def emit_lede anElement, attrs
     add_class attrs, 'lede'
     add_class attrs, 'header-position' if lacks_position? anElement
     if anElement.key? 'src'
@@ -249,8 +252,7 @@ class DeckTransformer < Mfweb::Core::Transformer
   end
 
   def handle_img anElement
-    attrs = copy_some_attributes(anElement, {:src => :src, :class =>
-    :class, :style => :style})
+    attrs = copy_some_attributes(anElement, {:src => :src, :style => :style})
     emit_img anElement, attrs
    end
 

@@ -146,7 +146,8 @@ module Mfweb::InfoDeck
       set_transition_timing + "\n" + forwards_js
     end
     def set_transition_timing
-      "$('%s').addClass('fadeable');" % [full_selector]
+      s = full_selector
+      "$('#{s}, #{s} p, #{s} ul, #{s} pre').addClass('fadeable');"
     end
   end
 

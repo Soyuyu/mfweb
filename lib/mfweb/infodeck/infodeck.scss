@@ -20,8 +20,7 @@ $banner-height: 30px;
 }
 
 .fadeable {
-  @include transition-duration(500ms);
-  @include transition(opacity 500ms ease-in-out);
+  @include transition-duration(400ms);
 }
 
 $overlay-color: hsla(34, 50, 90, 0.9);
@@ -74,10 +73,6 @@ body {
 		-o-transition:-o-transform 500ms ease-in-out;
 		transition:transform 500ms ease-in-out;
   } 
-
-  .slide.current * {
-    @extend .fadeable;
-  }
 
 	.slide.next {
 		@include translate(200%);

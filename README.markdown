@@ -2,18 +2,23 @@
 
 These scripts are a subset of the scripts I use for building
 martinfowler.com. They are here on github to help with collaborating
-with colleagues who are writing articles for martinfowler.com. As such
-they aren't intended as a library for general use, although you're
-welcome to give them a spin if you so wish.
+with colleagues who are writing articles for martinfowler.com. I have
+made no effort to document them, or package them, for general use. You
+are welcome to give them a spin if you so wish, but they will need
+considerable hacking on them to make them usable outside the context
+of my own website. I'm happy for that to be done, but it's not one of my
+likely priorities.
 
 ##Using the scripts
 
 The top level folders are:
 
 - `lib` contains the ruby scripts 
-- `lib\mfweb\core` scripts required for various parts of the web site
-- `lib\mfweb\article` scripts to turn article files into html
-- `sample` an example website to show how it builds. Build it by going into the sample directory and invoke `rake`
+- `lib/mfweb/core` scripts required for various parts of the web site
+- `lib/mfweb/article` scripts to turn article files into html
+- `lib/mfweb/infodeck` scripts to build infodecks
+- `sample` an example website to show how it builds. Build it by going
+  into the sample directory and invoke `rake`. 
 - `css` css files used for these parts of the web site.
 - `test` some unit tests (see below)
 
@@ -21,11 +26,10 @@ My full web site contains many more scripts than this, I've just
 pulled out those scripts required for collaboration.
 
 To perform a build you'll need to have ruby and rake installed. You
-can then just issue `rake` to build the articles. In addition to ruby
-and rake you will need some gems too. I've been lazy about tracking
-which actual ones you need (I really ought to sort things out with
-builder) but you'll certainly need Nokogiri, Kramdown, and Builder. The scripts
-should work on ruby 1.8.7 and ruby 1.9.
+can then just issue `rake` to build the articles. The dependent gems
+are all described with bundler and I use rbenv for the ruby version.
+I run the scripts with ruby 1.9.3 and I don't think they will run any
+more with 1.8.
 
 To start on an article, copy the sample article in
 `sample\articles\simple` and write away. Any xml file in
@@ -35,6 +39,11 @@ Note for code examples, the code can be auto-imported from any source
 file. I find this very handy as I can put my actual source files, do
 compiles and tests, and just use the comment annotations to mark bits
 of code to incorporate into the text.
+
+The library folders contain code to make infodecks, but I haven't yet
+added a sample infodeck to the samples. If you're interested in
+building infodecks let me know and I'll prioritize getting a sample
+together.
 
 ## Digging in the Code
 

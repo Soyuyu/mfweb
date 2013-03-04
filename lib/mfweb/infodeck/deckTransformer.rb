@@ -161,12 +161,16 @@ class DeckTransformer < Mfweb::Core::Transformer
    end
   end
   def handle_tile anElement
-    attrs = {:class => 'tile'}
+    emit_tile(anElement, {}) {apply anElement}
+  end
+
+  def emit_tile anElement, attrs
+    add_class(attrs, 'tile')   
     add_class(attrs, anElement['style'])
     inject_position attrs, anElement
     inject_width attrs, anElement
     inject_class attrs, anElement
-    @html.element('div',  attrs) {apply anElement}
+    @html.element('div',  attrs) {yield}
   end
 
   def inject_class attrs, anElement

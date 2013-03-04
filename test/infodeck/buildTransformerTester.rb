@@ -19,6 +19,10 @@ module Mfweb::InfoDeck
       @html = Nokogiri::XML(@emitter.out)    
     end
 
+    def fadeable
+      "$('# .sel, # .sel p, # .sel ul, # .sel pre').addClass('fadeable');\n"
+    end
+
     #------- show --------------------------------
 
     def test_show_forwards
@@ -34,12 +38,12 @@ module Mfweb::InfoDeck
     end
     def test_show_setup_forwards
       transform "<show selector = '.sel'/>"
-      assert_equal("$('# .sel').addClass('hidden');",
+      assert_equal(fadeable + "$('# .sel').addClass('hidden');",
                    @btr.build.elements[0].setup_forwards_js)
     end
     def test_show_setup_backwards
       transform "<show selector = '.sel'/>"
-      assert_equal("$('# .sel').removeClass('hidden');",
+      assert_equal(fadeable + "$('# .sel').removeClass('hidden');",
                    @btr.build.elements[0].setup_backwards_js)
     end
 
@@ -59,12 +63,12 @@ module Mfweb::InfoDeck
     end
     def test_hide_setup_forwards
       transform "<hide selector = '.sel'/>"
-      assert_equal("$('# .sel').removeClass('hidden');",
+      assert_equal(fadeable + "$('# .sel').removeClass('hidden');",
                    @btr.build.elements[0].setup_forwards_js)
     end
     def test_hide_setup_backwards
       transform "<hide selector = '.sel'/>"
-      assert_equal("$('# .sel').addClass('hidden');",
+      assert_equal(fadeable + "$('# .sel').addClass('hidden');",
                    @btr.build.elements[0].setup_backwards_js)
     end
 
@@ -83,12 +87,12 @@ module Mfweb::InfoDeck
     end
     def test_char_setup_forwards
       transform "<char selector = '.sel'/>"
-      assert_equal("$('# .sel').removeClass('charred');",
+      assert_equal(fadeable + "$('# .sel').removeClass('charred');",
                    @btr.build.elements[0].setup_forwards_js)
     end
     def test_char_setup_backwards
       transform "<char selector = '.sel'/>"
-      assert_equal("$('# .sel').addClass('charred');",
+      assert_equal(fadeable + "$('# .sel').addClass('charred');",
                    @btr.build.elements[0].setup_backwards_js)
     end
 

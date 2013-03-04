@@ -167,11 +167,15 @@ module Mfweb::InfoDeck
       @root.css('slide').each do |anElement|
         output_file = "%s/%s.html" % [@output_dir, anElement['id']]
         HtmlEmitter.open(output_file) do |html|
-          tr = DeckTransformer.new(html, anElement, self)
+          tr = transformer_class.new(html, anElement, self)
           tr.render
           @build_collector << tr.builds
         end
       end
+    end
+
+    def transformer_class
+      DeckTransformer
     end
 
     def generate_contents

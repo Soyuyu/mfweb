@@ -1,6 +1,6 @@
 $: << 'lib'
 
-task :default => [:sample]
+task :default => [:test, :sample]
 
 task :sample do
   cd "sample" do

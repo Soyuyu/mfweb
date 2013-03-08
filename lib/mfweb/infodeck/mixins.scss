@@ -35,3 +35,10 @@
   -o-transition-delay: $value;
   transition-delay: $value;
 }
+
+@mixin column-count ($value) {
+  -moz-column-count: $value;
+  -webkit-column-count: $value;
+  -o-column-count: $value;
+  column-count: $value;
+}

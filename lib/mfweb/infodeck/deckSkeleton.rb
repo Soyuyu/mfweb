@@ -115,7 +115,6 @@ module Mfweb::InfoDeck
       DeckMaker::JQUERY_SVG_FILES.each do |f|
         @html.js f
       end
-      @html.js 'contents.js'
     end
     def emit_google_analytics
       if @maker.google_analytics_file

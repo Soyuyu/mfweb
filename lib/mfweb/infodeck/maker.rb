@@ -4,7 +4,7 @@ module Mfweb::InfoDeck
   class DeckMaker
     include Mfweb::Core
     include FileUtils
-    attr_reader :lede_font, :output_dir
+    attr_reader :lede_font, :output_dir, :js
     attr_accessor :lede_font_file, :code_server, 
        :asset_server, :google_analytics_file, :css_paths, :mfweb_dir
     def initialize input_file, output_dir
@@ -47,7 +47,13 @@ module Mfweb::InfoDeck
       skeleton = DeckSkeleton.new
       skeleton.js_files = js_files.map{|f| f.pathmap("%f")}
       skeleton.maker = self
-      coffee_src = File.join(input_dir, 'deck.coffee')
+      coffee_glob = File.join(input_dir, 'js/*.coffee')
+      unless Dir[coffee_glob].empty?
+        sh "coffee -o #{@output_dir} -c #{coffee_glob}"
+        skeleton.js_files += Dir[coffee_glob].map{|f| f.pathmap("%n.js")}
+      end
+      skeleton.js_files << 'contents.js'
+      coffee_src = File.join(input_dir, 'deck.coffee') 
       if File.exist?(coffee_src)
         coffee_target = File.join(@output_dir, 'deck.js')
         sh "coffee -j #{coffee_target} -c #{coffee_src}"

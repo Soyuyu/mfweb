@@ -17,6 +17,10 @@ class DeckTransformer < Mfweb::Core::Transformer
     raise "unknown element: " + anElement.name
   end
 
+  def slide_id anElement
+    anElement.ancestors("slide").first['id']
+  end
+
   def add_class attrHash, class_name
     return unless class_name
     if attrHash.key? :class

@@ -81,6 +81,7 @@ module Mfweb::InfoDeck
     def load_included_decks aDeckRoot
       aDeckRoot.css('deck[src]').each do |d|
         inclusion = Nokogiri::XML(File.read(File.join(input_dir, d['src']))).root
+        load_included_decks inclusion
         d.replace(inclusion)
       end
     end

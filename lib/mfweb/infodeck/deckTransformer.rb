@@ -345,6 +345,23 @@ class DeckTransformer < Mfweb::Core::Transformer
     bt.render
     @builds.immediate = bt.build
   end
+       def handle_highlight_sequence anElement
+       steps = anElement.css('step').map{|e| e['name']}
+       args = ([slide_id(anElement)] + steps).map{|e| e.inspect}.join(",")
+       name = anElement['name'].gsub('-', '_')
+       @maker.js << "window.#{name} = new HighlightSequence(#{args});\n"
+       apply anElement
+     end
+     def handle_step anElement
+       tile_class = "highlight-description " + anElement['name']
+       emit_tile(anElement, :class => tile_class) {apply anElement}
+       build = Build.new
+       @builds << build
+       name = (anElement.ancestors('slide')[0]['id'] + '_' +
+               anElement['name']).gsub('-', '_')
+       build.js_builder(name)
+     end
+
 end
 
 class QuoteTransformer < DeckTransformer

@@ -37,6 +37,10 @@ class DeckTransformerTester < Test::Unit::TestCase
     assert_equal "15px", @html.at_css('img')['height']
     assert_equal "10px", @html.at_css('img')['width']
   end
+  def test_dont_load_non_local_svg_file
+    transform_slide "<img src = '/missing.svg'  height = '15'/>"
+    assert ! @html.at_css('img').has_attribute?('width')
+  end
   def test_use_one_dimension_and_scale_the_other
     transform_slide "<img src = 'native.svg'  height = '15'/>"
     html_svg = @html.at_css('svg')

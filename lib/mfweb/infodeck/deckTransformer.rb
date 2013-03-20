@@ -268,7 +268,7 @@ class DeckTransformer < Mfweb::Core::Transformer
     add_to_style(attrs, 'width' => add_units(anElement['width']))
     inject_class attrs, anElement
     inject_position attrs, anElement
-    if /\.svg$/ =~ anElement[:src]
+    if %r{^[^/].*\.svg$} =~ anElement[:src]
       svg_file = @maker.img_file(anElement['src'])
       svg_doc = read_svg_doc(svg_file)
       inject_svg_dimensions attrs, anElement, svg_doc

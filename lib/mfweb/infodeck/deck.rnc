@@ -181,4 +181,4 @@ deckTitle = element deckTitle {
 highlight_seq = element highlight-sequence {
   attribute name {text}, step*
 }
-step = element step {attribute name {text}, tile.content}
+step = element step {attribute name {text}, tile.content*}

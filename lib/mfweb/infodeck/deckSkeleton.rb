@@ -19,8 +19,8 @@ module Mfweb::InfoDeck
     end
     def emit_header title
       @html.title title
+      #TODO replace this css call with @import in scss
       @html.css 'http://fonts.googleapis.com/css?family=Inconsolata'
-      @html.css 'http://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,400,700'
       @html.element('meta', {:charset => "UTF-8"})
       @html.css "infodeck.css"
       DeckMaker::JQUERY_CSS_FILES.each {|f| @html.css f}

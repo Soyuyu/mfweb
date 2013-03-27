@@ -70,7 +70,6 @@ module Mfweb::InfoDeck
 
     def asset name
       @asset_server[name]
-      #return MFWEB_DIR + 'lib/mfweb/infodeck/' + name
     end
 
 
@@ -167,7 +166,7 @@ module Mfweb::InfoDeck
     end
     def allowed_fonts
       #should try to coordinate changes here with skeleton
-      ['Inconsolata']
+      ['Inconsolata', 'Open Sans']
     end
 
     def transform_slides

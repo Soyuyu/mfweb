@@ -89,6 +89,7 @@ tile.content =
     | insertCode
     | table
     | quote
+    | element abstract {inline}
 
 quote = element quote {
   attribute name {text},
@@ -116,6 +117,8 @@ inline.content =
     | element todo {inline}
     | linkMark
     | element amazon {attribute asin {text}, inline}
+    | element pub-date {inline}
+    | element author {attribute href {text}, text}
 
 
 p = element p {inline}

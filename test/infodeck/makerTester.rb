@@ -27,6 +27,7 @@ module Mfweb::InfoDeck
     end
 
     def test_included_external_deck
+      Site.init(Site.new)
       run_test_maker
       @included =  Nokogiri::HTML(File.read(BUILD_DIR + 'included-slide.html'))
       assert_not_nil  @included.at_css('#included-slide')

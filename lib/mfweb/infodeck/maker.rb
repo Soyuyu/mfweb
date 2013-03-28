@@ -21,51 +21,57 @@ module Mfweb::InfoDeck
     
 
     def run
-      mkdir_p output_dir, :verbose => false
-      unless File.exists? @mfweb_dir + 'lib/mfweb/infodeck.rb'
-        raise "unable to find mfweb library at <#{@mfweb_dir}>" 
+      begin
+        mkdir_p output_dir, :verbose => false
+        unless File.exists? @mfweb_dir + 'lib/mfweb/infodeck.rb'
+          raise "unable to find mfweb library at <#{@mfweb_dir}>" 
+        end
+        @code_server = Mfweb::Article::CodeServer.new(input_dir + 'code/')
+        @gen_dir = File.join('gen', input_dir)
+        @js = JavascriptEmitter.new
+        @build_collector = BuildCollector.new
+        lede_font_file = @lede_font_file || input_dir + 'lede-font.svg'
+        @lede_font = SvgFont.load(lede_font_file)
+        @root = Nokogiri::XML(File.read(@input_file)).root
+        load_included_decks(@root)
+        mkdir_p @gen_dir, :verbose => false
+        import_local_ruby
+        install_svg
+        install @mfweb_dir + 'lib/mfweb/infodeck/public/*'
+        install @mfweb_dir + 'lib/mfweb/infodeck/modernizr.custom.js'
+        build_css
+        install_graphics
+        install_jquery_svg
+        title = @root['title'] || "Unititled Infodeck"
+        js_files = Dir[File.join(input_dir, 'js/*.js')]
+        js_files.each {|f| install f}
+        skeleton = DeckSkeleton.new
+        skeleton.js_files = js_files.map{|f| f.pathmap("%f")}
+        skeleton.maker = self
+        coffee_glob = File.join(input_dir, 'js/*.coffee')
+        unless Dir[coffee_glob].empty?
+          sh "coffee -o #{@output_dir} -c #{coffee_glob}"
+          skeleton.js_files += Dir[coffee_glob].map{|f| f.pathmap("%n.js")}
+        end
+        skeleton.js_files << 'contents.js'
+        coffee_src = File.join(input_dir, 'deck.coffee') 
+        if File.exist?(coffee_src)
+          coffee_target = File.join(@output_dir, 'deck.js')
+          sh "coffee -j #{coffee_target} -c #{coffee_src}"
+          skeleton.js_files << coffee_target.pathmap('%f')
+        end
+        @root.css('partial').each {|e| add_partial e['id'], e}
+        transform_slides
+        HtmlEmitter.open(output_file) do |html|
+          skeleton.emit(html, title)
+        end
+        generate_contents
+        File.open(File.join(@output_dir, 'contents.js'), 'w') {|f| f << @js.to_js}
+        generate_fallback
+      rescue
+        rm_r @output_dir
+        raise $!
       end
-      @code_server = Mfweb::Article::CodeServer.new(input_dir + 'code/')
-      @gen_dir = File.join('gen', input_dir)
-      @js = JavascriptEmitter.new
-      @build_collector = BuildCollector.new
-      lede_font_file = @lede_font_file || input_dir + 'lede-font.svg'
-      @lede_font = SvgFont.load(lede_font_file)
-      @root = Nokogiri::XML(File.read(@input_file)).root
-      load_included_decks(@root)
-      mkdir_p @gen_dir, :verbose => false
-      import_local_ruby
-      install_svg
-      install @mfweb_dir + 'lib/mfweb/infodeck/public/*'
-      install @mfweb_dir + 'lib/mfweb/infodeck/modernizr.custom.js'
-      build_css
-      install_graphics
-      install_jquery_svg
-      title = @root['title'] || "Unititled Infodeck"
-      js_files = Dir[File.join(input_dir, 'js/*.js')]
-      js_files.each {|f| install f}
-      skeleton = DeckSkeleton.new
-      skeleton.js_files = js_files.map{|f| f.pathmap("%f")}
-      skeleton.maker = self
-      coffee_glob = File.join(input_dir, 'js/*.coffee')
-      unless Dir[coffee_glob].empty?
-        sh "coffee -o #{@output_dir} -c #{coffee_glob}"
-        skeleton.js_files += Dir[coffee_glob].map{|f| f.pathmap("%n.js")}
-      end
-      skeleton.js_files << 'contents.js'
-      coffee_src = File.join(input_dir, 'deck.coffee') 
-      if File.exist?(coffee_src)
-        coffee_target = File.join(@output_dir, 'deck.js')
-        sh "coffee -j #{coffee_target} -c #{coffee_src}"
-        skeleton.js_files << coffee_target.pathmap('%f')
-      end
-      @root.css('partial').each {|e| add_partial e['id'], e}
-      transform_slides
-      HtmlEmitter.open(output_file) do |html|
-        skeleton.emit(html, title)
-      end
-      generate_contents
-      File.open(File.join(@output_dir, 'contents.js'), 'w') {|f| f << @js.to_js}
     end 
 
     def asset name
@@ -98,6 +104,10 @@ module Mfweb::InfoDeck
 
     def output_file
       File.join @output_dir, 'index.html'
+    end
+
+    def uri
+      @output_dir.pathmap "%{build,}p"
     end
 
     def import_local_ruby
@@ -197,6 +207,16 @@ module Mfweb::InfoDeck
       @js << "initialize_deck();" << "\n"
       @js << "window.deck.load();" 
     end
+
+    def generate_fallback
+      return unless fallback_skeleton
+      HtmlEmitter.open(output_dir + '/fallback.html') do |html|
+        transformer = FallbackTransformer.new(html, @root, self)
+        title = "fallback for " + @root['title']
+        fallback_skeleton.emit(html, title) {transformer.render}
+      end
+    end
+    def fallback_skeleton; nil; end # hook method
   end
 end
 

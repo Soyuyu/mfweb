@@ -135,6 +135,7 @@ class Infodeck
     @_data.builds[aSlide.attr('id')]
 
   showSlideIndex: (ix) ->
+    $('.init').hide()
     @dropCurtain()
     $('#deck-container .slide').remove()
     @slideIndex = ix

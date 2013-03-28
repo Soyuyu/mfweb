@@ -42,7 +42,6 @@ module Mfweb::InfoDeck
         build_css
         install_graphics
         install_jquery_svg
-        title = @root['title'] || "Unititled Infodeck"
         js_files = Dir[File.join(input_dir, 'js/*.js')]
         js_files.each {|f| install f}
         skeleton = DeckSkeleton.new
@@ -62,9 +61,7 @@ module Mfweb::InfoDeck
         end
         @root.css('partial').each {|e| add_partial e['id'], e}
         transform_slides
-        HtmlEmitter.open(output_file) do |html|
-          skeleton.emit(html, title)
-        end
+        build_index_page skeleton
         generate_contents
         File.open(File.join(@output_dir, 'contents.js'), 'w') {|f| f << @js.to_js}
         generate_fallback
@@ -78,6 +75,16 @@ module Mfweb::InfoDeck
       @asset_server[name]
     end
 
+    def build_index_page skeleton
+      title = @root['title'] || "Untitled Infodeck"
+      HtmlEmitter.open(output_file) do |html|
+        skeleton.emit(html, title) do |html|
+          html.div('init') do
+            IndexTransformer.new(html, @root, self).render
+          end
+        end
+      end
+    end
 
     def input_dir
       @input_file.pathmap("%d/")

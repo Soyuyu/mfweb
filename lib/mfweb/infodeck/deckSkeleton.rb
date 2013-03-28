@@ -37,10 +37,10 @@ module Mfweb::InfoDeck
           emit_help_button
           emit_deck_status
         end
+        yield @html if block_given?
         emit_help_panel
         @html.element('div', :id => 'deck-container') do
           emit_loading_slide
-          yield @html if block_given?
           emit_goto_panel
         end
         emit_touch_panel

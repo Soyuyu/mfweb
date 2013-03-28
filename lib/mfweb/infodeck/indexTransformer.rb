@@ -1,5 +1,5 @@
 module Mfweb::InfoDeck
-  class FallbackTransformer < Mfweb::Core::Transformer
+  class IndexTransformer < Mfweb::Core::Transformer
     include Mfweb::InfoDeck
     def initialize out_emitter, in_root, maker
       super(out_emitter, in_root)
@@ -16,7 +16,6 @@ module Mfweb::InfoDeck
       handle(@root.at_css('abstract'))
       @root.css("author").each {|e| handle e}
       handle(@root.at_css("pub-date"))
-      @html << afterword
     end
     def handle_abstract anElement
       @html.p('abstract') {apply anElement}
@@ -30,14 +29,6 @@ module Mfweb::InfoDeck
         attrs = {href: anElement['href'], rel: 'author'}
         @html.element('a', attrs) {apply anElement}
       end
-    end
-    def afterword
-      raw = File.read(@maker.asset('fallback.md'))
-      text = ERB.new(raw).result(binding)
-      Kramdown::Document.new(text).to_html
-    end
-    def link 
-      "<a href = '#{@maker.uri}'>http://martinfowler.com#{@maker.uri}</a>"
     end
   end
 end

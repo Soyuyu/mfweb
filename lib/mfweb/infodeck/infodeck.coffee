@@ -187,7 +187,7 @@ class Infodeck
     @loadPreviousSlide()
 
   baseLocation: ->
-    window.location.origin + window.location.pathname
+    'http://' + window.location.host + window.location.pathname
 
   trimAddressBar: ->
     return if window.location.hash == ""

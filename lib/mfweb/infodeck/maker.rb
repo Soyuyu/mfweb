@@ -4,8 +4,8 @@ module Mfweb::InfoDeck
   class DeckMaker
     include Mfweb::Core
     include FileUtils
-    attr_reader :lede_font, :output_dir, :js
-    attr_accessor :lede_font_file, :code_server, 
+    attr_reader :output_dir, :js
+    attr_accessor :code_server, 
        :asset_server, :google_analytics_file, :css_paths, :mfweb_dir
     def initialize input_file, output_dir
       @input_file = input_file
@@ -30,8 +30,6 @@ module Mfweb::InfoDeck
         @gen_dir = File.join('gen', input_dir)
         @js = JavascriptEmitter.new
         @build_collector = BuildCollector.new
-        lede_font_file = @lede_font_file || input_dir + 'lede-font.svg'
-        @lede_font = SvgFont.load(lede_font_file)
         @root = Nokogiri::XML(File.read(@input_file)).root
         load_included_decks(@root)
         mkdir_p @gen_dir, :verbose => false

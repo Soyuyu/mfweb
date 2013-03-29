@@ -25,9 +25,6 @@ module Mfweb::InfoDeck
 
   class MakerStub
     attr_reader :lede_font
-    def initialize
-      @lede_font = Mfweb::InfoDeck::SvgFont.load('../../sample/decks/IndieFlower.svg')
-    end
     def img_file file_name
       'img/' + file_name
     end

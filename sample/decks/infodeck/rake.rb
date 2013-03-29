@@ -1,7 +1,6 @@
 
 maker = Mfweb::InfoDeck::DeckMaker.new('decks/infodeck/deck.xml', 
                                        BUILD_DIR + 'infodeck')
-maker.lede_font_file = 'decks/IndieFlower.svg'
 maker.mfweb_dir = "../"
 maker.asset_server =
   Mfweb::InfoDeck::AssetServer.new('.', 

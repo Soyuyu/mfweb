@@ -36,6 +36,7 @@ slide.content =
 
 lede = element lede {
     position,
+    width ?,
     attribute src {text} ?,
     attribute font-size {text} ?,
     attribute max-width {text} ?,
@@ -100,11 +101,13 @@ quote = element quote {
 
 tile = element tile {
     position,
-    attribute width {text}?,
+    width?,
     attribute style {"callout"}?,
     class?,
     tile.content*
 }
+
+width = attribute width {text}
 
 inline = inline.content *
 inline.content = 

@@ -2,13 +2,17 @@
 @import 'mixins';
 @import 'vars';
 
+$lede-font: serif !default;
+$text-font: sans-serif !default;
+$code-font: monospace !default;
+
 $background-purple: #e5d5fe;
 $slide-width: 960px;
 $slide-height: 590px;
-$code-fonts: 'Inconsolata', monospace;
 $shadow: 3px 3px 4px #555;  
 $body-margin: 5px;
 $banner-height: 30px;
+
 
 @import 'touch_panel';
 
@@ -49,7 +53,7 @@ html, body {
 
 body {
   background-color: gray;
-  font-family: arial, helvetica, clean, sans-serif;
+  font-family: $text-font;
   margin:$body-margin;
 }
 
@@ -99,7 +103,7 @@ body {
     font-style: italic;
   }
   code {
-    font-family: $code-fonts;
+    font-family: $code-font;
   }
 
   pre .highlight {
@@ -118,7 +122,7 @@ body {
   }
 
   .tile {
-    width: 20em;
+    width: 300px;
     
     h2 {
       text-align: left;
@@ -157,7 +161,7 @@ body {
     }
 
     pre {
-      font-family:  $code-fonts;
+      font-family:  $code-font;
       text-align: left;
       border: none;
     }
@@ -252,6 +256,13 @@ body {
 
 .charred {
   opacity: 0.3;
+}
+
+.lede {
+  font-family: $lede-font;
+  font-size: 36px;
+  color: $purple;
+  text-align: left;
 }
 
 a.link-mark {

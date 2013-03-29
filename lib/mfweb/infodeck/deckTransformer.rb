@@ -8,7 +8,7 @@ class DeckTransformer < Mfweb::Core::Transformer
     super(out_emitter, in_root)
     @maker = maker
     @apply_set = %w[deck]
-    @copy_set = %w[ul li p b i a code table tr th td]
+    @copy_set = %w[ul li p b i a code table tr th td br]
     @p_set = {'h' => 'h2'}
     @builds = SlideBuildSet.new(@root['id'])
     @current_build = nil
@@ -60,30 +60,15 @@ class DeckTransformer < Mfweb::Core::Transformer
   def emit_lede anElement, attrs
     add_class attrs, 'lede'
     add_class attrs, 'header-position' if lacks_position? anElement
+    inject_class attrs, anElement
     if anElement.key? 'src'
       attrs['src'] = anElement['src']
       attrs['title'] = anElement.text if anElement.has_text?
       emit_img anElement, attrs
     else
-      emit_lede_text anElement, attrs
-    end
-  end
-  def emit_lede_text anElement, attrs
-    svg_attrs = {}
-    text = anElement.text.gsub(/\s+/, ' ')
-    text_path =  @maker.lede_font.svg(text, 
-                                    anElement['font-size'] || "36",
-                                    anElement['max-width'] || "900")
-    dims = {:width => text_path.width, :height => text_path.height}
-    svg_attrs.merge! dims
-    inject_position attrs, anElement
-    inject_class attrs, anElement
-    add_class svg_attrs, 'lede'
-    attrs['title'] = text
-    @html.element('div', attrs) do
-      @html.element('svg', svg_attrs) do
-        @html << text_path.content
-      end
+      inject_position attrs, anElement
+      inject_width attrs, anElement
+      @html.element('div', attrs) {@html.p {apply anElement}}
     end
   end
 
@@ -94,7 +79,7 @@ class DeckTransformer < Mfweb::Core::Transformer
   end
 
   def check_no_fonts_in_svg svg_doc, file_name, allowed_fonts = []
-    log.warn "font present in svg file: %s" % file_name unless svg_doc.css('text').empty?  
+    log.warn "font present in svg file as img: %s" % file_name unless svg_doc.css('text').empty?  
   end
 
   def check_only_allowed_fonts_in_svg  svg_doc, file_name

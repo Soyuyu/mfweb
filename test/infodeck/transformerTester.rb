@@ -16,10 +16,6 @@ class DeckTransformerTester < Test::Unit::TestCase
     transform "<slide><lede>f</lede><slide>"
     assert_match(/header-position/,  @html.at_css('div.lede')['class'])
   end
-  def test_leaves_lede_position_data_alone
-    transform "<slide><lede right = '10'>f</lede><slide>"
-    assert_no_match(/top:/,  @html.at_css('svg')['style'])
-  end
   def test_lede_position_data_copied_over
     transform "<slide><lede right = '10'>f</lede><slide>"
     assert_equal('left: auto;right: 10px;',  @html.at_css('div.lede')['style'].strip)
@@ -64,12 +60,6 @@ class DeckTransformerTester < Test::Unit::TestCase
   def test_add_width_to_tile
     transform_slide("<tile width = '10em'/>")
     assert_match(/width: 10em/, @html.at_css('div.tile')['style'])
-  end
-  def test_lede_to_text
-    transform_slide("<lede>Cross-Platform Toolkits</lede>")
-    svg = @html.at_css('svg')
-    assert_in_delta 64.7859, svg['height'].to_f, 0.1
-    assert_in_delta 351.668, svg['width'].to_f, 0.001
   end
   def test_transforms_img
     transform_slide("<img src = 'foo.jpg' width = '50' left = '20%'/>")

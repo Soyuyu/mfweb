@@ -216,8 +216,7 @@ class PaperTransformer < Mfweb::Core::Transformer
       fig_num = @figureReader.number(src)
       @html.p('figureImage')do
         @html.element('a', 'name' => a_name(src)) {}
-        img_attrs = {}
-        img_attrs['src'] = src
+        img_attrs = copy_some_attributes(anElement, :width => :width, :src => :src)
         img_attrs['alt'] = "Figure #{fig_num}"
         # img_attrs['align'] = 'top'
         @html.element('img', img_attrs) {}

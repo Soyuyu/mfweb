@@ -89,6 +89,7 @@ class HtmlEmitter
   def substituteXmlEntities aString
     result = aString.gsub "&", "&amp;"
     result.gsub! "<", "&lt;"
+    result.gsub! "'", "&#39;"
     return result
   end
   def p(css_class = nil, &block)

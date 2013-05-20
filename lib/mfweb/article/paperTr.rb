@@ -290,7 +290,7 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.element('blockquote', attrs) do
       apply anElement
       @html.p('quote-attribution') do
-        text = lambda {@html.text anElement['credit']}
+        text = lambda {@html.text "-- " + anElement['credit']}
         case
         when anElement['href'] then 
           @html.a_ref(anElement['href'], &text)

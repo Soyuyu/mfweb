@@ -11,7 +11,7 @@ module PhotoHandlers
                 end
     @html.element('div', {:class => css_class, 
                     :style => "width: #{width}px;" }) do
-      attrs = {:src => anElement['src']}
+      attrs = {:src => anElement['src'], title: anElement['title']}
       @html.element('img', attrs){}
       render_photo_credit anElement
       @html.p('photoCaption') {apply anElement}

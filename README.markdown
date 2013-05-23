@@ -17,23 +17,37 @@ The top level folders are:
 - `lib/mfweb/core` scripts required for various parts of the web site
 - `lib/mfweb/article` scripts to turn article files into html
 - `lib/mfweb/infodeck` scripts to build infodecks
-- `sample` an example website to show how it builds. Build it by going
-  into the sample directory and invoke `rake`. 
+- `sample` files to help build a sample directory (see below)
 - `css` css files used for these parts of the web site.
 - `test` some unit tests (see below)
 
 My full web site contains many more scripts than this, I've just
 pulled out those scripts required for collaboration.
 
-To perform a build you'll need to have ruby and rake installed. You
-can then just issue `rake` to build the articles. The dependent gems
+You will need ruby 1.9 installed. The dependent gems
 are all described with bundler and I use rbenv for the ruby version.
 I run the scripts with ruby 1.9.3 and I don't think they will run any
 more with 1.8.
 
-To start on an article, copy the sample article in
-`sample\articles\simple` and write away. Any xml file in
-`sample\articles\simple` will be transformed to an html file in `build/articles`
+To make use of the files you'll need to create a sample directory that
+links back to the mfweb libraries. I've included a script
+`make-sample.rb` to make this easier. To use it run the command
+
+    ruby make-sample.rb path/to/target
+
+This will create a starting folder in the target directory. You can
+then add new articles into the sample directory without worrying about
+changes to the core files themselves. To build the web site use the
+command `rake`, this will build the website into `target/build`. You
+can use `rake server` to start a web server on this output directory.
+The sample files include two examples for simple and flexible
+articles. The articles describe how to write articles using the
+toolchain and are examples you can start with.
+
+You can (and should) make a new repository for that folder which will
+be independent of your clone of mfweb. You should not modify any of
+the files in mfweb unless you are experimenting with patching mfweb
+itself and sending me a pull request.
 
 Note for code examples, the code can be auto-imported from any source
 file. I find this very handy as I can put my actual source files, do

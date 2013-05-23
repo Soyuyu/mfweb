@@ -1,12 +1,6 @@
 $: << 'lib'
 
-task :default => [:test, :sample]
-
-task :sample do
-  cd "sample" do
-    sh "rake clobber; rake" 
-  end
-end
+task :default => [:test]
 
 require 'rake/testtask'
 Rake::TestTask.new do |t|
@@ -18,3 +12,5 @@ Rake::TestTask.new do |t|
 end
 
 require './test/infodeck/rake'
+
+require './test/sampleBuilder'

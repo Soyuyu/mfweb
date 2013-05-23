@@ -1,0 +1,42 @@
+# modify the following line to point to the location of mfweb
+MFWEB_DIR = '<%= mfweb_dir %>/'
+
+BUILD_DIR = 'build/'                        # location of html output
+CSS_PATHS = ['css', MFWEB_DIR + 'css']      # path for finding SCSS files
+
+$: << MFWEB_DIR + 'lib' << 'lib'      # add mfweb and local lib to ruby search path
+verbose(true)
+
+# define clobber task to delete output directory
+require 'rake/clean'
+CLOBBER.include BUILD_DIR
+
+# execute subsidiary rake files
+FileList['lib/rake/*.rb'].each {|f| require(f.pathmap("rake/%n"))}
+
+# default task deletes build directory and rebuilds it
+task :default => [:clobber, :articles, :decks, :home]
+
+# replace default task with following line to avoid clean rebuilds of output
+# task :default => [:articles, :decks, :home]
+
+# define high level tasks
+desc "build articles"
+task :articles
+
+desc "build infodecks"
+task :decks
+
+# to build articles, require the articles part of mfweb
+require 'mfweb/article'
+
+# build article css file from sass source
+sassTask MFWEB_DIR + 'css/article.scss', 'articles', :articles
+
+# For simple articles, you need the following block in the rakefile
+build_simple_articles
+
+# For flexible articles call a rakefile defined in that directory
+require './articles/flexible/rake'
+
+

@@ -33,20 +33,27 @@ how things are put together, and you can also look at the XML source
 to understand how that looks. I have some comments in the XML source
 that add some further information about the XML elements that are used.</p>
 <section>
-<h>Making your own document folder</h>
-<p>The sample folder here is a simple sample to get you started and
-provide some examples to base your own articles from. Rather than
-modify this sample folder in the mfweb repo, it's best to create your
-own work folder in a separate repo. You can start this simply by
-copying the sample folder into another location.</p>
-<p>To get your new folder to build in that location, you will need to
-make a change to the rakefile that controls the build process to point
-to the mfweb directory. Look for the line <code>MFWEB_DIR =
-'../'</code> at the top of the file and change the path to point to
-location of the mfweb folder. Once you've done that you should be able
-to execute <code>rake</code> in the new location and that will rebuild
-the sample files.</p>
-<p>The rakefile controls the build of the articles. There are comments
+<h>Making your own site folder</h>
+<p>To make your own site folder there is a script
+<code>make-sample.rb</code>. To run it</p>
+<pre>
+ruby make-sample.rb path/to/target
+</pre>
+<p>This will create a starting folder in the target directory. You can
+then add new articles into the sample directory without worrying about
+changes to the core files themselves. You can (and should) make a new
+repository for that folder which will be independent of your clone of
+mfweb. You should not modify any of the files in mfweb unless you are
+experiementing with patching mfweb itself and sending me a pull request.</p>
+<p>The link from the sample folder to mfweb is made in the rakefile
+with the line <code>MFWEB_DIR = '/path/to/mfweb'</code> at the top of the file.
+The default build sets this to the absolute locaiton of the mfweb
+folder when you run <code>make-sample</code> so if you move the mfweb
+folder later you must update that line. I find it useful to change the
+line to <code>MFWEB_DIR = 'mfweb'</code> and symlink the mfweb
+directory into the sample folder. You can also make a git submodule
+there if you're comfortable with git submodules.</p>
+<p>The rakefile in the sample directory controls the build of the articles. There are comments
 in the file to explain what various things do if you'd like to tweak
 it.</p>
 </section>
@@ -65,7 +72,7 @@ it.</p>
   All xml files found in that folder will be transformed into
   <code>your-folder/build/articles</code>. The only thing that's
   different between a simple article and a flexible article is the way
-  the articles sources are organized - they both look the same to the
+  the article sources are organized - they both look the same to the
   reader.</p>
 </section>
 <section>

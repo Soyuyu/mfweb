@@ -7,7 +7,7 @@ module Mfweb::InfoDeck
   class MakerTester < Test::Unit::TestCase
     include InfoDeck
 
-    BUILD_DIR = 'lib/test/build/'
+    BUILD_DIR = 'build/test/'
 
     def run_test_maker
       mkdir_p BUILD_DIR, :verbose => false

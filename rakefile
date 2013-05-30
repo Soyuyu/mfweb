@@ -2,15 +2,21 @@ $: << 'lib'
 
 task :default => [:test]
 
+desc "unit tests for toolchain"
+task :test => :unit
 require 'rake/testtask'
 Rake::TestTask.new do |t|
-  t.name = "test"
+  t.name = "unit"
   t.libs << "lib/mfweb"
   t.test_files = FileList['test/**/*Tester.rb']
   t.verbose = false
   t.warning = false
 end
 
+require 'rake/clean'
+CLOBBER.include 'build'
+
 require './test/infodeck/rake'
 
 require './test/sampleBuilder'
+

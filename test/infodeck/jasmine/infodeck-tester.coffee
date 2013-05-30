@@ -95,7 +95,7 @@ describe "infodeck object", ->
       
       it "loads correct current slide for hash", ->
         runs ->
-          marker = $('.slide.current div.lede').attr('title')
+          marker = $('.slide.current div.lede p').text()
           expect(marker).toMatch(/To understand/)
           expect().toHaveSlides('contents', 'begin', 'less')
           expect(window.deck.slideIndex).toBe(2)
@@ -111,7 +111,7 @@ describe "infodeck object", ->
       it "load will load first slide", ->
         runs ->
           expect($('#deck-container #cover').length).toBe(1)
-          marker = $('#deck-container #cover div.lede').attr('title')
+          marker = $('#deck-container #cover div.lede p').text()
           expect(marker).toBe("Tests for Jasmine to work on")
           expect().toHaveSlides(undefined, 'cover', 'contents')
 
@@ -129,10 +129,9 @@ describe "infodeck object", ->
       waitsFor((-> window.deck.loadingNext.state() == "resolved"), "loading next", 500)
       runs ->
         expect($('.slide.next').length).toBe(1)
-        element = $('#deck-container .next div.lede')
-        marker = element.attr('title')
+        element = $('#deck-container .next div.lede p')
         expect(element.length).not.toBe(0)
-        expect(marker).toBe("Our agenda")
+        expect(element.text()).toBe("Our agenda")
 
     it "does not try to pre-load next slide when on last slide", ->
       window.deck.location = -> {hash: "#what"}

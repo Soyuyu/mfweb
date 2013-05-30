@@ -10,6 +10,9 @@ end
 
 Mfweb::Core::Site.init(SampleSite.new)
 
-markdown_task 'index.md', '.', :home, "index"
+markdown_task('index.md', '.', :home, "Sample Home Page",  
+              Mfweb::Core::Site.skeleton.with_css('/home.css'))
+
+sassTask 'css/home.scss', '.', :home
 
 

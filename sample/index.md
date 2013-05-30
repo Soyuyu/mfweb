@@ -8,9 +8,10 @@ Documentation Pages
 
 - [Simple Article](articles/simpleArticle.html)
 - [Flexible Article](articles/flexible.html)
+- [Infodeck](/infodeck)
 
 
 Building this home page
 ---------------------
 
-It's source is `index.md` - a markdown file. The rake commands to build this page are in `lib/rake/sampleSite.rb`
+Its source is `index.md` - a markdown file. The rake commands to build this page are in `lib/rake/sampleSite.rb`

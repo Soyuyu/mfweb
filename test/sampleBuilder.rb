@@ -16,11 +16,22 @@ file SAMPLE_TOUCHFILE do
   end
 end
 
+desc "run server for sample directory"
+task :server do
+  require 'webrick'
+  include WEBrick
 
-task :server => SAMPLE_TOUCHFILE do
-  cd SAMPLE_TARGET + 'build' do
-    puts "=" * 40, "in #{Dir.pwd}"
-    sh "rake server"
-  end
+  port = 2929
+
+  puts "URL: http://#{Socket.gethostname}:#{port}"
+  mime_types = WEBrick::HTTPUtils::DefaultMimeTypes
+  mime_types.store 'js', 'application/javascript'
+  mime_types.store 'svg', 'image/svg+xml'
+
+  s = HTTPServer.new(:Port            => port,
+                     :MimeTypes => mime_types,
+                     :DocumentRoot    => SAMPLE_TARGET + 'build')
+
+  trap("INT"){ s.shutdown }
+  s.start
 end
-  

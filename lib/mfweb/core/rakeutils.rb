@@ -60,12 +60,12 @@ def copyGraphicsTask srcDir, targetDirSuffix, taskSymbol
   end
 end
 
-def markdown_task src, relativeTargetDir, taskSymbol, title
+def markdown_task src, relativeTargetDir, taskSymbol, title, skeleton = nil
   targetDir = BUILD_DIR + relativeTargetDir
   target = File.join(targetDir, src.pathmap('%n.html'))
   task taskSymbol => target
   file target => [src] do |t|
-    skeleton = Mfweb::Core::Site.skeleton.with_css('/global.css')
+    skeleton ||= Mfweb::Core::Site.skeleton.with_css('/global.css')
     build_markdown src, target, skeleton, title
   end
 end

@@ -38,10 +38,52 @@
   </slide>
   <slide id="overview">
     <lede>How the toolchain works</lede>
-    <tile top="50" left="50">
-      <ul>
-        <li></li>
-      </ul>
+    <tile top="100" width="900">
+      <tile left="50">
+        <ul>
+          <li>The sources for an infodeck are a series of text files in
+          various formats. These live in a project folder which you can
+          generate from the mfweb repository by running <code>ruby
+          make-sample.rb project_dir</code>.</li>
+          <li>There are three categories of "sources" for
+          the toolchain based on how widely they apply to different infodecks.</li>
+          <ul>
+            <li>Sources for a particular infodeck live in a folder
+            within your project folder. I use <code>project_dir/decks/deckname</code></li>
+            <li>Sources for all decks within your project live in <code>project_dir/lib/infodeck</code></li>
+            <li>Sources for all infodecks live within the mfweb
+            repository, mostly within <code>lib/mfweb/infodeck</code></li>
+          </ul>
+        </ul>
+      </tile>
+      <tile right="50" width="450">
+        <ul>
+          <li>Inside the infodeck specific folder you'll see the
+          various kinds of sources you need for a particular
+          infodeck.</li>
+          <ul>
+            <li>Various <code>.xml</code> which contain the layout and
+            text content of the infodeck. There must be at least one
+            of these (usually called <code>deck.xml</code> but there
+            may be others (useful for larger decks). </li>
+            <li><code>rake.rb</code> is a rakefile (ruby's make) that
+            describes how to build the infodeck. In it's simplest form
+            it just states where the starting xml source is and into
+            what folder it should build the output into. As we do more
+            complicated builds it can orchestrate the various elements
+            we need. </li>
+            <li>A folder of images (I use <code>img</code>) to store graphics</li>
+            <li>You may need a css file to specify deck-specific
+            styling. By default this should be <code>deck.scss</code>
+            and uses the scss variant of css.</li>
+            <li>You may need some more ruby files to tweak the build process.</li>
+            <li>If you are doing some non-basic animation code, you'll
+            need to add some coffeescript in <code>deck.coffee</code>
+            and some javascript files in the <code>js</code> folderapi.
+            </li>
+          </ul>
+        </ul>
+      </tile>
     </tile>
   </slide>
 </deck>

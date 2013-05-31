@@ -4,9 +4,44 @@
       <p>A simple bit of text just to display something</p>
     </tile>
   </slide>
-  <slide id="second">
+  <slide id="status">
+   <tile top="30" width="900">
     <tile>
-      <p> A second slide in case I need one to avoid the spinner</p>
+      <p>I should begin by laying out some limitations of the current
+      tool-chain</p>
+      <ul>
+        <li>So far I've only used on a few infodecks done by myself,
+        so I haven't put much effort into setting things up to be easy
+        for others to get involved.</li>
+        <p>In particular this means the creation of infodecks is done
+        using tools that I'm comfortable with.</p>
+        <li>Since I've only built infodecks for my website so far, the
+        toolchain embeds a lot of assumptions about my site into its
+        general operation. These need to be teased out, but I feel I
+        can best do that only when working with other people's
+        decks.</li>
+        <p>This includes such simple things as hard-wiring
+        my logo onto the slides - but I'm sure there are many
+        less-obvious examples.</p>
+      </ul>
+    </tile>
+    <tile right="50" top="50">
+      <ul>
+        <li>To work with the deck you'll need to be comfortable editing
+        various forms of web-oriented text documents: XML files for
+        content, and CSS (SCSS) for styling. If you're going to play
+        with animation behavior you'll need to do some javascript (coffeescript)
+        programming.</li>
+      </ul>
+    </tile>
+   </tile>
+  </slide>
+  <slide id="overview">
+    <lede>How the toolchain works</lede>
+    <tile top="50" left="50">
+      <ul>
+        <li></li>
+      </ul>
     </tile>
   </slide>
 </deck>

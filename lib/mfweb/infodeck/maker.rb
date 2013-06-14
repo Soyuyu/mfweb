@@ -15,6 +15,7 @@ module Mfweb::InfoDeck
       @css_paths = %w[lib/mfweb/infodeck css]
       @google_analytics_file = 'partials/footer/google-analytics.html'
       @mfweb_dir = "mfweb/"
+      @css_out = StringIO.new
     end
 
     
@@ -37,7 +38,6 @@ module Mfweb::InfoDeck
         install_svg
         install @mfweb_dir + 'lib/mfweb/infodeck/public/*'
         install @mfweb_dir + 'lib/mfweb/infodeck/modernizr.custom.js'
-        build_css
         install_graphics
         install_jquery_svg
         js_files = Dir[File.join(input_dir, 'js/*.js')]
@@ -59,6 +59,7 @@ module Mfweb::InfoDeck
         end
         @root.css('partial').each {|e| add_partial e['id'], e}
         transform_slides
+        build_css
         build_index_page skeleton
         generate_contents
         File.open(File.join(@output_dir, 'contents.js'), 'w') {|f| f << @js.to_js}
@@ -140,7 +141,12 @@ module Mfweb::InfoDeck
     def build_css
       sass = Sass::Engine.new(File.read(base_scss), 
                               :syntax => :scss, :load_paths => @css_paths)
-      File.open("#{@output_dir}/infodeck.css", 'w') {|out| out << sass.render}
+      File.open("#{@output_dir}/infodeck.css", 'w') do |out| 
+        out << sass.render
+        return if @css_out.string.empty?
+        out << "\n\n/*" + '-' * 50 + "*/\n\n"
+        out << @css_out.string
+      end
     end
 
 
@@ -222,6 +228,9 @@ module Mfweb::InfoDeck
       end
     end
     def fallback_skeleton; nil; end # hook method
+    def put_css aString
+      @css_out << aString
+    end
   end
 end
 

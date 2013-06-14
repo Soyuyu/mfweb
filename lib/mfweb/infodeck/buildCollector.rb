@@ -65,8 +65,6 @@ module Mfweb::InfoDeck
       @elements = []
     end
     def emit_js out
-      #out << " - one_build\n"
-      #@elements.each {|e| out << "// " << e.inspect << "\n"}
       out << "window.deck.addBuild('#{slide_id}', "
       emit_js_body out
       out << "\n);\n"

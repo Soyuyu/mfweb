@@ -15,7 +15,6 @@ module Mfweb::InfoDeck
       maker.asset_server = AssetServer.new("lib/mfweb/infodeck")
       maker.google_analytics_file = nil
       maker.mfweb_dir = "./"
-      maker.css_paths += %w[sample/css]
       maker.run
       @result = Nokogiri::HTML(File.read(BUILD_DIR + '/index.html', encoding: 'utf-8'))
     end

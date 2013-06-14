@@ -185,6 +185,14 @@ deckTitle = element deckTitle {
 }
 
 highlight_seq = element highlight-sequence {
-  attribute name {text}, step*
+  attribute name {text}, 
+  element panel {dimensions}?,
+  element description {position, dimensions}?,
+  step*
 }
-step = element step {attribute name {text}, tile.content*}
+step = element step {
+  attribute name {text}, 
+  position,
+  dimensions,
+  tile.content*
+}

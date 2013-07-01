@@ -17,11 +17,10 @@ class HighlightSequenceTransformer < DeckTransformer
   def handle_step anElement
     tile_class = "highlight-description " + anElement['name']
     @html.div(tile_class + " tile") {apply anElement}
-    # emit_tile(anElement, :class => tile_class) {apply anElement}
     build = Build.new
     @builds << build
     @maker.js << step_build_assignment(anElement)
-    name = (slide_id(anElement) + '_' + js_id(anElement['name']))
+    name = js_id(slide_id(anElement) + '_' + anElement['name'])
     build.js_builder(name)
     emit_step_css anElement
   end
@@ -30,7 +29,7 @@ class HighlightSequenceTransformer < DeckTransformer
     step_name = js_id(anElement['name'])
     if anElement == anElement.parent.css('step')[0]
       result = []
-      result << "window.%s_%s = {" % [slide_id(anElement), step_name]
+      result << "window.%s_%s = {" % [js_id(slide_id(anElement)), step_name]
       result << "forwards:  function() {return #{sequence_name}.fadeIn();},"
       result << "backwards: function() {return #{sequence_name}.fadeOut();},"
       result << "setup_forwards: function() {return #{sequence_name}.setupAtStart();},"

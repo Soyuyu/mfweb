@@ -1,0 +1,40 @@
+<deck>
+  <slide id="tiles">
+    <lede>Laying out a slide with tiles</lede>
+    <tile top="100" width="960">
+      <tile width="400">
+        <p>Once you're in a slide, you can lay out the contents of the
+        slide through tiles. A <b>tile</b> element represents an area of content which
+        you can position on the slide by specifying position and width.
+        Inside the tile you can place text and pictures. There are some
+        elements that can be positioned directly on the slide without
+        being wrapped in tiles, this is a convenience for common cases.</p>
+        <p>You can indicate the position of a tile with the attributes
+        <code>top, bottom, left,</code> and <code>right</code>. These
+        work the same (and translate to) as the CSS attributes. The
+        attributes take an integer value, which corresponds to css
+        pixels. You shouldn't use both top and bottom (or both left and
+        right) for the same tile.</p>
+        <p>The default slide dimensions I use are 960 px wide and 590px
+        tall. Combined with a banner of 30px along the top this results
+        in a slide size that fits well on iPads. The aspect ratio won't
+        work as well for other devices, but slides will still display
+        with some wasted space. The notion of a deck relies on laying
+        out elements in two dimensions, so it's very tricky to produce a
+        layout that would truly flex to different apsect ratios. </p>
+        <p>There is a width attribute (again in pixels) which you can
+        use to set the width of a tile. It defaults to 300px.</p>
+      </tile>
+      <tile left="450">
+        <p>Tiles can be nested. I'm using this here to give two tiles
+        the same <code>top</code> without duplicating the attribute </p>
+      </tile>
+    </tile>
+    <tile class="sidebar" bottom="10" right="20">
+      <p>The defaults for dimensions are set out in the base scss
+      file: <code>mfweb-dir/lib/mfweb/ infodeck/infodeck.scss</code>.
+      Like any other part of the CSS it can be changed either for a
+      whole site or a single deck.</p>
+    </tile>
+  </slide>
+</deck>

@@ -102,18 +102,22 @@
     <tile top="100" left="600">
          <p>The deck element contains various elements which I call
          deck-contents. The two most important of these are slides and
-         other decks. Slide elements represent the contents of a
-         single slide, and I'll discuss these shortly. Nested deck
-         elements refer to other xml files. </p>
-         <p>A nested deck element
-         must have a <code>src</code> attribute specifying the path to
-         another xml file. The slides inside that file are then
-         included into the deck at the position of that deck element.
-         (Any attributes of the included file's deck element, such as
-         a title, are ignored). Nesting decks like this allows you to
-         break up a big deck into multiple files. (Potentially it may
-         also allow to reuse sequences of slides between decks -
-         although I haven't tried to do that yet.)</p>
+         other decks. </p>
+         <p>A slide represents a single slide in the deck. Each slide
+         must have an <code>id</code> attribute, which must be unique
+         within the deck. The slide's id can be used in a URL to deep
+         link into the deck, it's also useful for slide-specific CSS
+         rules.</p>
+          <p>Nested deck elements allow you include other xml files. A nested
+          deck element must have a <code>src</code> attribute
+          specifying the path to another xml file. The slides inside
+          that file are then included into the deck at the position of
+          that deck element. (Any attributes of the included file's
+          deck element, such as a title, are ignored). Nesting decks
+          like this allows you to break up a big deck into multiple
+          files. (Potentially it may also allow to reuse sequences of
+          slides between decks - although I haven't tried to do that
+          yet.)</p>
      </tile>
      <tile bottom="10" left="100" width="400" class="sidebar">
        <p>As well as learning about the structure of decks through
@@ -130,7 +134,5 @@
        </ul>
      </tile>
   </slide>
-  <!-- 
   <deck src="tiles.xml"/>
- -->
-</deck>
+ </deck>

@@ -231,14 +231,14 @@ body {
   position: absolute;
 }
 
-.slide > .lede, .slide > svg, .slide > .tile, .slide > img, 
+.slide > .lede, .slide > svg,  .slide > img, 
 .slide > a > img, .slide > .diagram, .slide > .head {
   position: absolute;
-  left: 30px;
 }
 
 
 .slide > .header-position {
+  // default position for ledes and any element with position = 'heading'
   top:  40px; 
   left: 20px;
 }

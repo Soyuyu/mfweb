@@ -1,0 +1,25 @@
+<deck>
+  <slide id="style">
+    <lede>SCSS files control the styling</lede>
+    <tile top="100" left="30" >
+      <p>SCSS files are used to generate styles for the deck. The deck
+      sofware will look for a master scss file in various places</p>
+      <ul>
+        <li>If you take no action, styles will be set by
+      <code>mfweb‑dir/lib/mfweb/infodeck/infodeck.scss</code>. </li>
+        <li>You can override these styles for an individual deck by creating
+        <code>deck.scss</code> in your deck's folder. You must
+        explicitly do <code>@import 'infodeck.scss';</code> to import
+        mfweb's style sheet. </li>
+        <p class = "small">(For my main web site I import a site
+        specific stylesheet that includes and overrides mfweb's
+        scss file - this allows me to set styles for all decks on my site.)</p>
+      </ul>
+    </tile>
+    <tile right="200" top="250" class="special">
+      <p>Most elements can take a <code>class</code> attribute to set
+      a css class - this allows you to put <span class="special">specific styling</span> in your
+      local css file.</p>
+    </tile>
+  </slide>
+</deck>

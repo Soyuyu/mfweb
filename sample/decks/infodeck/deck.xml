@@ -86,7 +86,7 @@
       </tile>
     </tile>
   </slide>
-  <slide id="deck-layout">
+  <slide id="deck">
     <lede>Decks and Slides</lede>
     <tile top="100" left="30">
          <p>The layout and text content is defined by a series of xml
@@ -135,4 +135,5 @@
      </tile>
   </slide>
   <deck src="tiles.xml"/>
+  <deck src = "style.xml"/>
  </deck>

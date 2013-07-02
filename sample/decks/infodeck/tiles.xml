@@ -1,7 +1,7 @@
 <deck>
   <slide id="tiles">
-    <lede>Laying out a slide with tiles</lede>
-    <tile top="100" width="960">
+    <lede>Use tiles to lay elements into a slide</lede>
+    <tile top="100" width="900" left="30">
       <tile width="400">
         <p>Once you're in a slide, you can lay out the contents of the
         slide through tiles. A <b>tile</b> element represents an area of content which
@@ -35,6 +35,63 @@
       file: <code>mfweb-dir/lib/mfweb/ infodeck/infodeck.scss</code>.
       Like any other part of the CSS it can be changed either for a
       whole site or a single deck.</p>
+    </tile>
+  </slide>
+  <slide id="lede">
+    <lede>The lede summarizes slides to make them skippable</lede>
+    <tile left="30" top="100" width="400">
+         <p>I use the lede element to summarize the slide with the
+        thought that a reader can get the gist of a sequence of slides
+        just by reading the ledes, choosing to read detailed text if she
+        needs more detail.</p>
+        <p>The lede element takes position and dimensions attributes
+        just like a tile as it's convenient to place a lede in a slide
+        without wrapping it in a tile. </p>
+       <lede>By default, a lede appears at the
+      top</lede>
+        <p>The default lede position is set in scss using the
+        <code>header-position</code> css class</p>
+        <p>A lede that's inside a tile does not use the position
+        attributes, it appears as part of the flow of the tile's contents.</p>
+    </tile>
+  </slide>
+  <slide id="diagrams">
+    <lede>Diagrams can also be placed directly on the slide</lede>
+    <diagram src="consumer-supplier.svg" right="30" top="100"
+             width="400"/>
+    <tile top="100" left="30" >
+      <p>Images can be added to a slide with two tags:</p>
+      <ul>
+        <li>The <b>img</b> tag will introduce an img tag into the html
+        document. This is best for non-svg graphics</li>
+        <li>The <b>diagram</b> element should refer to an svg file and
+        will embed the svg diagram directly into the html with an svg
+        element. You need to do this if you want to manipulate the svg
+        elements.</li>
+      </ul>
+      <p>By default you store images in the <code>img</code> folder
+      inside your deck's folder. Paths are relative to that img folder.</p>
+      <p>Both diagram and img elements can be take position and
+      dimension attributes, so don't need to be inside a tile. If they
+      are placed directly in a tile they will be statically positioned
+      and thus will flow with the tile's content.</p>
+    </tile>
+  </slide>
+  <slide id="text-content">
+    <lede>Use a subset of regular html tags inside a tile</lede>
+    <tile top="100" left="30">
+      <p>Within a tile, you can place some common HTML blocks such as
+      <b>p</b>, <b>ul</b> and <b>table</b>. These contain usual HTML inline elements
+      such as text, <b>b</b>, <b>i</b>, and <b>a</b>. This will change as I need new
+      elements, see the <a href = "#deck">rnc grammar</a> for the current elements that are
+      supported (and ask me to add more if you need them).</p>
+      <h>Headings</h>
+      <p>Use the <b>h</b> element for headings. There's only one
+      level.</p>
+      <h>Quotes</h>
+      <quote name="Martin Fowler" affiliation="ThoughtWorks" photo="/infodeck/mf.jpg">
+        Quotes are paragraphs with additional attributes.
+      </quote>
     </tile>
   </slide>
 </deck>

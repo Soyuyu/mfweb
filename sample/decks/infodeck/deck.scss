@@ -7,3 +7,25 @@
   padding: 5px;
   box-shadow: $shadow;
 }
+
+.lede {
+  font-style: italic;
+}
+
+#style {
+  
+  div.special {
+    font-style: italic;
+    background-color: linen;
+    padding: 5px;
+    box-shadow: $shadow;
+  }
+
+  span.special {
+    color: green;
+  }
+
+  p.small {
+    font-size: 80%;
+  }
+}

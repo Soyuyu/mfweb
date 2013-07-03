@@ -1,0 +1,34 @@
+<deck>
+  <slide id="code">
+    <lede>You can import code from live files</lede>
+    <tile class = "body">
+      <p>If you want to import code samples, I use the same code
+      import mechanism that I use for my prose articles. This means
+      you don't have to put code into the xml source itself, instead
+      you can extract code from separate files. This allows you to
+      have live code files, which can run and be tested. (It also
+      avoids awkward escaping issues as the code is imported as a
+      CDATA element.)</p>
+    </tile>
+     <tile top="300">
+     <p>The element</p>
+      <insertCode file="frags.txt" fragment="basic-insert" />
+      <p>imports the following code</p>
+       <insertCode file="example.rb" fragment="all" label="some code" />
+    </tile>
+    <tile right="50" class="body" width="400">
+      <p>The path for code files begins at
+      <code>project-dir/code</code>. If you don't name a fragment,
+      then the entire file is imported. </p>
+      <p>Fragments are defined by starting with a line containing </p>
+      <p><code>&lt;codeFragment name = "fragment-name"></code></p>
+      <p>and finishing with the line</p>
+      <p><code>&lt;/codeFragment></code></p>
+      <p>These lines can be placed in comments, allowing you to select
+      pretty much any block of code. Code fragment blocks can be nested.</p>
+      <p>If you use the attribute <code>useClassName="true"</code>
+      then the code importer will try to guess the name of the class
+      for the imported code and use it as the label.</p>
+    </tile>
+  </slide>
+</deck>

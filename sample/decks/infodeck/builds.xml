@@ -1,0 +1,76 @@
+<deck>
+  <slide id="build">
+    <lede>Builds allow you hide and show elements</lede>
+    <tile class="body first">
+      <p>Rather than switching to a new slide, it can be useful to
+      show new elements and hide old elements.</p>
+    </tile>
+    <tile class = "eg-show hidden" left="400" top="310">
+      <p>You can also use the show element with a css selector. But in
+      this case it's up to you to ensure these elements are hidden
+      initially by giving them the <code>hidden</code> css class.</p>
+    </tile>
+    <build>
+      <hide selector=".first"/>
+      <show class="second">
+        <tile class="body" >
+          <p>Use a <b>build</b> element for each build step in a
+          slide. Inside the build element you can place other elements
+          to control what happens during a build.</p>
+          <ul>
+            <li>To hide elements use the <b>hide</b> element. This
+            takes a <code>selector</code> attribute which is a css
+            selector to match elements that should be hidden. Elements are
+            hidden by applying the <code>hidden</code> css class and
+            shown by removing that class.</li>
+            <li>To show elements use a <b>show</b> element and enclose
+            the elements you wish to show. The show element needs a
+            class which is used to control the display. </li>
+            <p class="small">To get fading to work smoothly, you'll need to 
+            enclose elements in a tile, even if they can be placed
+            directly (such as diagrams or ledes).</p>
+          </ul>
+        </tile>
+        <tile left="420" top="90">
+          <diagram src="arrow.svg" />
+        </tile>
+        <tile left="500" top="120">
+          <p>As well as hiding elements you can char them with the
+          <b>char</b> element - this applies the
+          <code>charred</code> css class, by default reducing its
+          opacity to 30%. This is good to de-emphasize an element while
+          still retaining it for context.</p>
+        </tile>
+      </show>
+      <show selector=".eg-show"/>
+      <char selector=".lede"/>
+    </build>
+  </slide>
+  <slide id="add-class">
+    <lede>You can add/remove any css class with builds</lede>
+    <tile class="body body1">
+      <p>Hides, shows, and chars work by adding and removing css
+      classes. You can use this mechanism for more complicated build
+      animations, such as resizing and moving.</p>
+    </tile>
+    <diagram src="consumer-supplier.svg" class="diag d1"/>
+    <build>
+      <add-class      selector = ".body1 p" class="small"/>
+      <add-class       selector=".diag" class="d2"/>
+      <remove-class selector=".diag" class="d1"/>
+      <show class="body2">
+        <tile class="body" top="250">
+          <p>You can do any animation that's supported by css
+          animations by adding and removing classes. This can
+          change colors, positions, sizes, and orientations. You can
+          control the duration of these transitions.</p>
+          <p>Multi-step animations can be awkward to do this way,
+          although they are possible by typing transiton-delays in
+          the css as I've done here. For more complex animation it's probably better to
+          program them directly in javascript - although I haven't
+          experiemented with this much so far.</p>
+        </tile>
+      </show>
+    </build>
+  </slide>
+</deck>

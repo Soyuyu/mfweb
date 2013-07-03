@@ -1,0 +1,4 @@
+#<codeFragment name = "basic-insert">
+<insertCode file="example.rb" fragment="all" 
+            label="some code"/>
+#</codeFragment>

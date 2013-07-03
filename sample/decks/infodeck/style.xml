@@ -3,7 +3,7 @@
     <lede>SCSS files control the styling</lede>
     <tile top="100" left="30" >
       <p>SCSS files are used to generate styles for the deck. The deck
-      sofware will look for a master scss file in various places</p>
+      sofware will look for a root scss file in various places</p>
       <ul>
         <li>If you take no action, styles will be set by
       <code>mfweb‑dir/lib/mfweb/infodeck/infodeck.scss</code>. </li>
@@ -12,7 +12,7 @@
         explicitly do <code>@import 'infodeck.scss';</code> to import
         mfweb's style sheet. </li>
         <p class = "small">(For my main web site I import a site
-        specific stylesheet that includes and overrides mfweb's
+        specific stylesheet that imports and overrides mfweb's
         scss file - this allows me to set styles for all decks on my site.)</p>
       </ul>
     </tile>

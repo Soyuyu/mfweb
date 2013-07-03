@@ -1,31 +1,64 @@
 @import 'infodeck.scss';
 
-.sidebar {
-  size: 80%;
-  font-style: italic;
-  background-color: linen;
-  padding: 5px;
-  box-shadow: $shadow;
-}
+#deck-container {
 
-.lede {
-  font-style: italic;
-}
-
-#style {
-  
-  div.special {
+  .sidebar {
+    size: 80%;
     font-style: italic;
     background-color: linen;
     padding: 5px;
     box-shadow: $shadow;
   }
 
-  span.special {
-    color: green;
+  .lede {
+    font-style: italic;
+  }
+
+  .body {
+    top: 100px;
+    left: 30px;
+  }
+
+  .tile {
+    left: 30px;
   }
 
   p.small {
     font-size: 80%;
+  }
+
+
+  #style {
+    
+    div.special {
+      font-style: italic;
+      background-color: linen;
+      padding: 5px;
+      box-shadow: $shadow;
+    }
+
+    span.special {
+      color: green;
+    }
+
+  }
+
+  #add-class {
+    .body2 {
+      @include transition-delay(0.5s);      
+    }
+    .d1 {
+      bottom: 20px;
+      left: 20px;
+      width: 200px;
+      height: 200px;
+    }
+    .d2 {
+      bottom: 20px;
+      left: 500px;
+      width: 400px;
+      height: 400px;
+    }
+
   }
 }

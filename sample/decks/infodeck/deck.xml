@@ -136,4 +136,6 @@
   </slide>
   <deck src="tiles.xml"/>
   <deck src = "style.xml"/>
+  <deck src="code.xml"/>
+  <deck src="builds.xml"/>
  </deck>

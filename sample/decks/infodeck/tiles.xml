@@ -90,7 +90,7 @@
       <p>Use the <b>h</b> element for headings. There's only one
       level.</p>
       <h>Quotes</h>
-      <quote name="Martin Fowler" affiliation="ThoughtWorks" photo="/infodeck/mf.jpg">
+      <quote name="Martin Fowler" affiliation="ThoughtWorks" photo="mf.jpg">
         Quotes are paragraphs with additional attributes.
       </quote>
     </tile>

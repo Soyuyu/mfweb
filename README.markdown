@@ -2,7 +2,7 @@
 
 These scripts are a subset of the scripts I use for building
 martinfowler.com. They are here on github to help with collaborating
-with colleagues who are writing articles for martinfowler.com. I have
+with people who are writing articles for martinfowler.com. I have
 made no effort to document them, or package them, for general use. You
 are welcome to give them a spin if you so wish, but they will need
 considerable hacking on them to make them usable outside the context
@@ -29,6 +29,11 @@ are all described with bundler and I use rbenv for the ruby version.
 I run the scripts with ruby 1.9.3 and I don't think they will run any
 more with 1.8.
 
+To build the infodecks you will also need to install coffeescript. The
+default rake tasks assume this is the case, let me know if this is an
+issue and I'll try to do something clever to avoid the need for
+coffeescript if you are only working on articles.
+
 To make use of the files you'll need to create a sample directory that
 links back to the mfweb libraries. I've included a script
 `make-sample.rb` to make this easier. To use it run the command
@@ -40,8 +45,8 @@ then add new articles into the sample directory without worrying about
 changes to the core files themselves. To build the web site use the
 command `rake`, this will build the website into `target/build`. You
 can use `rake server` to start a web server on this output directory.
-The sample files include two examples for simple and flexible
-articles. The articles describe how to write articles using the
+The sample files include examples for simple articles, flexible
+articles, and infodecks. The articles describe how to write articles using the
 toolchain and are examples you can start with.
 
 You can (and should) make a new repository for that folder which will
@@ -53,11 +58,6 @@ Note for code examples, the code can be auto-imported from any source
 file. I find this very handy as I can put my actual source files, do
 compiles and tests, and just use the comment annotations to mark bits
 of code to incorporate into the text.
-
-The library folders contain code to make infodecks, but I haven't yet
-added a sample infodeck to the samples. If you're interested in
-building infodecks let me know and I'll prioritize getting a sample
-together.
 
 ## Digging in the Code
 

@@ -1,6 +1,6 @@
 <deck>
   <slide id="tiles">
-    <lede>Use tiles to lay elements into a slide</lede>
+    <lede>Use tiles to position elements in a slide</lede>
     <tile top="100" width="900" left="30">
       <tile width="400">
         <p>Once you're in a slide, you can lay out the contents of the
@@ -27,10 +27,11 @@
       </tile>
       <tile left="450">
         <p>Tiles can be nested. I'm using this here to give two tiles
-        the same <code>top</code> without duplicating the attribute </p>
+        the same <code>top</code> without duplicating the attribute.
+        You can do a similar thing using css classes. </p>
       </tile>
     </tile>
-    <tile class="sidebar" bottom="10" right="20">
+    <tile class="sidebar" bottom="30" right="30">
       <p>The defaults for dimensions are set out in the base scss
       file: <code>mfweb-dir/lib/mfweb/ infodeck/infodeck.scss</code>.
       Like any other part of the CSS it can be changed either for a

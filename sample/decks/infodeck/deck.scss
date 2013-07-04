@@ -59,6 +59,21 @@
       width: 400px;
       height: 400px;
     }
+  }
 
+  #travellingHighlight {
+    .highlight-description.css-step {
+      height: 200px;
+      top: 200px;
+      background-color: lavenderblush;
+      width: 350px;
+    }
+    .highlight-panel.css-step {
+      left: 500px;
+      top: 400px;
+      background-color: dodgerblue;
+      opacity: 0.3;
+    }
+      
   }
 }

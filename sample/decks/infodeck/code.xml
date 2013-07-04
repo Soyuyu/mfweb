@@ -18,7 +18,7 @@
     </tile>
     <tile right="50" class="body" width="400">
       <p>The path for code files begins at
-      <code>project-dir/code</code>. If you don't name a fragment,
+      <code>yourdeck/code</code>. If you don't name a fragment,
       then the entire file is imported. </p>
       <p>Fragments are defined by starting with a line containing </p>
       <p><code>&lt;codeFragment name = "fragment-name"></code></p>

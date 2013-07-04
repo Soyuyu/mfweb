@@ -1,0 +1,32 @@
+<deck>
+   <slide id="status">
+    <lede>The infodeck toolchain is alpha-quality</lede>
+    <tile class="body">
+      <p>The toolchain currently has many limitations as it's only
+      been used by me, and I haven't yet put much energy into making
+      it more widely usable.</p>
+      <p>Since I've only built infodecks for my website so far, the
+      toolchain embeds a lot of assumptions about my site into its
+      general operation. These need to be teased out, but I feel I
+      can best do that only when working with other people's
+      decks. This includes such simple things as hard-wiring
+      my logo onto the slides - but I'm sure there are many
+      less-obvious examples.</p>
+    </tile>
+    <tile right="150" class = "body">
+      <p>To work with the deck you'll need to be comfortable editing
+      various forms of web-oriented text documents: XML files for
+      content, and SCSS for styling. This is enough to write
+      infodecks with multiple slides, images, code imports, and some
+      simple animations: builds, fades, moving, resizing, and
+      travelling highlights. More sophisticated animations and
+      customization requires programming in ruby and coffeescript.</p>
+      <p>You can import any kind of image, but to get images that size
+      well and support manipulation, I use svg images. I draw svg
+      images using <a href = "http://inkscape.org/">Inkscape</a>, an
+      open source image editor. Inkscape is a powerful tool, but has
+      the user experience one would expect from an open-source
+      tool.</p>
+    </tile>
+  </slide>
+</deck>

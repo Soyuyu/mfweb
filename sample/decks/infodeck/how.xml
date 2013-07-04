@@ -1,0 +1,56 @@
+<deck>
+  <slide id="how">
+    <lede>How the toolchain works</lede>
+    <tile class="body" width="400">
+      <p>The sources for an infodeck are a series of text files in
+      various formats. These live in a project folder which you can
+      generate from the mfweb repository. To generate a sample
+      site in the folder <code>site</code> use the command<code>ruby
+      make-sample.rb site</code>.</p>
+      <p>There are three categories of "sources" for
+      the toolchain based on how widely they apply to different infodecks.</p>
+      <ul>
+        <li>Sources for a particular infodeck live in a folder
+        within your project folder. I use something like <code>site/decks/yourdeck</code></li>
+        <li>Sources for all decks within your project live in <code>site/lib/infodeck</code></li>
+        <li>Sources for all infodecks live within the mfweb
+        repository, mostly within <code>mfweb_dir/lib/mfweb/infodeck</code></li>
+      </ul>
+    </tile>
+    <tile right="50" width="450" class="body">
+      <ul>
+        <li>Inside the infodeck specific folder you'll see the
+        various kinds of sources you need for a particular
+        infodeck.</li>
+        <ul>
+          <li>Various <code>.xml</code> which contain the layout and
+          text content of the infodeck. There must be at least one
+          of these (usually called <code>deck.xml</code>) but there
+          may be others (useful for larger decks). </li>
+          <li><code>rake.rb</code> is a rakefile (ruby's make) that
+          describes how to build the infodeck. In it's simplest form
+          it just states where the starting xml source is and into
+          what folder it should build the output into. </li>
+          <li>A folder of images (I use <code>img</code>) to store graphics</li>
+          <li>If you need to include code then use the folder <code>code</code>.</li>
+          <li>You probably need an scss file to specify deck-specific
+          styling in <code>deck.scss</code>.</li>
+        </ul>
+        <p>If you are doing more advanced work that involves
+        futher customzation with programming you will need  more
+        ruby files to tweak the build process, some coffeescript in <code>deck.coffee</code>,
+        and some javascript files in the <code>js</code> folder.</p>
+      </ul>
+    </tile>
+    <tile class="sidebar" bottom="10" left="30" width="400">
+      <p>In the rest of this deck I will use </p>
+      <ul>
+        <li><code>mfweb-dir</code>
+      to refer to the root of the mfweb repository</li>
+        <li> <code>site</code> for the root of your site's project directory.</li>
+        <li><code>yourdeck</code> for your deck's sources (at
+        <code>site/decks/yourdeck</code>)</li>
+      </ul>
+    </tile>
+  </slide>
+</deck>

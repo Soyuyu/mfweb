@@ -1,0 +1,40 @@
+<deck>
+  <slide id="travellingHighlight">
+    <lede>Traveling Highlights walk through diagrams</lede>
+    <diagram src="consumer-supplier.svg" width="400" right="50"
+             top="200"/>
+    <highlight-sequence name="highlight">
+      <panel width="150" height="120"/>
+      <description top="100" left="30" width="300" height="400"/>
+      <step name="seq" top="180" left="500">
+        <p>The <b>highlight-sequence</b> element defines a sequnce of
+        travelling highlights. It must take a name that is unique to
+        the entire deck.</p>
+        <p><code>highlight-sequence</code> takes two sub-elements that
+        affect the whole sequence. <b>description</b> indicates where
+        the descriptive text tile you're now reading goes. It has the
+        positional and dimension attributes. <b>panel</b> sets default
+        dimensions for the travelling highlight panel.</p>
+      </step>
+      <step name="panel" top="320" left="740" width="50" height="50">
+        <p><code>highlight-sequence</code> contains a number of
+        <b>step</b> elements.
+        Each step takes position and perhaps dimension atributes to
+        adjust the highlight panel. It must be given a unique name within
+        the sequence. It also takes regular tile content
+        elements to populate the description tile.</p>
+      </step>
+      <step name="css-step">
+        <p>Positioning and styling of the description and panel are
+        done through css, so you can override them in
+        <code>yourdeck/deck.scss</code>. </p>
+        <ul>
+        <li>To select the description tile use
+        <code>.highlight‑description.step‑name</code></li>
+        <li>To select the panel use
+        <code>.highlight‑panel.step‑name</code></li>
+        </ul>
+      </step>
+    </highlight-sequence>
+  </slide>
+</deck>

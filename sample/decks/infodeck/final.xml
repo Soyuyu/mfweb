@@ -1,0 +1,16 @@
+<deck>
+  <slide id="final">
+    <lede>There is more you can do with some programming…</lede>
+    <lede top="100" left="100">… but that's outside the scope of this
+    deck</lede>
+    <tile top="200" left="100">
+      <p>You can override the ruby code to alter both the overall
+      coordination of how the slides are built and the details of the
+      transformation between xml and html.</p>
+      <p>You can also use any javascript code to program more flexible
+      animations by writing javascript or coffeescript.</p>
+      <p>I haven't explained this here, if you want to do this
+      get in touch with me.</p>
+    </tile>
+  </slide>
+</deck>

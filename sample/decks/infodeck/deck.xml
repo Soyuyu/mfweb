@@ -1,141 +1,25 @@
 <deck title = "Infodeck Manual">
   <slide id="cover">
-    <tile>
-      <p>A simple bit of text just to display something</p>
+    <lede>A proto-manual for Infodecks</lede>
+    <tile class="body">
+      <p>This deck is a crude manual to explain how to create
+      infodecks using my current toolchain. It's a manual partly due
+      to the explanations in it, but also because it is an example of
+      an infodeck itself - so you can look to the sources to see how
+      various things in this manual are done.</p>      
+    </tile>
+    <tile top="200" right="100" class="sidebar">
+      <p>You can find the sources for this deck at <code>site/decks/infodeck</code></p>
     </tile>
   </slide>
-  <slide id="status">
-    <tile top="30" width="900">
-      <tile>
-      <p>I should begin by laying out some limitations of the current
-      tool-chain</p>
-      <ul>
-        <li>So far I've only used on a few infodecks done by myself,
-        so I haven't put much effort into setting things up to be easy
-        for others to get involved.</li>
-        <p>In particular this means the creation of infodecks is done
-        using tools that I'm comfortable with.</p>
-        <li>Since I've only built infodecks for my website so far, the
-        toolchain embeds a lot of assumptions about my site into its
-        general operation. These need to be teased out, but I feel I
-        can best do that only when working with other people's
-        decks.</li>
-        <p>This includes such simple things as hard-wiring
-        my logo onto the slides - but I'm sure there are many
-        less-obvious examples.</p>
-      </ul>
-    </tile>
-    <tile right="50" top="50">
-      <ul>
-        <li>To work with the deck you'll need to be comfortable editing
-        various forms of web-oriented text documents: XML files for
-        content, and CSS (SCSS) for styling. If you're going to play
-        with animation behavior you'll need to do some javascript (coffeescript)
-        programming.</li>
-      </ul>
-    </tile>
-   </tile>
-  </slide>
-  <slide id="overview">
-    <lede>How the toolchain works</lede>
-    <tile top="100" width="900">
-      <tile left="50">
-        <ul>
-          <li>The sources for an infodeck are a series of text files in
-          various formats. These live in a project folder which you can
-          generate from the mfweb repository by running <code>ruby
-          make-sample.rb project_dir</code>.</li>
-          <li>There are three categories of "sources" for
-          the toolchain based on how widely they apply to different infodecks.</li>
-          <ul>
-            <li>Sources for a particular infodeck live in a folder
-            within your project folder. I use <code>project_dir/decks/deckname</code></li>
-            <li>Sources for all decks within your project live in <code>project_dir/lib/infodeck</code></li>
-            <li>Sources for all infodecks live within the mfweb
-            repository, mostly within <code>lib/mfweb/infodeck</code></li>
-          </ul>
-        </ul>
-      </tile>
-      <tile right="50" width="450">
-        <ul>
-          <li>Inside the infodeck specific folder you'll see the
-          various kinds of sources you need for a particular
-          infodeck.</li>
-          <ul>
-            <li>Various <code>.xml</code> which contain the layout and
-            text content of the infodeck. There must be at least one
-            of these (usually called <code>deck.xml</code> but there
-            may be others (useful for larger decks). </li>
-            <li><code>rake.rb</code> is a rakefile (ruby's make) that
-            describes how to build the infodeck. In it's simplest form
-            it just states where the starting xml source is and into
-            what folder it should build the output into. As we do more
-            complicated builds it can orchestrate the various elements
-            we need. </li>
-            <li>A folder of images (I use <code>img</code>) to store graphics</li>
-            <li>You may need a css file to specify deck-specific
-            styling. By default this should be <code>deck.scss</code>
-            and uses the scss variant of css.</li>
-            <li>You may need some more ruby files to tweak the build process.</li>
-            <li>If you are doing some non-basic animation code, you'll
-            need to add some coffeescript in <code>deck.coffee</code>
-            and some javascript files in the <code>js</code> folderapi.
-            </li>
-          </ul>
-        </ul>
-      </tile>
-    </tile>
-  </slide>
-  <slide id="deck">
-    <lede>Decks and Slides</lede>
-    <tile top="100" left="30">
-         <p>The layout and text content is defined by a series of xml
-         files. One file is the root of this content - this is usually
-         called <code>deck.xml</code> (this can be changed by changing
-         the <code>rake.rb</code> file.)</p>
-         <p>Each xml file contains a <code>&lt;deck></code> element as
-         its root. The root deck's deck element should have a
-         <code>title</code> attribute which will set the title of the
-         generated html document (this will appear in the tab or title
-         bar of the browser.</p>
-    </tile>
-    <tile top="100" left="600">
-         <p>The deck element contains various elements which I call
-         deck-contents. The two most important of these are slides and
-         other decks. </p>
-         <p>A slide represents a single slide in the deck. Each slide
-         must have an <code>id</code> attribute, which must be unique
-         within the deck. The slide's id can be used in a URL to deep
-         link into the deck, it's also useful for slide-specific CSS
-         rules.</p>
-          <p>Nested deck elements allow you include other xml files. A nested
-          deck element must have a <code>src</code> attribute
-          specifying the path to another xml file. The slides inside
-          that file are then included into the deck at the position of
-          that deck element. (Any attributes of the included file's
-          deck element, such as a title, are ignored). Nesting decks
-          like this allows you to break up a big deck into multiple
-          files. (Potentially it may also allow to reuse sequences of
-          slides between decks - although I haven't tried to do that
-          yet.)</p>
-     </tile>
-     <tile bottom="10" left="100" width="400" class="sidebar">
-       <p>As well as learning about the structure of decks through
-       this narrative description, you can use a couple of other ways
-       to see how all this works.</p>
-       <ul>
-         <li>You can look at the sources for this infodeck in
-         <code>mfweb-dir/sample/decks/infodeck</code></li>
-         <li>There is a schema for decks using <a href = "http://www.relaxng.org/compact-tutorial-20030326.html">REALAX NG compact syntax</a>
-          (which is very readable) at
-         <code>mfweb-dir/lib/infodeck/deck.rnc</code>. If you use
-         emacs you can use this file to edit deck files in a
-         schema-aware manner using <a href = "http://www.thaiopensource.com/nxml-mode/">nxml-mode</a> (as I do).</li>
-       </ul>
-     </tile>
-  </slide>
+ 
+  <deck src="status.xml"/>
+  <deck src="how.xml"/>
+  <deck src = "deck-slides.xml"/>
   <deck src="tiles.xml"/>
   <deck src = "style.xml"/>
   <deck src="code.xml"/>
   <deck src="builds.xml"/>
- </deck>
+  <deck src="highlight.xml"/>
+  <deck src="final.xml"/>
+</deck>

@@ -68,6 +68,11 @@ ol {
 
 pre {
   font-size: 90%;
+  font-family: $code-font;
+}
+
+code {
+  font-family: $code-font;
 }
 
 span.credit {

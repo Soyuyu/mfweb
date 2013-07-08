@@ -24,7 +24,6 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
 
   def render_body
     @transformer.render
-    @transformer.render_revision_history
   end
 
   def create_transformer

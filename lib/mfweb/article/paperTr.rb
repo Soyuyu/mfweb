@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Mfweb::Article
 
 module PhotoHandlers
@@ -40,6 +41,13 @@ class PaperTransformer < Mfweb::Core::Transformer
     @ignore_set = %w[footnote-list bibliography]
     @section_depth = 1
     @has_printed_version = false
+  end
+
+  def handle_paper anElement
+    @figureReader = FigureReader.new anElement
+    @is_draft = ('dev' == anElement["status"])
+    apply anElement
+    render_revision_history
   end
 
   def title_bar_text
@@ -85,11 +93,6 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
   def handle_subtitle anElement
     @html.p("subtitle") {apply anElement}
-  end
-  def handle_paper anElement
-    @figureReader = FigureReader.new anElement
-    @is_draft = ('dev' == anElement["status"])
-    apply anElement
   end
   def draft?
     @is_draft
@@ -152,10 +155,20 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.div('paperBody') do
       apply anElement
       @html.element('hr', attrs){}
+      render_similar_articles
     end
   end
   def handle_appendix anElement
     @html.div('appendix') {apply anElement}
+  end
+  def render_similar_articles
+    @html.div('similar-articles') do
+      @html.h(2) {@html.text "For articles on similar topics…"}
+      @html.p {@html.text "…take a look at the following tags:"}
+      @html.p('tags') do
+        @html << @maker.tags.collect{|t| t.link}.join(dot_sep)
+      end
+    end
   end
   def section_title aSectionElement
     flatten_content aSectionElement.at_xpath('H|h')
@@ -488,7 +501,7 @@ class FrontMatterTransformer < PaperTransformer
   
   def print_tags
     @html.div('tags') do
-      @html.b {@html << "Tags: "  }
+      @html.b {@html << "Find similar articles to this by looking at these tags: "  }
       @html << @maker.tags.collect{|t| t.link}.join(dot_sep)
     end
   end

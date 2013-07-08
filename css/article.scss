@@ -170,7 +170,7 @@ div.frontMatter {
   }
 
   hr.bodySep {
-    margin: 5em 10%;
+    margin: 5em 10% 2em;
     border-top: thin solid $dk-purple;
     clear: both;
   }
@@ -222,4 +222,19 @@ div.footnote-list {
     font-size: 100%;
     font-weight: bold;
   }  
+}
+
+.paperBody .similar-articles, .similar-articles {
+  padding: 10px 20px;
+  background-color: $light-gray-background;
+  margin: 2em -20% 5em 40%;
+  h2 {
+    font-family: Marydale;
+    font-weight: normal;
+    margin-bottom: 0;
+    color: $purple;
+  }
+  p {
+    margin: 0.5em 0 1em 2em;
+  }
 }

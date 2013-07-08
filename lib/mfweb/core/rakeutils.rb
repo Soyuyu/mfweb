@@ -120,3 +120,12 @@ end
 def build_simple_articles deps
   SimpleArticleBuilder.new(deps).run 
 end
+
+class ArticleTask
+ def self.srcs 
+   Dir[MFWEB_DIR + 'lib/mfweb/article/*.rb']
+ end
+ def self.deps 
+   [BANNER] + srcs
+ end
+end

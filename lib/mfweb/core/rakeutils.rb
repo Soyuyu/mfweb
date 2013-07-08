@@ -79,10 +79,14 @@ def build_markdown src, target, skeleton, title
   end
 end
 class SimpleArticleBuilder
+  def initialize deps = []
+    @deps = deps 
+  end
+  
   def run
     FileList['articles/simple/*.xml'].each do |src|
       target = src.pathmap(BUILD_DIR + 'articles/%n.html')
-      file target => [src] do |t|
+      file target => [src] + @deps do |t|
         maker = Mfweb::Article::ArticleMaker.new( t.prerequisites[0], 
                                                   t.name, skeleton)
         maker.bib_server = Mfweb::Article::Bibliography.new src
@@ -113,6 +117,6 @@ class SimpleArticleBuilder
   end
 end
 
-def build_simple_articles 
-  SimpleArticleBuilder.new.run
+def build_simple_articles deps
+  SimpleArticleBuilder.new(deps).run 
 end

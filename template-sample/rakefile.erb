@@ -34,7 +34,7 @@ require 'mfweb/article'
 sassTask MFWEB_DIR + 'css/article.scss', 'articles', :articles
 
 # For simple articles, you need the following block in the rakefile
-build_simple_articles
+build_simple_articles ArticleTask.srcs
 
 # For flexible articles call a rakefile defined in that directory
 require './articles/flexible/rake'

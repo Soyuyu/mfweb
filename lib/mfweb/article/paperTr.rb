@@ -494,7 +494,7 @@ class FrontMatterTransformer < PaperTransformer
         @html.a_ref(t['url']) do
           @html.text t['language']
         end
-        @html.text " "
+        @html.text dot_sep
       end
     end
   end

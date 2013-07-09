@@ -115,7 +115,7 @@ blockquote {
 }
 
 @mixin tag-button {
-  background-color: $purple;
+  background: $purple;
   color: white;
   font-family: $sans;
   font-style: normal;
@@ -125,4 +125,5 @@ blockquote {
   border-radius: 5px;
   margin: 2px;
   white-space: nowrap;
+  background: linear-gradient(rgb(176,29,218), $purple);
 }

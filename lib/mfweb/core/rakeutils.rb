@@ -10,11 +10,13 @@ QUIET = {:verbose => false}
 
 #----------------------------------------------------------------
 
-def sassTask srcGlob, relativeTargetDir, taskSymbol, deps = []
+def sassTask srcGlob, relativeTargetDir, taskSymbol, base_deps = []
   FileList[srcGlob].each do |src|
+    deps = base_deps.dup
     targetDir = BUILD_DIR + relativeTargetDir
     target = File.join(targetDir, src.pathmap("%n.css"))
     srcDir = src.pathmap "%d"
+    deps << MFWEB_DIR + 'css/global.scss' unless /global.scss/ =~ src 
     task taskSymbol => target
     file target => [src] + deps do 
       puts "sass #{src}"

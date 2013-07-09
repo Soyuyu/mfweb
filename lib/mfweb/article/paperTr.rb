@@ -166,7 +166,7 @@ class PaperTransformer < Mfweb::Core::Transformer
       @html.h(2) {@html.text "For articles on similar topics…"}
       @html.p {@html.text "…take a look at the following tags:"}
       @html.p('tags') do
-        @html << @maker.tags.collect{|t| t.link}.join(dot_sep)
+        @html << @maker.tags.collect{|t| t.link}.join(" ")
       end
     end
   end

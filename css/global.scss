@@ -114,3 +114,15 @@ blockquote {
   cursor: pointer;
 }
 
+@mixin tag-button {
+  background-color: $purple;
+  color: white;
+  font-family: $sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  padding: 5px;
+  border-radius: 5px;
+  margin: 2px;
+  white-space: nowrap;
+}

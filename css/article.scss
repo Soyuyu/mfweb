@@ -237,4 +237,10 @@ div.footnote-list {
   p {
     margin: 0.5em 0 1em 2em;
   }
+  .tags {
+    line-height: 3;
+    a {
+      @include tag-button;
+    }
+  }
 }

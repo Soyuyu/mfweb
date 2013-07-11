@@ -37,7 +37,7 @@ class HighlightSequenceTransformer < DeckTransformer
       result << "};\n"
       return result.join("\n")
     else
-      "window.%s_%s = %s;\n" % [slide_id(anElement), step_name, sequence_name]
+      "window.%s_%s = %s;\n" % [js_id(slide_id(anElement)), step_name, sequence_name]
     end
   end
   def emit_step_css anElement

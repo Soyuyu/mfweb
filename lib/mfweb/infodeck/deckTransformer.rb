@@ -365,15 +365,13 @@ class DeckTransformer < Mfweb::Core::Transformer
     to_x, to_y = anElement['to'].split.map(&:to_i)
     head_dx = 20
     head_dy = head_dx * 0.6
-    curve = 0.1
+    curve = 0.2
     arrow_tip_offset = 2
     path_dx = to_x - from_x
     path_dy = to_y - from_y
     svg_length = Math.sqrt((path_dx ** 2) + (path_dy ** 2))
-    svg_height = head_dx * 2
     svg_attrs, path_attrs, svg_style = {}, {}, {}
     svg_attrs['width'] = "%dpx" % [svg_length]
-    svg_attrs['height'] = "%dpx" % [svg_height]
     svg_attrs['class'] = 'arrow'
     path_length = svg_length - arrow_tip_offset
     path_angle = Math.atan2(path_dy, path_dx)
@@ -381,13 +379,15 @@ class DeckTransformer < Mfweb::Core::Transformer
     control_offset = path_length * curve
     control_point = "%d,%f" % [path_length/2.0, control_offset]
     end_point = "%d,%f" % [path_length, 0]
-    line_path = "M %s l %s" % [start_point, end_point]
+    line_path = "M %s q %s %s" % [start_point, control_point, end_point]
     arrow_head_path = "m -%d, -%d l %d, %d l -%d, %d " % 
       [head_dx, head_dy, head_dx, head_dy, head_dx, head_dy]
     path_attrs['d'] = [line_path, arrow_head_path].join(" ")
+    svg_height = [head_dx * 2, control_offset].max
+    svg_attrs['height'] = "%dpx" % [svg_height]
     svg_style['left'] = "%spx" % from_x
-    svg_style['top'] = "%spx" % (from_y - svg_height / 2.0)
-    svg_style['transform-origin'] = "0 50%"
+    svg_style['top'] = "%spx" % (from_y - head_dx)
+    svg_style['transform-origin'] = "0 %spx" % head_dx
     svg_style['transform'] = "rotate(%1.2frad)" % path_angle
     populate_browser_prefixes svg_style, 'transform-origin', 'transform'
     add_to_style(svg_attrs, svg_style)

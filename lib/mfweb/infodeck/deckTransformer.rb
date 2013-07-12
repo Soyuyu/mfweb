@@ -363,20 +363,43 @@ class DeckTransformer < Mfweb::Core::Transformer
   def handle_arrow anElement
     from_x, from_y = anElement['from'].split.map(&:to_i)
     to_x, to_y = anElement['to'].split.map(&:to_i)
-    svg_attrs, path_attrs = {}, {}
-    svg_attrs['width'] = "%dpx" % (to_x - from_x).abs
-    svg_attrs['height'] = "%dpx" % (to_y - from_y).abs
+    head_dx = 20
+    head_dy = head_dx * 0.6
+    curve = 0.1
+    arrow_tip_offset = 2
+    path_dx = to_x - from_x
+    path_dy = to_y - from_y
+    svg_length = Math.sqrt((path_dx ** 2) + (path_dy ** 2))
+    svg_height = head_dx * 2
+    svg_attrs, path_attrs, svg_style = {}, {}, {}
+    svg_attrs['width'] = "%dpx" % [svg_length]
+    svg_attrs['height'] = "%dpx" % [svg_height]
     svg_attrs['class'] = 'arrow'
-    path_attrs['d'] = "M 0,0 l %d,%d" % [to_x - from_x, to_y - from_y]
-    path_attrs['marker-end'] = "url(#svgdef-stick-arrow)"
-    translate_x = [(from_x - to_x),0].max
-    translate_y = [(from_y - to_y),0].max
-    path_attrs['transform'] = "translate(%d %d)" % [translate_x, translate_y]
-    svg_attrs['viewbox'] = "0 0 %s %s" % [svg_attrs['width'], svg_attrs['height']]
-    svg_attrs['style'] = "left: %spx; top: %spx" % 
-      [from_x - translate_x, from_y - translate_y]
+    path_length = svg_length - arrow_tip_offset
+    path_angle = Math.atan2(path_dy, path_dx)
+    start_point = "0,%d" % head_dx
+    control_offset = path_length * curve
+    control_point = "%d,%f" % [path_length/2.0, control_offset]
+    end_point = "%d,%f" % [path_length, 0]
+    line_path = "M %s l %s" % [start_point, end_point]
+    arrow_head_path = "m -%d, -%d l %d, %d l -%d, %d " % 
+      [head_dx, head_dy, head_dx, head_dy, head_dx, head_dy]
+    path_attrs['d'] = [line_path, arrow_head_path].join(" ")
+    svg_style['left'] = "%spx" % from_x
+    svg_style['top'] = "%spx" % (from_y - svg_height / 2.0)
+    svg_style['transform-origin'] = "0 50%"
+    svg_style['transform'] = "rotate(%1.2frad)" % path_angle
+    populate_browser_prefixes svg_style, 'transform-origin', 'transform'
+    add_to_style(svg_attrs, svg_style)
     @html.element("svg", svg_attrs) do
       @html.element("path", path_attrs)
+    end
+  end
+  def populate_browser_prefixes(attrs, *keys)
+    keys.each do |k|
+      %w[ms webkit moz o].each do |prefix|
+        attrs["-%s-%s" % [prefix, k]] = attrs[k]
+      end
     end
   end
 end

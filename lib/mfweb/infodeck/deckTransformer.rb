@@ -52,7 +52,6 @@ class DeckTransformer < Mfweb::Core::Transformer
   
   def emit_svgdefs
     svg = File.read(@maker.asset('defs.svg'))
-    puts svg
     @html << svg
   end
 
@@ -361,7 +360,23 @@ class DeckTransformer < Mfweb::Core::Transformer
   def slide_id anElement
     anElement.ancestors('slide')[0]['id']
   end
-
+  def handle_arrow anElement
+    from_x, from_y = anElement['from'].split.map(&:to_i)
+    to_x, to_y = anElement['to'].split.map(&:to_i)
+    svg_attrs, path_attrs = {}, {}
+    svg_attrs['style'] = "left: %spx; top: %spx" % [from_x, from_y]
+    svg_attrs['width'] = "%dpx" % (to_x - from_x).abs
+    svg_attrs['length'] = "%dpx" % (to_y - from_y).abs
+    svg_attrs['class'] = 'arrow'
+    path_attrs['d'] = "M 0,0 l %d,%d" % [to_x - from_x, to_y - from_y]
+    path_attrs['marker-end'] = "url(#svgdef-stick-arrow)"
+    translate_x = [(from_x - to_x),0].max
+    translate_y = [(from_y - to_y),0].max
+    path_attrs['transform'] = "translate(%d %d)" % [translate_x, translate_y]
+    @html.element("svg", svg_attrs) do
+      @html.element("path", path_attrs)
+    end
+  end
 end
 
 class QuoteTransformer < DeckTransformer

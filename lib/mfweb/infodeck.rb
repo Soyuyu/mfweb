@@ -27,4 +27,5 @@ require 'mfweb/infodeck/buildTransformer'
 require 'mfweb/infodeck/fallbackGenerator'
 require 'mfweb/infodeck/indexTransformer'
 require 'mfweb/infodeck/highlightSequenceTr'
+require 'mfweb/infodeck/arrowTr'
 

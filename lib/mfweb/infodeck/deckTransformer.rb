@@ -354,7 +354,9 @@ class DeckTransformer < Mfweb::Core::Transformer
   def slide_id anElement
     anElement.ancestors('slide')[0]['id']
   end
-
+  def handle_arrow anElement
+    ArrowTransformer.new(@html, anElement, @maker).render
+  end
 end
 
 class QuoteTransformer < DeckTransformer

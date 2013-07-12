@@ -1,3 +1,17 @@
-<svg>
-  
+<svg 
+    class = "svgdefs">
+    <defs>
+    <marker id="svgdef-stick-arrow"
+            class = "stick"
+            refX="20" 
+            refY="10"
+            markerWidth="20" 
+            markerHeight="20"
+            orient = "auto"
+            markerUnits = "userSpaceOnUse"
+            overflow = "visible"
+             >
+       <path d="M 0,20 L 20,10 L 0,0"/>
+    </marker>
+  </defs>
 </svg>

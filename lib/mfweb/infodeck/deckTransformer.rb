@@ -39,6 +39,7 @@ class DeckTransformer < Mfweb::Core::Transformer
       apply anElement
       emit_draft_marker if @maker.draft?
       emit_draft_notice if @maker.draft? && 'cover' == anElement['id']
+      emit_svgdefs
     end
   end
 
@@ -47,6 +48,12 @@ class DeckTransformer < Mfweb::Core::Transformer
       @html.p {@html << "Draft Only"}
       @html.p {@html << "Do not share or link"}
     end
+  end
+  
+  def emit_svgdefs
+    svg = File.read(@maker.asset('defs.svg'))
+    puts svg
+    @html << svg
   end
 
   def emit_draft_notice

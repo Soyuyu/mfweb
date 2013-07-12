@@ -81,6 +81,17 @@ module Mfweb::InfoDeck
           html.div('init') do
             IndexTransformer.new(html, @root, self).render
           end
+          # emit_svg_defs html
+        end
+      end
+    end
+
+    def emit_svg_defs html
+      defs = Nokogiri::XML(File.read(asset('defs.svg')))
+      def_items = defs.css('svg defs > *')
+      html.element('svg', :class => 'svgdefs') do
+        html.element('defs') do
+          html << def_items.map(&:to_xml).join("\n")
         end
       end
     end

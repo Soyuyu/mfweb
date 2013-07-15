@@ -32,6 +32,7 @@ slide.content =
     | img
     | include_element
     | highlight_seq
+    | arrow
 
 
 lede = element lede {
@@ -41,7 +42,7 @@ lede = element lede {
     attribute font-size {text} ?,
     attribute max-width {text} ?,
     attribute class {text}?,
-    text
+    inline
 }
 
 diagram = element diagram {
@@ -195,4 +196,9 @@ step = element step {
   position,
   dimensions,
   tile.content*
+}
+arrow = element arrow {
+  attribute from {text},
+  attribute to {text},
+  attribute curve {'left'|'right'}?
 }

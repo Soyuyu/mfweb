@@ -10,9 +10,10 @@ module Mfweb::InfoDeck
     def handle_arrow anElement
       assert_valid_element
       svg_attrs, svg_style = {}, {}
+      add_class svg_attrs, "arrow"
+      inject_class svg_attrs, anElement
       svg_attrs['width'] = "%dpx" % [svg_length]
       svg_attrs['height'] = "%dpx" % [svg_height]
-      svg_attrs['class'] = 'arrow'
       svg_style['left'] = "%spx" % from_x
       svg_style['top'] = "%spx" % (from_y - svg_h_space)
       svg_style['transform-origin'] = "0 50%"

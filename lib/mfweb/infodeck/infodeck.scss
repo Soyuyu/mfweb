@@ -23,7 +23,7 @@ $banner-height: 30px;
   cursor: pointer; 
 }
 
-.fadeable {
+.fadeable, .fadeable * {
   @include transition-duration(400ms);
 }
 
@@ -166,7 +166,10 @@ body {
       border: none;
     }
 
- }
+
+
+  }
+
 
   .callout {
     background-color: #EEEEEE;
@@ -197,7 +200,7 @@ body {
       clear: none;
     }
   }
- 
+  
 
   .draft-marker {
     position: absolute;
@@ -208,13 +211,26 @@ body {
     @include transform(rotate(-45deg));
   }
 
+  svg.arrow {
+    overflow: visible;
+    path {
+      fill:none;
+      stroke:$purple;
+      stroke-width:4px;
+      stroke-opacity:1;
+      stroke-linejoin: round;
+      overflow: visible;
+    }
+  }
+
+
   #cover {
     img.draft-notice {
-    width: 300px;
-    top: 20px;
-    left: 200px;
+      width: 300px;
+      top: 20px;
+      left: 200px;
     }
-   }
+  }
 
   .deck-help {
     @extend .clickable;

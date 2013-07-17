@@ -38,7 +38,7 @@ class PaperTransformer < Mfweb::Core::Transformer
     super output, root
     @maker = maker
     @copy_set = %w[b i p ul li a code img table tr th td div ol]
-    @ignore_set = %w[footnote-list bibliography]
+    @ignore_set = %w[footnote-list bibliography title subtitle abstract]
     @section_depth = 1
     @has_printed_version = false
   end
@@ -46,6 +46,7 @@ class PaperTransformer < Mfweb::Core::Transformer
   def handle_paper anElement
     @figureReader = FigureReader.new anElement
     @is_draft = ('dev' == anElement["status"])
+    print_front_matter
     apply anElement
     render_revision_history
   end
@@ -53,6 +54,13 @@ class PaperTransformer < Mfweb::Core::Transformer
   def title_bar_text
     return @root.at_xpath('/paper/title').text
   end
+
+  def print_front_matter
+    tr = "short" == @root['style'] ? 
+      ShortFrontMatterTransformer : FrontMatterTransformer
+    tr.new(@html, @root, @maker).handle(@root)
+  end
+  def handle_topImage anElement; end
 
   def render_revision_history
     @html.div('appendix') do
@@ -88,12 +96,6 @@ class PaperTransformer < Mfweb::Core::Transformer
     @footnote_server
   end
 
-  def handle_title anElement
-    @html.h(1) {apply anElement}
-  end
-  def handle_subtitle anElement
-    @html.p("subtitle") {apply anElement}
-  end
   def draft?
     @is_draft
   end
@@ -108,33 +110,6 @@ class PaperTransformer < Mfweb::Core::Transformer
   def default_handler anElement
     raise "unhandled case: " + anElement.name
     puts 'unhandled: ' + anElement.name
-  end
-  def handle_abstract anElement
-    print_topImage
-    @html.p('abstract'){@html.i{apply anElement}}
-    print_front_matter
-  end
-  def print_front_matter
-    FrontMatterTransformer.new(@html, @root, @maker).handle(@root)
-  end
-  def handle_topImage anElement; end
-  def print_topImage
-    elem = xpath_only('//paper/topImage')
-    return unless elem
-    attrs = {}
-    case elem['layout']
-      when 'full' then attrs['class'] = 'fullPhoto'
-      when nil then attrs['id'] = 'topImage'
-    end
-    width = elem['width']
-    attrs['style'] = "width: #{width}px;" if width
-    @html.element('div', attrs) do
-      @html.element('img', {:src => elem['src']}){}
-      render_photo_credit elem
-      if elem.has_text?
-        @html.p {apply elem}
-      end
-    end
   end
   def handle_section anElement
     @section_depth += 1
@@ -393,158 +368,6 @@ end
 
 #==== Full Author Transformer ================================
 
-class FullAuthorTransformer < Mfweb::Core::Transformer
-  include Mfweb::Core::XpathFunctions
-
-  def initialize htmlRenderer, rootElement
-    super htmlRenderer, rootElement
-    @apply_set = %w[author-bio]
-    @copy_set = %w[p a i b]
-  end
-  def default_handler anElement
-    $stderr.puts "Can't handle: #{anElement.name}"
-  end
-
-  def handle_author anElement
-    @html.div('author') do 
-      photo = xpath_only('author-photo', anElement)
-      if photo
-        attrs = {}
-        attrs['src'] = photo['src']
-        name = xpath_only('author-name', anElement).text
-        attrs['alt'] = "Photo of #{name}"
-        attrs[:width] = '80'
-        @html.element('img', attrs) {}
-      end
-      print_name anElement
-      apply anElement
-    end
-    @html.div('clear'){}
-  end
-
-  def  print_name authorElement
-    name = xpath_only('author-name', authorElement)
-    url = xpath_only('author-url', authorElement)
-    @html.p('name') do
-      if url
-        @html.element('a', href: url.text, rel: 'author') {@html.text name.text }
-      else
-        @html.text name.text
-      end
-    end
-  end
-
-  def handle_author_name anElement ; end
-  def handle_author_url anElement; end
-  def handle_author_photo anElement; end
-end
-
-#==== Front Matter Transformer  ================================
-
-class FrontMatterTransformer < PaperTransformer
-  def initialize *args
-    super(*args)
-  end
-  def handle_paper anElement
-    assert_valid
-    @html.div('frontMatter') do
-      @html.div('frontLeft') do
-        print_version
-        print_authors
-        print_translations anElement
-        print_tags
-        print_topBox
-      end
-      @html.div('frontRight') do
-        print_contents
-      end
-    end
-  end
-  
-  def assert_valid
-    credits = xpath("//credits")
-    unless credits.empty?
-      authors = xpath("//author")
-      raise "credits but no authors" if authors.empty?
-    end
-  end
-
-
-  def print_version 
-    latest_version = xpath_first('version')
-    date = latest_version['date']
-    @html.p('date') {@html.text print_date(date)}
-  end
-
-  def print_authors 
-    elements = xpath('/*/author').each {|e| handle e}
-  end
-
-  def handle_author anElement
-    handler = FullAuthorTransformer.new(@html, anElement)
-    handler.render
-  end
-
-  def print_translations anElement
-    trans = xpath('//paper/translation')
-    return if trans.empty?
-    @html.div('translations') do
-      @html.b {@html.text "Translations: "}
-      trans.each do |t|
-        @html.a_ref(t['url']) do
-          @html.text t['language']
-        end
-        @html.text dot_sep
-      end
-    end
-  end
-  
-  def print_tags
-    @html.div('tags') do
-      @html.b {@html << "Find similar articles to this by looking at these tags: "  }
-      @html << @maker.tags.collect{|t| t.link}.join(dot_sep)
-    end
-  end
-
-  def print_topBox 
-    topBox = xpath('//paper/topBox').first
-    handle topBox if topBox
-  end
-
-
-  def handle_topBox anElement
-    @html.div('topBox') do
-      apply anElement
-    end
-  end
-
-
-  def print_contents 
-    @html.div('contents') do
-      @html.h(2) {@html.text 'Contents'}
-      @html.ul  do
-        xpath('body/section').each {|s| print_contents_for s}
-      end
-    end
-  end
-
-  def print_contents_for aSection
-    @html.li do
-      @html.a_ref("##{anchor_for(aSection)}") do
-        @html.text(section_title(aSection))
-      end
-      subSections = xpath('section', aSection)
-      unless subSections.empty?
-        @html.ul {subSections.each {|s| print_contents_for s} }
-      end
-    end
-  end
-
-  def handle_abstract anElement;  end #skip
-  def handle_body anElement;  end #skip
-  def handle_title anElement; end #skip
-  def default_handler anElement; end
-end
 
 class FigureReader
   include Mfweb::Core::XpathFunctions

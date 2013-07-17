@@ -80,7 +80,7 @@ div.frontMatter {
     margin: 2em 0;
     font-size: 90%;
   }
-}
+
 
 
 
@@ -157,7 +157,7 @@ div.frontMatter {
       margin: 0.5em 0;
     }
   }
-
+}
   div.paperBody {
     clear: both;
     line-height: $text-line-height;
@@ -243,4 +243,19 @@ div.footnote-list {
       @include tag-button;
     }
   }
+}
+
+.short-front {
+  width: 400px;
+  float: left;
+  margin-bottom: 3em;
+  p {
+    margin: 0;
+  }
+  p.author-photo {
+    float: left;
+    margin-right: 10px;
+    width: 60px;
+  }
+
 }

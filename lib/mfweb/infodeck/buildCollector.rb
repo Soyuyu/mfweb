@@ -129,7 +129,7 @@ module Mfweb::InfoDeck
       @backwards_function = backwards_function
     end
     def full_selector
-      "#%s *%s" % [@build.slide_id, @selector]
+      "#%s %s" % [@build.slide_id, @selector]
     end
     def forwards_js
       "$('%s').%s('%s');" % [full_selector, @forwards_function, @cssClass]

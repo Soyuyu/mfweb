@@ -63,6 +63,7 @@ class PaperTransformer < Mfweb::Core::Transformer
   def handle_topImage anElement; end
 
   def render_revision_history
+    return if "short" == @root['style']
     @html.div('appendix') do
       @html.h(2) do 
         @html.a_name 'SignificantRevisions'
@@ -137,11 +138,19 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.div('appendix') {apply anElement}
   end
   def render_similar_articles
+    return if @maker.tags.empty?
     @html.div('similar-articles') do
       @html.h(2) {@html.text "For articles on similar topics…"}
-      @html.p {@html.text "…take a look at the following tags:"}
-      @html.p('tags') do
-        @html << @maker.tags.collect{|t| t.link}.join(" ")
+      if  @maker.tags.size > 1
+        @html.p {@html.text  "…take a look at the following tags:"}
+        @html.p('tags') do
+          @html << @maker.tags.collect{|t| t.link}.join(" ")
+        end
+      else
+        @html.p do
+          @html.text  "…take a look at the tag: "
+          @html.span('tags') {@html << @maker.tags[0].link}
+        end
       end
     end
   end

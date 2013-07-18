@@ -99,8 +99,12 @@ module Mfweb::Article
     end
     
     def print_tags
+      return if @maker.tags.empty?
+      message = @maker.tags.size > 1 ?
+        "Find similar articles to this by looking at these tags: " :
+        "Find similar articles at the tag: "
       @html.div('tags') do
-        @html.b {@html << "Find similar articles to this by looking at these tags: "  }
+        @html.b {@html << message  }
         @html << @maker.tags.collect{|t| t.link}.join(dot_sep)
       end
     end

@@ -243,6 +243,9 @@ div.footnote-list {
       @include tag-button;
     }
   }
+  span.tags {
+    margin-left: 2em;
+  }
 }
 
 .short-front {

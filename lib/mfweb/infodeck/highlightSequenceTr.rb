@@ -16,13 +16,13 @@ class HighlightSequenceTransformer < DeckTransformer
   end
   def handle_step anElement
     tile_class = "highlight-description " + anElement['name']
-    @html.div(tile_class + " tile") {apply anElement}
     build = Build.new
     @builds << build
     @maker.js << step_build_assignment(anElement)
     name = js_id(slide_id(anElement) + '_' + anElement['name'])
     build.js_builder(name)
     emit_step_css anElement
+    @html.div(tile_class + " tile") {apply anElement}
   end
   def step_build_assignment anElement
     sequence_name = js_id(anElement.ancestors('highlight-sequence')[0]['name'])
@@ -62,7 +62,11 @@ class HighlightSequenceTransformer < DeckTransformer
     selector = "#deck-container #%s .highlight-description" % slide_id(anElement)
     emit_css_position_block anElement, selector
   end
-
+  def handle_build anElement
+    bt = BuildTransformer.new(@html, anElement, @maker)
+    bt.render
+    @builds.last.merge! bt.build
+  end
 end
 
 end

@@ -20,3 +20,9 @@ require './test/infodeck/rake'
 
 require './test/sampleBuilder'
 
+task :one => [:test] do
+  cd '..'
+  sh 'rake one'
+end
+
+

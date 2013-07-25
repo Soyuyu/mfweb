@@ -195,7 +195,8 @@ step = element step {
   attribute name {text}, 
   position,
   dimensions,
-  tile.content*
+  tile.content*,
+  build?
 }
 arrow = element arrow {
   attribute from {text},

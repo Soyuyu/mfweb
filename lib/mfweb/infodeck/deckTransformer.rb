@@ -11,7 +11,6 @@ class DeckTransformer < Mfweb::Core::Transformer
     @copy_set = %w[ul li p b i a code table tr th td br]
     @p_set = {'h' => 'h2'}
     @builds = SlideBuildSet.new(@root['id'])
-    @current_build = nil
    end
   def default_handler anElement
     raise "unknown element: " + anElement.name
@@ -350,9 +349,6 @@ class DeckTransformer < Mfweb::Core::Transformer
   end
   def js_id aString
     aString.gsub('-', '_')
-  end
-  def slide_id anElement
-    anElement.ancestors('slide')[0]['id']
   end
   def handle_arrow anElement
     ArrowTransformer.new(@html, anElement, @maker).render

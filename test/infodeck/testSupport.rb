@@ -24,7 +24,10 @@ module Mfweb::InfoDeck
   end
 
   class MakerStub
-    attr_reader :lede_font
+    attr_reader :lede_font, :js
+    def initialize
+      @js = JavascriptEmitter.new
+    end
     def img_file file_name
       'img/' + file_name
     end
@@ -32,6 +35,7 @@ module Mfweb::InfoDeck
     def allowed_fonts
       ['Inconsolata']
     end
+    def put_css *args; end
 
   end
 

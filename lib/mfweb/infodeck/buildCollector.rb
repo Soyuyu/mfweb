@@ -56,6 +56,12 @@ module Mfweb::InfoDeck
     def empty?
       return (nil ==  @immediate) && @builds.empty?
     end
+    def last
+      @builds.last
+    end
+    def assert_ok
+      @builds.each{|b| b.assert_ok}
+    end
   end
 
   class Build
@@ -112,9 +118,19 @@ module Mfweb::InfoDeck
         acc << element_prefix << e.setup_backwards_js
       end
     end
+    def merge! other
+      @elements += other.elements.map{|e| e.with_build(self)}
+    end
+    def assert_ok
+      bad_elements = @elements.select do |e| 
+        ChangeClassElement == e.class && self != e.build
+      end
+      raise "bi-directional link mismatch" unless bad_elements.empty?
+    end
   end
 
   class ChangeClassElement
+    attr_reader :build
     def self.add aBuild, selector, cssClass
       self.new aBuild, selector, cssClass, "addClass", "removeClass"
     end
@@ -147,9 +163,13 @@ module Mfweb::InfoDeck
       s = full_selector
       "$('#{s}, #{s} p, #{s} ul, #{s} pre').addClass('fadeable');"
     end
+    def with_build aBuild
+      self.class.new(aBuild, @selector, @cssClass, @forwards_function, @backwards_function)
+    end
   end
 
   class JsBuilderElement
+
     def initialize target
       @target = "window." + target
     end
@@ -166,7 +186,9 @@ module Mfweb::InfoDeck
     def setup_backwards_js
       @target + ".setup_backwards();"
     end
-   
+    def with_build aBuild
+      self
+    end
   end
 
       

@@ -25,6 +25,7 @@ execute these commands.
     cd mfweb
     ruby make-sample.rb ../sample
     cd ../sample
+    bundle install
     rake
     rake server
 
@@ -35,15 +36,17 @@ There's a good chance that things went pear-shaped when you executed
 the `rake` command. This will probably be due to missing some
 prerequisites. I still need to sort out making it easier to get the
 dependencies. Until then I can say that you will need ruby 1.9 (I
-install it and control the install with rbenv.) The Gemfile in the
-repo indicates the necessary gems you need. (I should sort out a
-gemfile in the generated project folder too.) To build the infodecks
+install it and control the install with rbenv.) To build the infodecks
 you will also need to install coffeescript. The default rake tasks
 assume this is the case, let me know if this is an issue and I'll try
 to do something clever to avoid the need for coffeescript if you are
 only working on articles.
 
-If all goes well you add your own articles and infodecks to the sample
+You need a bunch of ruby gems to run the toolchain. These are
+specified using bundler and there are the appropriate Gemfile and
+Gemfile.lock files in the sample folder.
+
+If all goes well you can now add your own articles and infodecks to the sample
 repo. You should not modify any of the files in mfweb unless you are
 experimenting with patching mfweb itself and sending me a pull
 request.

@@ -10,6 +10,7 @@ puts "creating sample directory at #{target}"
 mfweb_dir = File.dirname(File.expand_path $0)
 cp_r(File.join(mfweb_dir, 'sample/'), target)
 rakefile_template = File.join(mfweb_dir, 'template-sample', 'rakefile.erb')
+['Gemfile', 'Gemfile.lock'].each {|f| cp f, target}
 rake_renderer = ERB.new(File.read(rakefile_template))
 File.open(File.join(target, 'rakefile'), 'w') {|out| out << rake_renderer.result(binding)}
 

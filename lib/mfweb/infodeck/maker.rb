@@ -23,7 +23,7 @@ module Mfweb::InfoDeck
 
     def run
       begin
-        mkdir_p output_dir, :verbose => false
+        mkdir_p @output_dir, :verbose => false
         unless File.exists? @mfweb_dir + 'lib/mfweb/infodeck.rb'
           raise "unable to find mfweb library at <#{@mfweb_dir}>" 
         end

@@ -49,6 +49,8 @@ class Transformer
       handle_element aNode
     elsif aNode.entity_ref?
       handleEntityRef(aNode)
+    elsif aNode.kind_of? Nokogiri::XML::Document
+      handle aNode.root
     else
       return #ignore comments and processing instructions
     end

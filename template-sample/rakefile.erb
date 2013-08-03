@@ -4,8 +4,13 @@ MFWEB_DIR = '<%= mfweb_dir %>/'
 BUILD_DIR = 'build/'                        # location of html output
 CSS_PATHS = ['css', MFWEB_DIR + 'css']      # path for finding SCSS files
 
-$: << MFWEB_DIR + 'lib' << 'lib'      # add mfweb and local lib to ruby search path
+# add mfweb and local lib to ruby load path
+$: << MFWEB_DIR + 'lib' << 'lib'      
 verbose(true)
+
+# use bundler to setup gems
+require 'rubygems'
+require 'bundler/setup'
 
 # define clobber task to delete output directory
 require 'rake/clean'

@@ -57,6 +57,9 @@ class PageSkeleton
     result.instance_variable_set(:@css, arg.flatten)
     return result
   end
+  def with_added_css *arg
+    with_css(@css + arg)
+  end
   def with_banner_photo arg
     result = self.dup
     result.instance_variable_set(:@header, custom_banner(:photo_fn => arg))
@@ -78,6 +81,9 @@ class PageSkeleton
     result = self.dup
     result.instance_variable_set(:@js, arg.flatten)
     return result
+  end
+  def with_added_js *arg
+    with_js(@js + arg)
   end
   def with_inline_js *arg
     result = self.dup

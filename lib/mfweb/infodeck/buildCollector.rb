@@ -26,7 +26,7 @@ module Mfweb::InfoDeck
     end
     def emit_js out
       return if empty?
-      out << "\n// for slide #{@slide_id}\n"
+      out << "\n\n" + "// ---- for slide #{@slide_id}" + '-' * 40 + "\n"
       @builds.each{|b| b.emit_js(out)}
       emit_immediate_build out
       emit_setup_build out
@@ -81,24 +81,10 @@ module Mfweb::InfoDeck
       out << "\n    backwards: " << backwards_function << "\n  }"
     end
     def hide selector
-      if svg_element? selector
-        @elements << ChangeClassElement.add(self, selector, 'hidden')
-      else
-        @elements << JQueryMethod.new(self, selector, "fadeOut()", "fadeIn()")
-      end
+      @elements << HideElement.new(self, selector)
     end
     def show selector
-      if svg_element? selector
-        @elements << ChangeClassElement.remove(self, selector, 'hidden')
-      else
-        @elements << JQueryMethod.new(self, selector, "fadeIn()", "fadeOut()")
-      end
-    end
-    def svg_element? selector
-      svg_elements = ['g', 'path', 'svg']
-      element_names = selector.split.map{|a| a.split(".").first}.reject{|a| a.empty?}
-      return element_names.any? {|e| svg_elements.include? e}
-      # see svg-note below for why this is needed
+      @elements << ShowElement.new(self, selector)
     end
     
     def char selector
@@ -178,10 +164,10 @@ module Mfweb::InfoDeck
       "$('%s').%s('%s');" % [full_selector, @backwards_function, @cssClass]
     end
     def setup_forwards_js
-      set_transition_timing + "\n" + backwards_js
+      set_transition_timing + "      \n" + backwards_js
     end
     def setup_backwards_js
-      set_transition_timing + "\n" + forwards_js
+      set_transition_timing + "      \n" + forwards_js
     end
     def set_transition_timing
       s = full_selector
@@ -215,10 +201,37 @@ module Mfweb::InfoDeck
     end
   end
 
-  class JQueryMethod
-    def initialize build, selector, forwards_function, backwards_function
+  class JQueryManipulator
+    def initialize build, selector
       @build = build
       @selector = selector
+    end
+    def jqe
+      "$('%s')" % full_selector
+    end
+    def full_selector
+      "#%s %s" % [@build.slide_id, @selector]
+    end
+    def setup_forwards_js
+      setup_before + backwards_js
+    end
+    def setup_backwards_js
+      setup_before + forwards_js
+    end
+    def with_build aBuild
+      self.class.new(aBuild, @selector)
+    end
+    def wrap_setTimeout body, duration = nil
+      duration ||= default_transition_duration
+      "window.setTimeout(function () {#{body};}, #{duration});"
+    end
+    def setup_before; end #hook
+    def default_transition_duration; 400; end
+  end
+
+  class JQueryMethod < JQueryManipulator
+    def initialize build, selector, forwards_function, backwards_function
+      super build, selector
       @forwards_function = forwards_function
       @backwards_function = backwards_function
     end
@@ -228,37 +241,53 @@ module Mfweb::InfoDeck
     def backwards_js
       "#{jqe}.%s;" % @backwards_function
     end
-    def jqe
-      "$('%s')" % full_selector
-    end
     def with_build aBuild
       self.class.new(aBuild, @selector, @forwards_function, @backwards_function)
     end
-    def full_selector
-      "#%s %s" % [@build.slide_id, @selector]
+  end
+
+  class ShowElement < JQueryManipulator
+    def setup_before
+      "#{jqe}.addClass('fadeable')" + sep
     end
-    def setup_forwards_js
-      backwards_js
+    def forwards_js
+      "#{jqe}.removeClass('no-display')" + sep + 
+        wrap_setTimeout("#{jqe}.removeClass('hidden')",0)
     end
-    def setup_backwards_js
-      forwards_js
+    def backwards_js
+      "#{jqe}.addClass('hidden')" + sep + 
+        wrap_setTimeout("#{jqe}.addClass('no-display')")
+    end
+    def sep
+      ";\n" + " " * 6
+    end
+  end
+
+  class HideElement < ShowElement
+    alias :super_forwards :forwards_js
+    alias :super_backwards :backwards_js
+    def forwards_js
+      super_backwards
+    end
+    def backwards_js
+      super_forwards
     end
   end
      
 end
 
 
-################  svg-note ################
+################  hides and shows ################
 #
-# the awkward switching based on a guess on whether we are talking to
-# an svg element is due to jquery not working on svg elements and the
-# need to hide an element that's faded out.
-# 
 # I need to hide any faded out element in case it covers a visible
-# element and prevents clicking on a link. To do this with nice fading
-# is tricky timing with css class changes - jquery doesn't do css
-# class changes within its animation queue. But jquery solves this
-# problem by supplying fadeIn and fadeOut methods, which do the fade
-# and set display to none. This is just what I need for html elements
-# but doesn't work for svg elements, hence use of a class change, and
-# the awkward guessing method
+# element and prevents clicking on a link. JQuery does this easily
+# with its fadeIn and fadeOut methods, which do the fade and set
+# display to none. This is just what I need for html elements but
+# doesn't work for svg elements, so I have to do this myself
+# 
+# I experimented with using events on the hide so the no-display class
+# would be added after the transition event finished - rather than
+# using the brittle fixed timeout amount. But I couldn't get the
+# eventing to work properly. Events would be added and I couldn't get
+# them to go way which would apply no-display just after showing the
+# element

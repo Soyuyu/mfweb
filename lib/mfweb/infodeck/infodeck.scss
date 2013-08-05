@@ -13,6 +13,8 @@ $shadow: 3px 3px 4px #555;
 $body-margin: 5px;
 $banner-height: 30px;
 
+$default-transition-duration: 400ms;
+
 
 @import 'touch_panel';
 
@@ -24,7 +26,7 @@ $banner-height: 30px;
 }
 
 .fadeable, .fadeable * {
-  @include transition-duration(400ms);
+  @include transition-duration($default-transition-duration);
 }
 
 $overlay-color: hsla(34, 50, 90, 0.9);
@@ -37,7 +39,7 @@ $overlay-color: hsla(34, 50, 90, 0.9);
 .highlight-panel {
   background-color: hsla(60,100, 50, 0.3);
   position: absolute;
-  @include transition-duration(400ms);
+  @include transition-duration($default-transition-duration);
 }
 
 .highlight-description {
@@ -273,6 +275,15 @@ body {
 .hidden, .hidden *{
   @include hidden;
 }
+
+@mixin no-display {
+  display: none;
+}
+
+.no-display, .no-display *{
+  @include no-display;
+}
+
 
 .charred {
   opacity: 0.3;

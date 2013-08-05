@@ -80,6 +80,30 @@ module Mfweb::InfoDeck
       out << "\n    forwards: "  << forwards_function << ",\n"
       out << "\n    backwards: " << backwards_function << "\n  }"
     end
+    def hide selector
+      if svg_element? selector
+        @elements << ChangeClassElement.add(self, selector, 'hidden')
+      else
+        @elements << JQueryMethod.new(self, selector, "fadeOut()", "fadeIn()")
+      end
+    end
+    def show selector
+      if svg_element? selector
+        @elements << ChangeClassElement.remove(self, selector, 'hidden')
+      else
+        @elements << JQueryMethod.new(self, selector, "fadeIn()", "fadeOut()")
+      end
+    end
+    def svg_element? selector
+      svg_elements = ['g', 'path', 'svg']
+      element_names = selector.split.map{|a| a.split(".").first}.reject{|a| a.empty?}
+      return element_names.any? {|e| svg_elements.include? e}
+      # see svg-note below for why this is needed
+    end
+    
+    def char selector
+      @elements << ChangeClassElement.add(self, selector, 'charred')
+    end
     def add_class selector, css_class
       @elements << ChangeClassElement.add(self, selector, css_class)
     end
@@ -191,5 +215,50 @@ module Mfweb::InfoDeck
     end
   end
 
-      
+  class JQueryMethod
+    def initialize build, selector, forwards_function, backwards_function
+      @build = build
+      @selector = selector
+      @forwards_function = forwards_function
+      @backwards_function = backwards_function
+    end
+    def forwards_js
+      "#{jqe}.%s;" % @forwards_function
+    end
+    def backwards_js
+      "#{jqe}.%s;" % @backwards_function
+    end
+    def jqe
+      "$('%s')" % full_selector
+    end
+    def with_build aBuild
+      self.class.new(aBuild, @selector, @forwards_function, @backwards_function)
+    end
+    def full_selector
+      "#%s %s" % [@build.slide_id, @selector]
+    end
+    def setup_forwards_js
+      backwards_js
+    end
+    def setup_backwards_js
+      forwards_js
+    end
+  end
+     
 end
+
+
+################  svg-note ################
+#
+# the awkward switching based on a guess on whether we are talking to
+# an svg element is due to jquery not working on svg elements and the
+# need to hide an element that's faded out.
+# 
+# I need to hide any faded out element in case it covers a visible
+# element and prevents clicking on a link. To do this with nice fading
+# is tricky timing with css class changes - jquery doesn't do css
+# class changes within its animation queue. But jquery solves this
+# problem by supplying fadeIn and fadeOut methods, which do the fade
+# and set display to none. This is just what I need for html elements
+# but doesn't work for svg elements, hence use of a class change, and
+# the awkward guessing method

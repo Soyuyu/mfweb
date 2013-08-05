@@ -10,14 +10,14 @@ module Mfweb::InfoDeck
     end
     def handle_show anElement
       selector = selector(anElement) || "." + anElement['class']
-      @build.remove_class( selector, 'hidden')
+      @build.show(selector)
       apply anElement
     end
     def handle_hide anElement
-      @build.add_class( selector(anElement), 'hidden')
+      @build.hide(selector(anElement))
     end
     def handle_char anElement
-      @build.add_class( selector(anElement), 'charred')
+      @build.char(selector(anElement))
     end
     def handle_add_class anElement
       @build.add_class( selector(anElement), anElement['class'])

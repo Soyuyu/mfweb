@@ -20,6 +20,7 @@ namespace :infodeck do
   task :js => BUILD_DIR + 'js/infodeck.js'
   infodeck_coffee_srcs =  "#{MFWEB_DIR}lib/mfweb/infodeck/*.coffee" 
   file BUILD_DIR + 'js/infodeck.js' => FileList[infodeck_coffee_srcs] do |t|
+    puts "building infodeck.js"
     staging = 'gen/js/infodeck'
     mkdir_p staging, QUIET
     mkdir_p t.name.pathmap('%d'), QUIET

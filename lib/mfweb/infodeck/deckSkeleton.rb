@@ -108,7 +108,7 @@ module Mfweb::InfoDeck
       end
     end
     def self.js_dependencies
-      %w[jquery-1.7.2.min.js spin.js/spin.js]
+      %w[jquery-1.10.2.min.js spin.js/spin.js]
     end
     def emit_infodeck_js_files
       deps = self.class.js_dependencies.map{|p| File.basename(p)}

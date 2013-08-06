@@ -252,7 +252,7 @@ module Mfweb::InfoDeck
     end
     def forwards_js
       "#{jqe}.removeClass('no-display')" + sep + 
-        wrap_setTimeout("#{jqe}.removeClass('hidden')",0)
+        wrap_setTimeout("#{jqe}.removeClass('hidden')",50)
     end
     def backwards_js
       "#{jqe}.addClass('hidden')" + sep + 

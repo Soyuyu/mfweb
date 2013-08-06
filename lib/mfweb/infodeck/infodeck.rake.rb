@@ -25,7 +25,7 @@ namespace :infodeck do
     mkdir_p t.name.pathmap('%d'), QUIET
     sh "coffee -o #{staging} -c #{infodeck_coffee_srcs}", QUIET
     sh "cat #{staging}/*.js > #{t.name}", QUIET
-    %w[jquery-1.7.2.min.js spin.js/spin.js].each do |f|
+    Mfweb::InfoDeck::DeckSkeleton.js_dependencies.each do |f|
       src = MFWEB_DIR + 'vendor/' + f
       install src, t.name.pathmap('%d'), QUIET
     end

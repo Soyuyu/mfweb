@@ -125,7 +125,7 @@ inline.content =
     | element author {attribute href {text}, text}
 
 
-p = element p {inline}
+p = element p {class?, inline}
 ul = element ul {class?, (ul | li | p)*}
 li = element li {inline, tile.content*} 
 

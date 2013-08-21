@@ -97,7 +97,7 @@ class DeckTransformer < Mfweb::Core::Transformer
     raise "Unable to find #{svg_file} from #{Dir.pwd}" unless File.exists? svg_file
     svg_doc = read_svg_doc(svg_file)
     check_only_allowed_fonts_in_svg svg_doc, svg_file
-    add_class attrs, anElement['class']
+    inject_class attrs, anElement
     inject_position attrs,  anElement
     inject_id attrs, anElement
     manipulate_svg anElement, svg_doc 

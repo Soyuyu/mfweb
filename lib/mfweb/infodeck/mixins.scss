@@ -42,3 +42,17 @@
   -o-column-count: $value;
   column-count: $value;
 }
+
+@mixin columns ($value) {
+  -moz-columns: $value;
+  -webkit-columns: $value;
+  -o-columns: $value;
+  columns: $value;
+}
+
+@mixin column-gap ($value) {
+  -moz-column-gap: $value;
+  -webkit-column-gap: $value;
+  -o-column-gap: $value;
+  column-gap: $value;
+}

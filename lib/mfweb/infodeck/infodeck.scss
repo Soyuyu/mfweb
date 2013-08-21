@@ -238,66 +238,68 @@ body {
     @extend .clickable;
   }
 
-}
-
-/* override auto margins set by deck.core.css */
-.slide img {
-  margin: 0;
-}
-
-.tile {
-  position: absolute;
-}
-
-.slide > .lede, .slide > svg,  .slide > img, 
-.slide > a > img, .slide > .diagram, .slide > .head {
-  position: absolute;
-}
 
 
-.slide > .header-position {
-  // default position for ledes and any element with position = 'heading'
+  /* override auto margins set by deck.core.css */
+  .slide img {
+    margin: 0;
+  }
+
+  .tile {
+    position: absolute;
+  }
+
+  .slide > .lede, .slide > svg,  .slide > img, 
+  .slide > a > img, .slide > .diagram, .slide > .head {
+    position: absolute;
+  }
+
+
+  .slide > .header-position {
+    // default position for ledes and any element with position = 'heading'
   top:  40px; 
   left: 20px;
-}
+  }
 
-.slide > .full-slide {
-  top: 0;
-  left: 0;
-  width: $slide-width;
-  height: $slide-height;
-}
+  .slide > .full-slide {
+    top: 0;
+    left: 0;
+    width: $slide-width;
+    height: $slide-height;
+  }
 
-@mixin hidden {
-  opacity: 0;
-}
+  @mixin hidden {
+    opacity: 0;
+  }
 
-.hidden, .hidden *{
-  @include hidden;
-}
+  .hidden, .hidden *{
+    @include hidden;
+  }
 
-@mixin no-display {
-  display: none;
-}
+  @mixin no-display {
+    display: none;
+  }
 
-.no-display, .no-display *{
-  @include no-display;
-}
+  .no-display, .no-display *{
+    @include no-display;
+  }
 
 
-.charred {
-  opacity: 0.3;
-}
+  .charred {
+    opacity: 0.3;
+  }
 
-.lede {
-  font-family: $lede-font;
-  font-size: 36px;
-  color: $purple;
-  text-align: left;
-}
+  .lede {
+    font-family: $lede-font;
+    font-size: 36px;
+    color: $purple;
+    text-align: left;
+  }
 
-a.link-mark {
-  text-decoration: none;
+  a.link-mark {
+    text-decoration: none;
+  }
+
 }
 
 

@@ -45,6 +45,7 @@ module Mfweb::InfoDeck
         skeleton = DeckSkeleton.new
         skeleton.js_files = js_files.map{|f| f.pathmap("%f")}
         skeleton.maker = self
+        skeleton.table_of_contents = table_of_contents
         coffee_glob = File.join(input_dir, 'js/*.coffee')
         unless Dir[coffee_glob].empty?
           sh "coffee -o #{@output_dir} -c #{coffee_glob}"
@@ -69,6 +70,14 @@ module Mfweb::InfoDeck
         raise $!
       end
     end 
+
+    def table_of_contents
+      titles = @root.css('slide[title]')
+      return nil if titles.empty?
+      return titles.
+        map{|e| "<p><a href='#%s'>%s</a></p>" % [e['id'], e['title']]}.
+        join("\n")
+    end
 
     def asset name
       @asset_server[name]

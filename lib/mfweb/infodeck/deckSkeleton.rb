@@ -1,7 +1,7 @@
 module Mfweb::InfoDeck
   class DeckSkeleton
     include Mfweb::Core::HtmlUtils
-    attr_accessor :js_files, :maker
+    attr_accessor :js_files, :maker, :table_of_contents
     def initialize 
       @css = []
     end
@@ -33,9 +33,11 @@ module Mfweb::InfoDeck
           emit_logo
           emit_navigator
           emit_help_button
+          emit_toc_button if @table_of_contents
           emit_deck_status
         end
         yield @html if block_given?
+        emit_table_of_contents_panel
         emit_help_panel
         @html.element('div', :id => 'deck-container') do
           emit_loading_slide
@@ -43,6 +45,12 @@ module Mfweb::InfoDeck
         end
         emit_touch_panel
         emit_js_in_body
+      end
+    end
+    def emit_table_of_contents_panel
+      return unless @table_of_contents
+      @html.div('deck-toc-panel') do
+        @html << @table_of_contents
       end
     end
     def emit_js_in_body
@@ -76,6 +84,10 @@ module Mfweb::InfoDeck
     def emit_help_button
       @html.element_span 'img', {:src => 'help-button.svg',
         :class => "deck-help", :title => "show help"}
+    end
+    def emit_toc_button
+      @html.element_span 'img', {:src => 'toc-button.svg',
+        :class => "deck-toc-button", :title => "show Table of Contents"}
     end
     def emit_help_panel
       @html.div('deck-help-panel') do

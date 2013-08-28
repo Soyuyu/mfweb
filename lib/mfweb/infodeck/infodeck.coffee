@@ -9,6 +9,7 @@ class Infodeck
     @loadingCurrent = LoadingSlide.newResolved()
 
   log: (message) ->
+    # console.log(message)
     false
 
   resolvedPromise: ->
@@ -140,6 +141,7 @@ class Infodeck
     $('#deck-container .slide').remove()
     @slideIndex = ix
     @_data.buildIndex = 0
+    @hideTableOfContents();
     @loadCurrentSlide()
     @loadNextSlide()
     @loadPreviousSlide()
@@ -242,9 +244,12 @@ class Infodeck
   goToLast: ->
     @goToSlide @length()
 
-  goToContents: ->
-    ix = @indexForHash '#contents'
-    @goToSlide(ix + 1) if ix?
+  toggleTableOfContents: ->
+    $('.deck-toc-panel').toggleClass('show')
+
+  hideTableOfContents: ->
+    $('.deck-toc-panel').removeClass('show')
+
 
   $goToField: ->
     $('.deck-goto-panel .deck-goto-input')
@@ -317,7 +322,7 @@ class Infodeck
         '38' : 'skipBackwards'    #up-arrow
         '39' : 'forwards'    # right-arrow
         '40' : 'skipForwards'  #down-arrow
-        '67' : 'goToContents'     # c
+        '67' : 'toggleTableOfContents'     # c
         '71' : 'toggleGoToPanel'  # g
         '74' : 'backwards'         # j
         '75' : 'forwards'         # k

@@ -23,7 +23,7 @@
     right: 10px;
   }
 
-  .deck-prev-link, .deck-next-link, .deck-help {
+  .deck-prev-link, .deck-next-link, .deck-help, .deck-toc-button {
     position: absolute;
     top: 5px;
     height: 25px;
@@ -45,6 +45,9 @@
 
   .deck-help {
     left: 600px;
+  }
+  .deck-toc-button {
+    left: 650px;
   }
   
   .logo {

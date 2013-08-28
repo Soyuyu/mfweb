@@ -1,11 +1,19 @@
 $('#deck-container').on 'deck-becameCurrent', ->
-  $('a').click (ev) ->
+  $('#deck-container a').click (ev) ->
     history.pushState('','',deck.permalink())
     if $(this).attr('href').match('^#')
       window.deck.goToHash($(this).attr('href'))
       ev.preventDefault()
-  $('.deck-help').off()
-  $('.deck-help').click -> $('.deck-help-panel').toggleClass('deck-help-visible')
+      
+$('.deck-help').off()
+$('.deck-help').click -> $('.deck-help-panel').toggleClass('deck-help-visible')
+
+$('.deck-toc-button').click -> $('.deck-toc-panel').toggleClass('show')
+$('.deck-toc-panel a').click (ev) ->
+  if $(this).attr('href').match('^#')
+#    console.log('clicked link ' + $(this).attr('href'))
+    window.deck.goToHash($(this).attr('href'))
+    ev.preventDefault()
       
 $(window).on 'touchstart', (event) ->
   window.touchParser.touchstart(event)

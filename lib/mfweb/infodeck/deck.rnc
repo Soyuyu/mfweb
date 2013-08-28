@@ -19,6 +19,7 @@ partial = element partial {
 slide = element slide {
     attribute id {text},
     attribute class {text}?,
+    attribute title {text}?,
     slide.content*,
     immediate-build?,
     build*

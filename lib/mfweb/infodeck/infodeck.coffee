@@ -308,6 +308,14 @@ class Infodeck
     @loadingPrevious.always =>
       @runSetupBuild($('.slide.next'), 'next')
 
+  pushSlideUrl: ->
+    history.pushState('','',deck.permalink())
+
+  reloadThisSlide: ->
+    window.location.replace(@permalink())
+    window.location.reload()
+    
+
 
   bindKeyboardEvents: ->
     $(document).keyup (event) =>
@@ -323,10 +331,11 @@ class Infodeck
         '39' : 'forwards'    # right-arrow
         '40' : 'skipForwards'  #down-arrow
         '67' : 'toggleTableOfContents'     # c
-        '71' : 'toggleGoToPanel'  # g
-        '74' : 'backwards'         # j
-        '75' : 'forwards'         # k
-        '80' : 'toggleTouchPanel' # p
+        '71' : 'toggleGoToPanel'           # g
+        '74' : 'backwards'                 # j
+        '75' : 'forwards'                  # k
+        '80' : 'toggleTouchPanel'          # p
+        '82' : 'reloadThisSlide'           # r
       if map[event.which] then this[map[event.which]].call(this)
 
   initializeUI: ->

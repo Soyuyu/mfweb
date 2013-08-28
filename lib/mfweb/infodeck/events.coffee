@@ -1,6 +1,6 @@
 $('#deck-container').on 'deck-becameCurrent', ->
   $('#deck-container a').click (ev) ->
-    history.pushState('','',deck.permalink())
+    window.deck.pushSlideUrl()
     if $(this).attr('href').match('^#')
       window.deck.goToHash($(this).attr('href'))
       ev.preventDefault()
@@ -11,7 +11,6 @@ $('.deck-help').click -> $('.deck-help-panel').toggleClass('deck-help-visible')
 $('.deck-toc-button').click -> $('.deck-toc-panel').toggleClass('show')
 $('.deck-toc-panel a').click (ev) ->
   if $(this).attr('href').match('^#')
-#    console.log('clicked link ' + $(this).attr('href'))
     window.deck.goToHash($(this).attr('href'))
     ev.preventDefault()
       

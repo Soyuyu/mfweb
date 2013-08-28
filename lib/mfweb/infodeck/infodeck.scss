@@ -309,7 +309,7 @@ body {
   overflow: hidden;
   height: 0;
   width: 0;
-  @include transition(300ms ease-in-out);
+  @include transition($default-transition-duration ease-in-out);
  }
 
 .deck-help-panel {

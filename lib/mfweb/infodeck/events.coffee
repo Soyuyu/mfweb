@@ -1,18 +1,18 @@
-$('#deck-container').on 'deck-becameCurrent', ->
-  $('#deck-container a').click (ev) ->
-    window.deck.pushSlideUrl()
+fixLocalLinks = (root, shouldPushLocation) ->
+  $('a', root).click (ev) ->
+    window.deck.pushSlideUrl() if shouldPushLocation
     if $(this).attr('href').match('^#')
       window.deck.goToHash($(this).attr('href'))
       ev.preventDefault()
-      
-$('.deck-help').off()
-$('.deck-help').click -> $('.deck-help-panel').toggleClass('deck-help-visible')
+
+
+$('#deck-container').on 'deck-becameCurrent', ->
+  fixLocalLinks('#deck-container', true)      
+  $('.deck-help').off()
+  $('.deck-help').click -> $('.deck-help-panel').toggleClass('deck-help-visible')
 
 $('.deck-toc-button').click -> $('.deck-toc-panel').toggleClass('show')
-$('.deck-toc-panel a').click (ev) ->
-  if $(this).attr('href').match('^#')
-    window.deck.goToHash($(this).attr('href'))
-    ev.preventDefault()
+fixLocalLinks('.deck-toc-panel', false)
       
 $(window).on 'touchstart', (event) ->
   window.touchParser.touchstart(event)

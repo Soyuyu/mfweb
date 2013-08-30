@@ -300,6 +300,45 @@ body {
     text-decoration: none;
   }
 
+  .deck-help {
+    background-color: $background-purple;
+    padding: 0.5em 1em;
+    border-radius: 5px;
+    text-align: center;
+    height: 2em;
+    width: auto;
+    color: black;
+    @include transition(400ms);
+
+    &:hover {
+      background-color: darken($background-purple, 10%);
+    }
+  }
+
+
+
+  .catalog-tags {
+    line-height: 2.4;
+    text-align: left;
+    a {
+      @include transition(400ms);
+      color: white;
+      font-family: $sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 12px;
+      padding: 5px;
+      border-radius: 5px;
+      margin: 2px;
+      white-space: nowrap;
+      background-color: $dark-gray-background;
+      // background-color: linear-gradient(lighten($dark-gray-background, 10%), $dark-gray-background);
+      &:hover {
+        background-color: lighten($dark-gray-background, 10%);
+      }
+    }
+  }  
+
 }
 
 @mixin pop-up-panel {

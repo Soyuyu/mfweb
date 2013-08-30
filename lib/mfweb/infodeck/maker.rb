@@ -16,6 +16,7 @@ module Mfweb::InfoDeck
       @google_analytics_file = 'partials/footer/google-analytics.html'
       @mfweb_dir = "mfweb/"
       @css_out = StringIO.new
+      @catalog = Site.catalog
     end
 
     
@@ -239,6 +240,16 @@ module Mfweb::InfoDeck
     def fallback_skeleton; nil; end # hook method
     def put_css aString
       @css_out << aString
+    end
+    def catalog_key
+      return File.basename(@output_dir)
+    end
+    def tags 
+      if @catalog && @catalog[catalog_key]
+        return @catalog[catalog_key].tags
+      else
+        return []
+      end
     end
   end
 end

@@ -19,7 +19,7 @@ How to use this [Infodeck][]
     slide number. You can also do this by clicking on the page number
     on the banner.
   - press "home" to go to the first slide, "end" to the last
- - press "c" to bring up the table of contents (if there is one). Tap
+  - press "c" to bring up the table of contents (if there is one). Tap
    c to hide it again.
 - The ' # ' in the banner puts a deep link to the currently visible slide
   into the address bar

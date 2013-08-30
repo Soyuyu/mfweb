@@ -353,6 +353,11 @@ class DeckTransformer < Mfweb::Core::Transformer
   def handle_arrow anElement
     ArrowTransformer.new(@html, anElement, @maker).render
   end
+  def handle_list_tags anElement
+    @html.p("catalog-tags") do
+      @html << @maker.tags.collect{|t| t.link}.join(" ")
+    end
+  end
 end
 
 class QuoteTransformer < DeckTransformer

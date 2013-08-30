@@ -93,6 +93,7 @@ tile.content =
     | table
     | quote
     | element abstract {inline}
+    | element list-tags {empty}
 
 quote = element quote {
   attribute name {text},

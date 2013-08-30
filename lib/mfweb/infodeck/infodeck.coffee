@@ -336,6 +336,7 @@ class Infodeck
         '75' : 'forwards'                  # k
         '80' : 'toggleTouchPanel'          # p
         '82' : 'reloadThisSlide'           # r
+      return if event.metakey
       if map[event.which] then this[map[event.which]].call(this)
 
   initializeUI: ->

@@ -6,6 +6,10 @@ def ensure_rm file
 end
 QUIET = {:verbose => false}
 
+def build_dir_path arg
+  return (/^#{BUILD_DIR}/ =~ arg) ? arg : File.join(BUILD_DIR, arg)
+end
+
 
 
 #----------------------------------------------------------------
@@ -13,7 +17,7 @@ QUIET = {:verbose => false}
 def sassTask srcGlob, relativeTargetDir, taskSymbol, base_deps = []
   FileList[srcGlob].each do |src|
     deps = base_deps.dup
-    targetDir = BUILD_DIR + relativeTargetDir
+    targetDir = build_dir_path(relativeTargetDir) 
     target = File.join(targetDir, src.pathmap("%n.css"))
     srcDir = src.pathmap "%d"
     deps << MFWEB_DIR + 'css/global.scss' unless /global.scss/ =~ src 

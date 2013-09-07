@@ -74,8 +74,8 @@ class HtmlEmitter
     end
   end
 
-  def text arg
-    @out <<  arg if arg
+  def text *args
+    args.each {|a| @out << a}
   end
   def << arg
     @out << arg 

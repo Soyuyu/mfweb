@@ -129,6 +129,16 @@ class Transformer
     deprecated "use HtmlEmitter.amazon"
     @html.amazon(asin) {apply anElement}
   end
+
+  def first_in_run? anElement
+    not (anElement.previous_element && anElement.previous_element.name == anElement.name)
+  end
+
+  def collect_run e
+    return (e.next_element && e.next_element.name == e.name) ? 
+    [e] + collect_run(e.next_element) : [e]
+  end
+
 end
 
 #==== Transformer Page Renderer ================

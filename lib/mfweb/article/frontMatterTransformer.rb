@@ -163,13 +163,15 @@ module Mfweb::Article
       elements = xpath('/*/author')
       raise "can't do multiple authors on short form" if elements.size > 1
       author = Mfweb::Core::Author.new(elements[0])
-      @html.p('author-photo') do
-        @html.a_ref(author.url) do
-          @html.element('img', src: author.photo, title: "Photo of #{author.name}")
+      @html.div('author') do
+        @html.p('photo') do
+          @html.a_ref(author.url) do
+            @html.element('img', src: author.photo, title: "Photo of #{author.name}")
+          end
         end
-      end
-      @html.p('author') do
-        @html.element('a', href: author.url, rel: 'author'){@html.text author.name}
+        @html.p('name') do
+          @html.element('a', href: author.url, rel: 'author'){@html.text author.name}
+        end
       end
     end
   end

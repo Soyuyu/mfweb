@@ -1,0 +1,18 @@
+.short-front {
+  width: 400px;
+  float: left;
+  margin-bottom: 3em;
+  p {
+    font-size: 90%;
+    margin: 0;
+  }
+  .author .photo {
+    float: left;
+    margin-right: 10px;
+    width: 60px;
+    img {
+      width: 60px;
+    }
+  }
+
+}

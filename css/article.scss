@@ -245,18 +245,4 @@ div.footnote-list {
   }
 }
 
-.short-front {
-  width: 400px;
-  float: left;
-  margin-bottom: 3em;
-  p {
-    font-size: 90%;
-    margin: 0;
-  }
-  p.author-photo {
-    float: left;
-    margin-right: 10px;
-    width: 60px;
-  }
-
-}
+@import 'short-front'

@@ -16,7 +16,7 @@ body {
   color: $text-gray;
 }
 
-div#banner, div#footer {
+body > div#banner, body > div#footer {
   margin-left: $left-margin;
 }
 

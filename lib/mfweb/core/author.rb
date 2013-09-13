@@ -13,7 +13,7 @@ module Mfweb::Core
       @data.at_css('author-photo')['src'] if has_photo?
     end
     def has_photo?
-      true == @data.at_css('author-photo')
+      !! @data.at_css('author-photo')
     end
   end
 end

@@ -106,9 +106,10 @@ class HtmlEmitter
     element_span('hr', attr) {}
   end
 
-  def a_ref(href, &block)
+  def a_ref(href, attrs = {}, &block)
     if href
-      element_span("a", {'href' => href}, &block)
+      attrs['href'] = href
+      element_span("a", attrs, &block)
     else
       yield
     end

@@ -119,6 +119,11 @@ class HtmlEmitter
     element_block('a', {'name' => name}) {}
   end
 
+  def img src, attrs = {}
+    attrs['src'] = src
+    element 'img', attrs
+  end
+
   def b(&block)
     element_span 'b', nil, &block
   end
@@ -127,9 +132,9 @@ class HtmlEmitter
     element_span 'i', nil, &block
   end
 
-  def span css_class, &block
-    attr = class_attr css_class   
-    element_span 'span', attr, &block
+  def span css_class, attrs = {},  &block
+    attrs['class'] =  css_class   
+    element_span 'span', attrs, &block
   end
 
   def page_title title

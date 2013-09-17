@@ -201,7 +201,7 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.div('sidebar') {apply anElement}
   end
   def handle_soundbite anElement
-    @html.div('soundbyte') do
+    @html.div('soundbite') do
       @html.p {apply anElement}
     end
   end

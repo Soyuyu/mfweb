@@ -203,14 +203,16 @@ div.frontMatter {
     font-family: $sans;
     background-color: $light-gray_background;
     line-height: $default-line-height;
-    padding: 1em;
+    padding: 1em; 
   }
 
-  div.soundbyte {
+  div.soundbite {
     @extend .sidebar;
-    font-size: $paper-font-size;
-    font-style: italic;
+    color: $purple;
+    font-size: 20px;
+    font-family: $cursive-font;
     width: 20em;
+    p {margin: 0;}
   }
 
 div.footnote-list {

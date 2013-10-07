@@ -2,6 +2,17 @@ $: << 'lib'
 
 task :default => [:test]
 
+task :pre_commit do
+  require 'open3'
+  out, err, status = Open3.capture3 "rake test"
+  if 0 == status
+    puts "tests OK"
+  else
+    $stderr.puts out, err, "\nunit tests failed, commit abandoned"
+    exit 1
+  end
+end
+
 desc "unit tests for toolchain"
 task :test => :unit
 require 'rake/testtask'

@@ -6,7 +6,7 @@ namespace :infodeck do
   task :all
 
   def infodeck_task maker
-    slide_libs = FileList['lib/infodeck/*']
+    slide_libs = FileList['lib/infodeck/*', "#{MFWEB_DIR}lib/mfweb/infodeck/**/*"]
     deps = ['*', 'img/*', 'js/*'].map{|p| Dir[maker.input_dir + p]}.flatten
     deps << BUILD_DIR + 'js/infodeck.js'
     file maker.output_file => deps + slide_libs do

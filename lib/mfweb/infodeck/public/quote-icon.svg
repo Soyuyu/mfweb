@@ -1,62 +1,39 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
 <svg
    xmlns:dc="http://purl.org/dc/elements/1.1/"
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns="http://www.w3.org/2000/svg"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
    width="200"
    height="200"
-   id="svg2"
-   version="1.1"
-   inkscape:version="0.48.2 r9819"
-   sodipodi:docname="red quotes.svg">
-  <sodipodi:namedview
-     pagecolor="#ffffff"
-     bordercolor="#666666"
-     borderopacity="1"
-     objecttolerance="10"
-     gridtolerance="10"
-     guidetolerance="10"
-     inkscape:pageopacity="0"
-     inkscape:pageshadow="2"
-     inkscape:window-width="1337"
-     inkscape:window-height="885"
-     id="namedview21"
-     showgrid="false"
-     inkscape:zoom="1"
-     inkscape:cx="217"
-     inkscape:cy="115.2868"
-     inkscape:window-x="2120"
-     inkscape:window-y="121"
-     inkscape:window-maximized="0"
-     inkscape:current-layer="g14" />
+   viewBox = "0 0 200 200"
+   id="svg2">
   <title
      id="title4">red quotes</title>
   <defs
      id="defs6">
     <radialGradient
-       gradientTransform="scale(0.78133655,1.2798582)"
-       r="149.01205"
-       cy="176.36977"
        cx="937.70337"
-       spreadMethod="pad"
-       id="svg_3"
+       cy="176.36977"
+       r="149.01205"
        fx="937.70337"
        fy="176.36977"
-       gradientUnits="userSpaceOnUse">
+       id="svg_3"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="scale(0.78133655,1.2798582)"
+       spreadMethod="pad">
       <stop
-         offset="0"
-         stop-opacity="1"
-         stop-color="#999999"
-         id="stop9" />
+         id="stop9"
+         style="stop-color:#999999;stop-opacity:1"
+         offset="0" />
       <stop
-         offset="1"
-         stop-opacity="1"
-         stop-color="#777777"
-         id="stop11" />
+         id="stop11"
+         style="stop-color:#777777;stop-opacity:1"
+         offset="1" />
     </radialGradient>
   </defs>
   <metadata
@@ -66,12 +43,13 @@
     <dc:format>image/svg+xml</dc:format>
     <dc:type
        rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+    <dc:title>red quotes</dc:title>
   </cc:Work>
 </rdf:RDF>
 </metadata>
   <g
-     id="g14"
-     transform="matrix(0.67938306,0,0,0.71035878,-417.9454,-42.767995)">
+     transform="matrix(0.67938306,0,0,0.71035878,-417.9454,-42.767995)"
+     id="g14">
     <title
        id="title16">Layer 1</title>
     <g
@@ -79,11 +57,9 @@
       <g
          id="g3658">
         <path
-           id="path3648"
            d="m 911.82079,59.681435 -294.67791,0 0,163.175715 110,0 c 0,0 0,13.83466 -15.71429,42.40607 -15.7143,28.57145 -34.28571,44.28574 -34.28571,44.28574 l 27.14289,32.85715 c 0,0 138.96361,-45.7143 170.3922,-94.28574 31.42865,-48.57141 36.67843,-56.16138 36.81115,-93.96592 l 0.33167,-94.472985 z"
-           inkscape:connector-curvature="0"
-           style="fill:url(#svg_3)"
-           sodipodi:nodetypes="ccccsccsscc" />
+           id="path3648"
+           style="fill:url(#svg_3)" />
       </g>
     </g>
   </g>

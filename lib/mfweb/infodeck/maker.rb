@@ -236,7 +236,9 @@ module Mfweb::InfoDeck
         fallback_skeleton.emit(html, title) {transformer.render}
       end
     end
-    def fallback_skeleton; nil; end # hook method
+    def fallback_skeleton
+      Site.skeleton
+    end
     def put_css aString
       @css_out << aString
     end

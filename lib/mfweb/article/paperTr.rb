@@ -46,7 +46,7 @@ class PaperTransformer < Mfweb::Core::Transformer
 
   def handle_paper anElement
     @figureReader = FigureReader.new anElement
-    @is_draft = ('dev' == anElement["status"])
+    @is_draft = ('draft' == anElement["status"])
     print_front_matter
     apply anElement
     render_revision_history

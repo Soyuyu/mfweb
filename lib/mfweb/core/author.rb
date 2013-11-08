@@ -1,6 +1,8 @@
 module Mfweb::Core
   class Author
     def initialize anElement
+      raise "argument must be a nokogiri element" unless 
+        anElement.kind_of? Nokogiri::XML::Element
       @data = anElement
     end
     def name
@@ -14,6 +16,9 @@ module Mfweb::Core
     end
     def has_photo?
       !! @data.at_css('author-photo')
+    end
+    def key
+      @data['key']
     end
   end
 end

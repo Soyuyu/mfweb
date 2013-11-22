@@ -1,7 +1,7 @@
 module Mfweb::Core
 class PageSkeleton
   include HtmlUtils
-  attr_reader :meta_tags
+  attr_reader :meta_tags, :footer, :banner
   def initialize header, footer, cssArray
     @header = header
     @footer = footer
@@ -100,6 +100,16 @@ class PageSkeleton
       @html.h(1) {@html.text "Draft"}
       @html.p {@html.text "This article is a draft.<br/>Please do not share or link to this URL until I remove this notice"}
     end
+  end
+  def with_banner htmlString
+    result = self.dup
+    result.instance_variable_set(:@header, htmlString)
+    return result
+  end
+  def with_footer htmlString
+    result = self.dup
+    result.instance_variable_set(:@footer, htmlString)
+    return result
   end
     
   

@@ -19,7 +19,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
 
   def load
     super
-    @skeleton = @skeleton.as_draft if 'dev' == @root['status']
+    @skeleton = @skeleton.as_draft if 'draft' == @root['status']
   end
 
   def render_body

@@ -198,10 +198,12 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.a_ref(href){@html.text text}
   end
   def handle_sidebar anElement
-    @html.div('sidebar') {apply anElement}
+    css_class = [anElement['class'], 'sidebar'].join(" ")
+    @html.div(css_class) {apply anElement}
   end
   def handle_soundbite anElement
-    @html.div('soundbite') do
+    css_class = [anElement['class'], 'soundbite'].join(" ")
+    @html.div(css_class) do
       @html.p {apply anElement}
     end
   end

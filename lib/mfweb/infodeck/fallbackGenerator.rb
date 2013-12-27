@@ -13,7 +13,7 @@ module Mfweb::InfoDeck
     end
     def handle_deck anElement
       @html.h(1) {@html.text @root['title']}
-      handle(@root.at_css('abstract'))
+      @root.css('abstract').each {|e| handle e}
       @root.css("author").each {|e| handle e}
       handle(@root.at_css("pub-date"))
       @html << afterword

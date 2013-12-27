@@ -232,7 +232,7 @@ module Mfweb::InfoDeck
       return unless fallback_skeleton
       HtmlEmitter.open(output_dir + '/fallback.html') do |html|
         transformer = FallbackTransformer.new(html, @root, self)
-        title = "fallback for " + @root['title']
+        title = @root['title']
         fallback_skeleton.emit(html, title) {transformer.render}
       end
     end

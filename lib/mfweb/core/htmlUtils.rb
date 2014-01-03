@@ -2,7 +2,11 @@ module Mfweb::Core
 require 'uri'
 module HtmlUtils
   def a_ref uri, text
-     "<a href = #{URI.encode(uri)}>#{text}</a>"
+    if uri
+      "<a href = #{URI.encode(uri)}>#{text}</a>"
+    else
+      text
+    end
   end
   def self.dot_sep
     "&nbsp;&middot; "
@@ -96,4 +100,5 @@ end
   def css fileName
     %[<link href = "#{fileName}" rel = "stylesheet" type = "text/css"/>]
   end
+
 end

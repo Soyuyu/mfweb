@@ -11,6 +11,11 @@ div.photo {
     color: #808080;
     font-size: 80%;  
     text-align: right;
+    float: right;
+  }
+
+  p.photoCaption {
+    min-height: 1em;
   }
 } 
 

@@ -229,16 +229,33 @@ module Mfweb::InfoDeck
     end
 
     def generate_fallback
-      return unless fallback_skeleton
+      build_fallback_css
       HtmlEmitter.open(output_dir + '/fallback.html') do |html|
-        transformer = FallbackTransformer.new(html, @root, self)
+        headerTR = FallbackHeaderTransformer.new(html, @root, self)
         title = @root['title']
-        fallback_skeleton.emit(html, title) {transformer.render}
+        fallback_skeleton.emit(html, title) do
+          headerTR.render
+          emit_dump html
+        end
       end
     end
     def fallback_skeleton
       Site.skeleton
     end
+    def emit_dump html
+      html.div('text-dump') do
+        html.p('intro') {html.text "The following is dump of the text in the deck to help search engines perform indexing"}
+        FallbackDumpTransformer.new(html, @root, self).render
+      end
+    end
+    def build_fallback_css
+      sass = Sass::Engine.new(File.read(asset('fallback.scss')), 
+                              :syntax => :scss, :load_paths => @css_paths)
+      File.open("#{@output_dir}/fallback.css", 'w') do |out| 
+        out << sass.render
+      end
+    end
+
     def put_css aString
       @css_out << aString
     end

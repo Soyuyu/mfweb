@@ -1,0 +1,13 @@
+@import 'global';
+
+.notice {
+  background-color: lightgray;
+  padding: 1em;
+}
+.text-dump {
+  font-size: 80%;
+  .intro {
+    font-size: 100%;
+    font-weight: bold;
+  }
+}

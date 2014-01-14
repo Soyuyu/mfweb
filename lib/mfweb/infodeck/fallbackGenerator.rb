@@ -1,5 +1,5 @@
 module Mfweb::InfoDeck
-  class FallbackTransformer < Mfweb::Core::Transformer
+  class FallbackHeaderTransformer < Mfweb::Core::Transformer
     include Mfweb::InfoDeck
     def initialize out_emitter, in_root, maker
       super(out_emitter, in_root)
@@ -16,7 +16,7 @@ module Mfweb::InfoDeck
       @root.css('abstract').each {|e| handle e}
       @root.css("author").each {|e| handle e}
       handle(@root.at_css("pub-date"))
-      @html << afterword
+      @html.div('notice') {@html << afterword}
     end
     def handle_abstract anElement
       @html.p('abstract') {apply anElement}
@@ -40,4 +40,36 @@ module Mfweb::InfoDeck
       "<a href = '#{@maker.uri}'>http://martinfowler.com#{@maker.uri}</a>"
     end
   end
+
+  class FallbackDumpTransformer < Mfweb::Core::Transformer
+    include Mfweb::InfoDeck
+
+    def initialize out_emitter, in_root, maker
+      super(out_emitter, in_root)
+      @maker = maker
+      # @apply_set = %w[deck tile lede author pub-date span build 
+      #                 immediate-build show amazon br quote highlight-sequence 
+      #                 h insertCode step b i]
+      @copy_set = %w[a p ul li code table tr th td]
+      @ignore_set = %w[partial img include diagram hide js-builder 
+                       add-class linkMark char remove-class list-tags ]
+      @p_set = {'abstract' => 'p'}
+    end 
+    
+    def default_handler anElement
+      # puts "unknown element #{anElement.name}"
+      super
+    end
+
+    def handle_slide anElement
+      @html.hr
+      apply anElement
+    end
+   end
+
+
+
+
+
 end
+

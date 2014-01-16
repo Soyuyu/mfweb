@@ -76,7 +76,7 @@ module Mfweb::Article
     end
 
     def print_authors 
-      elements = xpath('/*/author').each {|e| handle e}
+      xpath('/*/author').each {|e| handle e}
     end
 
     def handle_author anElement

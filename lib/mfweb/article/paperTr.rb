@@ -233,6 +233,9 @@ class PaperTransformer < Mfweb::Core::Transformer
   def handle_book anElement
    @html.amazon(anElement['isbn']){apply anElement}
   end
+  def handle_todo anElement
+    handle_tbd anElement
+  end
   def handle_tbd anElement
     if draft?
       emitTbd anElement

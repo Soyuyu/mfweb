@@ -251,8 +251,8 @@ class PaperTransformer < Mfweb::Core::Transformer
     end
   end
   def emitTbdSpan anElement
-    @html.span('tbd') do
-      @html.text "[TBD: #{anElement.text}]"
+    @html.span('todo') do
+      @html.text "[TODO: #{anElement.text}]"
     end
   end
   def handle_term anElement

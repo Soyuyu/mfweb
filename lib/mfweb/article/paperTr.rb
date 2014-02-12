@@ -193,9 +193,13 @@ class PaperTransformer < Mfweb::Core::Transformer
   def handle_blikiRef anElement
     name = anElement['name']
     href = "http://martinfowler.com/bliki/#{name}.html"
-    text = name.gsub(/[A-Z]/, ' \&')
-    text += 's' if 'plural' == anElement['mode'] 
-    @html.a_ref(href){@html.text text}
+    if anElement.children.empty?
+      text = name.gsub(/[A-Z]/, ' \&')
+      text += 's' if 'plural' == anElement['mode'] 
+      @html.a_ref(href){@html.text text}
+    else
+      @html.a_ref(href){apply anElement}
+    end
   end
   def handle_sidebar anElement
     css_class = [anElement['class'], 'sidebar'].join(" ")

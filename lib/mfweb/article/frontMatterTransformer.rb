@@ -128,6 +128,13 @@ module Mfweb::Article
         @html.ul  do
           xpath('body/section').each {|s| print_contents_for s}
         end
+        sidebars = xpath('body//sidebar[h]')
+        unless sidebars.empty?
+          @html.h(3){@html.text 'Sidebars'}
+          @html.ul  do
+            sidebars.each {|s| print_contents_for s}
+          end
+        end         
       end
     end
 

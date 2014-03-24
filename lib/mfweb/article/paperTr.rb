@@ -115,13 +115,15 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
   def handle_section anElement
     @section_depth += 1
-    @html.hr('topSection') if @section_depth == 2
-    apply anElement
+    attrs = {:id => anchor_for(anElement)}
+    @html.div(nil, attrs) do
+      @html.hr('topSection') if @section_depth == 2
+      apply anElement
+    end
     @section_depth -= 1
   end
   def handle_H anElement
-    attrs = {:id => anchor_for(anElement.parent)}
-    @html.h(@section_depth, attrs) {apply anElement}
+    @html.h(@section_depth) {apply anElement}
   end
   alias :handle_h :handle_H
   def handle_topBox anElement;  end
@@ -171,9 +173,13 @@ class PaperTransformer < Mfweb::Core::Transformer
     #can't handle loose > in content
     aString.gsub(/<\/?[^>]*>/, "")
   end
-  def anchor_for aSectionElement
-    return aSectionElement['ID'] || 
-      section_title(aSectionElement).to_anchor
+  def anchor_for anElement
+    case
+    when anElement['ID'] then anElement['ID']
+    when not(section_title(anElement).empty?)
+      section_title(anElement).to_anchor
+    else nil
+    end
   end
   def handle_cite anElement   
     bibref = @maker.bib_server[anElement['name']]
@@ -203,7 +209,9 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
   def handle_sidebar anElement
     css_class = [anElement['class'], 'sidebar'].join(" ")
-    @html.div(css_class) {apply anElement}
+    attrs = {}
+    attrs[:id] = anchor_for(anElement) if anchor_for(anElement)
+    @html.div(css_class, attrs) {apply anElement}
   end
   def handle_soundbite anElement
     css_class = [anElement['class'], 'soundbite'].join(" ")

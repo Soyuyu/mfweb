@@ -6,6 +6,7 @@ $lede-font: serif !default;
 $text-font: sans-serif !default;
 $code-font: monospace !default;
 
+$highlight-color: hsla(60,100, 50, 0.3);
 $background-purple: #e5d5fe;
 $slide-width: 960px;
 $slide-height: 590px;
@@ -37,7 +38,7 @@ $overlay-color: hsla(34, 50, 90, 0.9);
 }
 
 .highlight-panel {
-  background-color: hsla(60,100, 50, 0.3);
+  background-color: $highlight-color;
   position: absolute;
   @include transition-duration($default-transition-duration);
 }

@@ -390,11 +390,7 @@ class PaperTransformer < Mfweb::Core::Transformer
       #@html << footnote_server.body(key)
     end
   end
-  
 end
-
-#==== Full Author Transformer ================================
-
 
 class FigureReader
   include Mfweb::Core::XpathFunctions

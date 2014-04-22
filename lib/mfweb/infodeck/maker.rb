@@ -171,11 +171,11 @@ module Mfweb::InfoDeck
     
 
     def img_file file_name
-      first = input_dir + '/img/' + file_name
-      return first if File.exists? first
-      second = @gen_dir + file_name
-      return second if File.exists? second
-      raise "unable to fine image file for " + file_name
+      gen_dir_file = @gen_dir + file_name
+      return gen_dir_file if File.exists? gen_dir_file
+      img_dir_file = input_dir + '/img/' + file_name
+      return img_dir_file if File.exists? img_dir_file
+      raise "unable to find image file for " + file_name
     end
     def add_partial key, anElement
       raise "duplicate partial definition for " + key if @partials.has_key? key

@@ -99,11 +99,11 @@ class DeckTransformer < Mfweb::Core::Transformer
     svg_file = @maker.img_file(anElement['src'])
     raise "Unable to find #{svg_file} from #{Dir.pwd}" unless File.exists? svg_file
     svg_doc = read_svg_doc(svg_file)
+    manipulate_svg anElement, svg_doc
     check_only_allowed_fonts_in_svg svg_doc, svg_file
     inject_class attrs, anElement
     inject_position attrs,  anElement
     inject_id attrs, anElement
-    manipulate_svg anElement, svg_doc 
     attrs['viewbox'] = "0 0 %s %s" % [svg_doc['width'], svg_doc['height']]
     inject_svg_dimensions attrs, anElement, svg_doc    
     @html.element('svg', attrs) {@html << svg_doc.to_xml}

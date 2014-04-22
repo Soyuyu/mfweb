@@ -68,7 +68,7 @@
         <li>The <b>diagram</b> element should refer to an svg file and
         will embed the svg diagram directly into the html with an svg
         element. You need to do this if you want to manipulate the svg
-        elements.</li>
+        elements. <a href = "/articles/svg-deck.html">(More murky details on using SVG.)</a></li>
       </ul>
       <p>By default you store images in the <code>img</code> folder
       inside your deck's folder. Paths are relative to that img folder.</p>

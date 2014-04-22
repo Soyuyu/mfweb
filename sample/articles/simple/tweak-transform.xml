@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<paper style="short">
+  <title>Tweaking the infodeck transformation process</title>
+  <version date="2014-04-18"/>
+  <author>
+    <author-name>Martin Fowler</author-name>
+    <author-url>http://martinfowler.com</author-url>
+  </author>
+  <body>
+    <p>Some decks have particular tasks they want to do that means
+    they need to tweak the transformation process. I haven't put any
+    sophisticated mechanism to add hook objects or the like, it's
+    still too early to be sure what we need. However this is exactly
+    where having inheritance is useful. It provides a crude but
+    flexible way to override bits of behavior for specific decks.</p>
+    <p>The transformation process is coordinated by a "maker" object -
+    by default <code>Mfweb::InfoDeck::DeckMaker</code>. To tweak the
+    transformation process we need to change this to a your own
+    deck-specific maker. The best way to do this is to add a
+    file to your particular deck subdirectory, such as
+    <code>decks/mydeck/maker.rb</code>. Inside this file create your
+    deck-specific maker class (eg <code>YourDeck::Maker </code>) that inherits
+    from the core maker. Then reference this maker class from the rake
+    task (usually in <code>decks/mydeck/rake.rb</code>). So where
+    you'd normally see
+    <code>Mfweb::InfoDeck::MfcomDeckMaker.new…</code> replace it with
+    <code>YourDeck::Maker.new…</code></p>
+    <p>Once you've got this working you can now override individual
+    methods from the core maker class and tweak it as you wish. Now
+    since this is early days, it may be that the core maker class
+    isn't as well factored as it needs to be to override just the
+    behavior you want, so in that case it may be useful to refactor
+    the core class and send pull requests to update the main mfweb project.</p>
+    <p>If you're using the ThoughtWorks draft repository you can find
+    examples of this approach for tweaking done at <code>decks/gap-scms-po</code>
+    and <code>decks/bigData</code>.</p>
+  </body>
+</paper>

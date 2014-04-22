@@ -1,0 +1,142 @@
+<?xml version="1.0"?>
+<paper style="short">
+<title>Using SVG files in Infodecks</title>
+<version date="2014-04-18"/>
+<author>
+ <author-name>Martin Fowler</author-name>
+  <author-url>http://martinfowler.com</author-url>
+ </author>
+<body>
+  <p>SVG is a useful graphics format for infodecks. It allows decks to
+  be scaled to any amount while remaining sharp. It also allows us to
+  manipulate the contents of the svg diagram - changing colors on
+  elements or other tricks. But it also has its quirks and problems,
+  and tools to generate it raise their own difficulties.</p>
+  <section id = "embed2">
+    <h>How to Embed SVG into HTML</h>
+    <p>There are a few ways you can embed an SVG document into an HTML
+    one. The infodeck allows you to use two different routes: as an
+    img element that references the SVG file, and by including the
+    full SVG document into the HTML.</p>
+    <p>Using img tag is the same basic process that we use for bitmap
+    graphics, and usually sounds like the best approach. However it
+    has two big disadvantages.</p>
+    <ul>
+      <li>You can't reference the contents of the SVG, to apply css
+      styles or do transformations like color changes</li>
+      <li>You can't use fonts that are defined in your web page.</li>
+    </ul>
+    <p>The latter problem is particularly awkward since often you
+    won't see it. I use Open Sans font a lot on my website as it's the
+    font ThoughtWorks uses. If I draw an SVG diagram I'll use the Open
+    Sans font in there. When I look at an SVG diagram referenced
+    through an img tag on my computer, it looks fine since I have Open
+    Sans installed on my computer. However if you look at that svg
+    diagram from a computer without that font installed, you'll get
+    some random font. Not just does that look ugly, it may throw out
+    the whole layout, leading to text overflowing into places it
+    shouldn't be.</p>
+    <p>So, in general, it's best to not use the img tag to embed SVG
+    graphics, instead use the diagram tag. The diagram tag will include the
+    SVG into the HTML document itself inside an svg tag, which allows the SVG graphic to
+    reference any fonts declared in the CSS of the HTML document. I
+    use Open Sans in my web page so Open Sans in an SVG element will
+    display correctly even on browsers running on machines with the
+    Open Sans font installed.</p>
+    <p>If you do use an svg graphic in an img element, you will get a
+    warning message if that svg graphic contains any text elements, as
+    that suggests you'll run into font rendering issues. If that
+    happens you should switch to using the diagram element.</p>
+  </section>
+  <section>
+    <h>Post-Processing SVG</h>
+    <p>SVG comes with irritations and possibilities. Since it's text
+    based (XML) format it's easy to manipulate the SVG if you want to
+    make changes to it. Sadly you sometimes have to manipulate it to
+    remove awkward glitches. So there's a need to slip
+    post-processing steps into the SVG pipelines.</p>
+    <p>There are currently two mechanism to incorporate post
+    processing like this, which I'll call an installer and a
+    manipulator.</p>
+    <section>
+      <h>Modifying the SVG Installer</h>
+      <p>Remember there are <a href = "#embed2">two ways to get SVG into
+      the output HTML</a>, either referenced via an img tag or
+      incorporated into the document tree itself as an svg tag. All svg
+      diagrams are installed into the output build folder, whether they are
+      referenced or embedded. Strictly there is no need to install any svg
+      files that are embedded, since these files won't be used by the
+      deck. This is because I haven't bothered to filter what gets installed.</p>
+      <p>For most graphics, installation is a simple copy, but even
+      referenced SVG files need some processing. In order for the files
+      to display properly you need to add a view box. Therefore all svg
+      files that are sent to the output folder are processed by
+      <code>Mfweb::InfoDeck::SvgInstaller</code>. We can override this
+      installer to do different things.</p>
+      <p>One example of this is automatically splitting a multi-layered
+      svg image done in Inkscape to put each layer in its own diagram.
+      To initiate this <a href = "/articles/tweak-transform.html">create
+      a deck-specific maker class</a>. In that class override the
+      <code>install_svg_file</code> method. There is already a class
+      that does the splitting, called
+      <code>SvgLayerSplittingInstaller</code>, you just need to ensure
+      you apply it the files you want to split. Here is an example of
+      this from one of my decks </p>
+      <pre>
+ <![CDATA[
+module Mfweb::InfoDeck
+   module BigDataDeck
+     include InfoDeck
+     class Maker < MfcomDeckMaker
+       def install_svg_file file_name
+         case file_name.pathmap "%n"
+         when 'analytics' then
+            SvgLayerSplittingInstaller.new(file_name, @gen_dir).run
+         else super file_name
+         end
+       end
+     end
+   end
+ end]]>
+      </pre>
+      <p>Note that I send the output of this to the folder referenced by the
+      <code>@gen_dir</code> field. This is a folder used for
+      intermediate generated files such as this. When you use a diagram
+      element it looks both in your usual img folder
+      (<code>decks/yourDeck/img</code>) and in the gen folder to find
+      the svg file to incorporate into the deck. (If you're using the
+      ThoughtWorks draft repo you can find this example in
+      <code>decks/bigData</code>. All files in the gen folder are copied
+      to the final output folder as well, so this mechanism can be used
+      for svg files that are embedded via svg tags or referenced via img
+      tags.</p>      
+    </section>
+    <section>
+      <h>Adding an SVG Manipulator to the diagram element</h>
+      <p>There is a second mechanism that you can use for
+      post-processing. When you have a diagram element, you can
+      optionally specify an SvgManipulator with something like </p>
+      <pre>
+        <![CDATA[<diagram src="app-landscape.svg" position="full"
+         manipulator="Sources" class="app-landscape"/>]]>
+      </pre>
+      <p>The manipulator is the name of a Ruby class that will be
+      instantiated to do the manipulation. The svg manipulator needs to
+      be passed a Nokogiri SVG document on construction and have a
+      <code>run</code> method (it's called with
+      <code>aManipulator.new(svg_doc).run</code> inside
+      <code>Mfweb::InfoDeck::DeckTransformer</code>). That run method
+      can freely munge the svg document to do any changes you like
+      before it's embedded into the HTML output. To make things a little
+      easier there is a base class that supports a couple of
+      manipulations in <code>Mfweb::InfoDeck::SvgManipulator</code>. </p>
+      <p>(If you're using the ThoughtWorks draft repo you can find an
+      example of this in <code>decks/bigData</code>. The xml element is
+      in <code>sources.xml</code> and the manipulator is defined in
+      <code>manipulators.rb</code>. This example removes some style
+      information attached directly to SVG elements so we can control it
+      via css instead.)</p>
+    </section>
+  </section>
+</body>
+</paper>

@@ -1,0 +1,116 @@
+<paper style="short">
+<title>Animating with Javascript</title>
+<version date="2014-04-18"/>
+<author>
+ <author-name>Martin Fowler</author-name>
+  <author-url>http://martinfowler.com</author-url>
+ </author>
+<body>
+  <p>The facilities exposed by the XML elements allow you to do a
+  number of animations by writing XML elements and CSS. Using the
+  build element allows various animations including motion and
+  resizing - all done by applying css classes. The highlight-sequence
+  element allows you to move a highlight panel around the slide, to
+  explain a complex diagram. These animations can handle a lot of
+  cases of what you might want to do with infodecks, but they have
+  their limits. If you want to push past those limits you can write
+  more complex animation behavior using arbitrary javascript.</p>
+  <p>To understand how this works, I need to explain a bit about how
+  the infodeck works. The infodeck is a javascript application written
+  using coffeescript. When we build the deck the sources (XML, scss
+  and possibly coffeescript) files are
+  translated into HTML, css, and javascript.</p>
+  <p>There are a number of slideshow HTML tools in common circulation,
+  but I didn't use any of these for the infodeck software. I did use
+  one initially but ran into a serious problem. The software would
+  download all the slides into the HTML DOM. While this allowed a
+  smooth animation and some ability to work offline or with poor
+  internet connections, it also crashed many tablets due to
+  overflowing the available memory for the DOM. This was true of all
+  the slideshow tools I saw at the time, which was why I decided to
+  write my own instead.</p>
+  <p>The infodeck software does not download all the slides into the
+  HTML DOM, it only downloads the current slide, the next slide, and
+  the previous slide. This way we can get a smooth animation but
+  minimize the memory consumption.</p>
+  <p>When you use the animation elements (build and
+  highlight-sequence) in the infodeck, the build process uses
+  transformer objects (written in Ruby) create a
+  javascript file to control the animation effects. This file is
+  called contents.js and sits in the target folder of the infodeck (eg
+  <code>build/articles/workflowsOfRefactoring/contents.js</code>).</p>
+  <p>Build animations are controlled with a javascript object. It must
+  have the functions <code>forwards</code> and <code>backwards</code>,
+  it may also have functions <code>setup_forwards</code> and
+  <code>setup_backwards</code>. When you introduce a build, the
+  transformer will generate code in <code>contents.js</code> to add a
+  build to the deck using a call to <code>window.deck.addBuild</code>.
+  The <code>addBuild</code> function takes two arguments, the id of
+  the slide and the forwards/backwards javascript object. </p>
+  <p>The forwards and backwards functions operate as you might expect,
+  going forwards through the build runs the <code>forwards</code>
+  function and backwards runs <code>backwards</code>. The two setup
+  functions are there to get the slide into the right state
+  beforehand. When the slide is loaded into the DOM the setup functions
+  for all the builds on the slide are run depending on the position of
+  the slide. So if a slide is run into the previous position, you will
+  move into backwards, so the load process runs all the
+  <code>setup_backwards</code> functions on the slide to get it ready.
+  Most of the time you can do your setup just by running the reverse
+  function - that is <code>setup_backwards</code> just needs to run
+  <code>forwards</code>. If you don't supply a setup function then the
+  framework will do that for you, which is why the setup functions are
+  optional.</p>
+  <p>When you use the various build elements such as
+  <code>show</code>, <code>hide</code>, <code>char</code>,
+  <code>add-class</code>, and <code>remove-class</code>, then all the
+  code is generated that you need. If you want to do something more
+  fancy, however, you can instead use the <code>js-builder</code>
+  element. js-builder takes a single argument: target which is the
+  name of a javascript variable that contains one of these
+  forward/backward objects. You define these objects coffeescript
+  files <code>(*.coffee)</code> in your source folder.</p>
+  <p>For example, in my workflows of refactoring deck I have such a
+  custom build on the <a href =
+  "http://martinfowler.com/articles/workflowsOfRefactoring/#tdd">second
+  slide</a>. I specify the build in the XML file with </p>
+  <pre>
+<![CDATA[
+    <build>
+      <js-builder target = "red_green_build"/>
+    </build>
+]]>
+  </pre>
+  <p>I then define the animation in javascript with code in the coffee
+  file.</p>
+  <pre>
+<![CDATA[
+window.red_green_build =
+  startText: -> $('#tdd .b1')
+  endText:   -> $('#tdd .b2')
+  cycleImg:  -> $('#tdd .cycle')
+
+  setup_forwards: ->
+    @startText().show()
+    @endText().hide()
+  setup_backwards: ->
+    @startText().hide()
+    @endText().show()
+    @cycleImg().addClass('end')
+  forwards: ->
+    @startText().fadeOut(400)
+    setTimeout( (=> @cycleImg().addClass('end')), 400)
+    setTimeout( (=> @endText().fadeIn()), 600)
+  backwards: ->
+    @endText().fadeOut(200)
+    setTimeout( (=> @cycleImg().removeClass('end')), 200)
+    setTimeout( (=> @startText().fadeIn()), 200)
+]]>
+  </pre>
+  <p>This mechanism allows you to do anything you can do in javascript
+  as part of a slide animation. In my Big Data deck I used a <a href = "http://martinfowler.com/articles/BigData/#distributed">d3
+  animation on one slide</a>. If you need extra javascript files, put
+  them in a folder <code>js</code>in the source folder and they will
+  be copied into the target folder.</p>
+</body>
+</paper>

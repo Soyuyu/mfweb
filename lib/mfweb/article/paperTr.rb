@@ -176,6 +176,7 @@ class PaperTransformer < Mfweb::Core::Transformer
   def anchor_for anElement
     case
     when anElement['ID'] then anElement['ID']
+    when anElement['id'] then anElement['id']
     when not(section_title(anElement).empty?)
       section_title(anElement).to_anchor
     else nil

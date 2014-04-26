@@ -13,19 +13,20 @@ class Bibliography
   end
   def load_file file
     if FileTest.exists? file
-      root =  MfXml.root(File.new(file))
-      root.xpath('//bibliography/ref').each {|e| load_bib_entry e}
+      load(File.new(file).read)
     else
       puts $deferr, "Unable to find bibiography file: " + file
     end
   end
+  def load aStream
+    root = Nokogiri::XML(aStream)
+    refs = root.xpath('//bibliography/ref')
+    $stderr.puts "no entries in stream" if refs.empty?
+    refs.each {|e| load_bib_entry e}
+    self
+  end
   def load_bib_entry aRefElement
-    ref = BibRef.new
-    ref.name = aRefElement['name']
-    ref.text = aRefElement['text']
-    ref.isbn = extractIsbn aRefElement
-    ref.url = element_text(aRefElement.xpath('.//url').first)
-    ref.cite = element_text(aRefElement.xpath('cite').first)
+    ref = BibRef.new aRefElement
     @entries[ref.name] = ref 
   end
   def element_text anElement
@@ -51,38 +52,56 @@ class Bibliography
     result = @entries[arg]
     result ? result : NullBibRef.new(arg)
   end
+  def to_s
+    @entries.map{|e| e.to_s}.join("\n")
+  end
 end
 
 class BibRef
-  attr_accessor :name, :isbn, :text
   include  Mfweb::Core::HtmlUtils
-  def initialize
-    @url = nil
+  def initialize anElement
+    raise 'heck' unless anElement
+    @xml = anElement
+  end
+  def name
+    @xml['name']
   end
   def url
-    return @url if @url
-    return 'http://www.amazon.com/exec/obidos/ASIN/' + @isbn if @isbn
+    case 
+    when url_element then url_element.text
+    when isbn then 'http://www.amazon.com/exec/obidos/ASIN/' + isbn
+    else nil
+    end
   end
-  def url= arg
-    @url = arg
+  def url_element
+    @xml.xpath('.//url').first
+  end
+  def text
+    @xml['text']
   end
   def null?
     false
   end
   def cite
-    return @cite ? @cite : "[#{name}]"
-  end
-  def cite= arg
-    @cite = arg
+    return @xml.xpath('cite').first ? @xml.xpath('cite').first.text : "[#{name}]"
   end
   def link_around htmlEmitter, anElement
     text = anElement.text.empty? ? cite : anElement.text
-    if @url
-      htmlEmitter.a_ref(@url){htmlEmitter.text text}
-    elsif @isbn
-      htmlEmitter << amazon(@isbn, text)
+    if url_element
+      htmlEmitter.a_ref(url, url_element.attributes){htmlEmitter.text text}
+    elsif isbn
+      htmlEmitter << amazon(isbn, text)
     else
       htmlEmitter.text text
+    end
+  end
+  def isbn
+    book_elem = @xml.xpath('book').first
+    if book_elem
+      return book_elem.xpath('isbn').first.text
+    else
+      isbn_only = @xml.xpath('isbn').first
+      return isbn_only ? isbn_only.text : nil
     end
   end
 end
@@ -100,6 +119,10 @@ class NullBibRef < BibRef
   end
   def url
     nil
+  end
+  def link_around htmlEmitter, anElement
+    puts 'missing bib reference for : ' + @name
+    htmlEmitter.span('todo') {htmlEmitter << "[TODO Add Bib Reference for '%s']" % @name}
   end
 end
 

@@ -1,6 +1,8 @@
 require 'test/unit'
 require 'stringio'
-require 'infodeck/maker'
+
+
+require 'infodeck'
 
 module Mfweb::InfoDeck
 

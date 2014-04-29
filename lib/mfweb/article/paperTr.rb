@@ -201,7 +201,7 @@ class PaperTransformer < Mfweb::Core::Transformer
     name = anElement['name']
     href = "http://martinfowler.com/bliki/#{name}.html"
     if anElement.children.empty?
-      text = name.gsub(/[A-Z]/, ' \&')
+      text = name.gsub(/[A-Z]/, ' \&').strip
       text += 's' if 'plural' == anElement['mode'] 
       @html.a_ref(href){@html.text text}
     else

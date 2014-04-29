@@ -21,7 +21,6 @@ class Bibliography
   def load aStream
     root = Nokogiri::XML(aStream)
     refs = root.xpath('//bibliography/ref')
-    $stderr.puts "no entries in stream" if refs.empty?
     refs.each {|e| load_bib_entry e}
     self
   end

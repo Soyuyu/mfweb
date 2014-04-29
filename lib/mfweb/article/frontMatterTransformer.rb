@@ -128,13 +128,7 @@ module Mfweb::Article
         @html.ul  do
           xpath('body/section').each {|s| print_contents_for s}
         end
-        sidebars = xpath('body//sidebar[h]')
-        unless sidebars.empty?
-          @html.h(3){@html.text 'Sidebars'}
-          @html.ul  do
-            sidebars.each {|s| print_contents_for s}
-          end
-        end         
+        print_sidebars      
       end
     end
 
@@ -143,11 +137,24 @@ module Mfweb::Article
         @html.a_ref("##{anchor_for(aSection)}") do
           @html.text(section_title(aSection))
         end
-        subSections = xpath('section', aSection)
-        unless subSections.empty?
-          @html.ul {subSections.each {|s| print_contents_for s} }
+        unless contents_subsections(aSection).empty?
+          @html.ul {contents_subsections(aSection).each {|s| print_contents_for s} }
         end
       end
+    end
+
+    def contents_subsections aSection
+      xpath('section', aSection)
+    end
+
+    def print_sidebars
+      sidebars = xpath('body//sidebar[h]')
+      unless sidebars.empty?
+        @html.h(3){@html.text 'Sidebars'}
+        @html.ul  do
+          sidebars.each {|s| print_contents_for s}
+        end
+      end         
     end
 
     def handle_body anElement;  end #skip

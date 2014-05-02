@@ -1,4 +1,4 @@
-start = deck
+start = (deck | slide)
 
 
 any = element * {any}*

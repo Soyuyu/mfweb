@@ -45,8 +45,8 @@
       <show selector=".eg-show"/>
       <char selector=".lede"/>
     </build>
-  </slide>
-  <slide id="add-class">
+   </slide>
+   <slide id="add-class">
     <lede>You can add/remove any css class with builds</lede>
     <tile class="body body1">
       <p>Hides, shows, and chars work by adding and removing css
@@ -67,10 +67,21 @@
           <p>Multi-step animations can be awkward to do this way,
           although they are possible by typing transiton-delays in
           the css as I've done here. For more complex animation it's probably better to
-          program them directly in javascript - although I haven't
-          experiemented with this much so far.</p>
+          <a href = "/articles/javascript-animation.html">program them directly in javascript</a>. </p>
         </tile>
       </show>
     </build>
   </slide>
+   <slide id="immediate">
+     <lede>Use an immediate-build to start a slide with an
+     animation</lede>
+     <tile class = "text">
+       <p>If you want to start a slide with an animation, put it
+       inside an <b>immediate-build</b> element.</p>
+     </tile>
+     <immediate-build>
+       <add-class selector=".text" class =  "done"/>
+     </immediate-build>
+   </slide>
+
 </deck>

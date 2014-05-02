@@ -76,4 +76,16 @@
     }
       
   }
+
+  #immediate {
+    .text {
+      background-color: lavenderblush;
+      padding: 5em;
+      left: -500px;
+      top: 300px;              
+    }
+    .text.done {
+      left: 0;
+    }
+  }
 }

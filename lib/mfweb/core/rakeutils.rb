@@ -49,7 +49,7 @@ def xslTask src, relativeTargetDir, taskSymbol, style, css = 'global.css'
 end   
 
 def copyTask srcGlob, targetDirSuffix, taskSymbol 
-  targetDir = BUILD_DIR + targetDirSuffix
+  targetDir = build_dir_path(targetDirSuffix)
   FileList[srcGlob].each do |f|
     target = File.join targetDir, File.basename(f)
     file target => [f] do |t|

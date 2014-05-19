@@ -10,7 +10,7 @@ class PageSkeleton
     @js_inline = []
     @banner_photo = nil
     @is_draft = false
-    @meta_tags = {}
+    @meta_tags = []
   end
   def emit aStream, title
     @html = aStream.kind_of?(HtmlEmitter) ? aStream : 
@@ -48,8 +48,9 @@ class PageSkeleton
     @html << '<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />'
   end
   def emit_meta_tags
-    @meta_tags.each do |k,v| 
-      @html << "<meta name = '#{k}' content = '#{v}'/>"
+    @meta_tags.each do |t| 
+      @html << "<meta " <<
+        t.map{|k, v| "#{k} = '#{v}'"}.join(" ") << "/>"
     end
   end
   def with_css *arg
@@ -68,9 +69,9 @@ class PageSkeleton
   def with_banner_for_tags arg
     return with_banner_photo(pick_photo(arg))
   end
-  def with_meta_tag property, content
+  def with_meta_tag attrs
     result = self.dup
-    new_meta = result.meta_tags.merge({property => content})
+    new_meta = result.meta_tags + [attrs]
     result.instance_variable_set(:@meta_tags, new_meta)
     return result
   end

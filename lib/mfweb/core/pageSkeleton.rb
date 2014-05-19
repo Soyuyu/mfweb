@@ -49,7 +49,7 @@ class PageSkeleton
   end
   def emit_meta_tags
     @meta_tags.each do |k,v| 
-      @html << "<meta property = '#{k}' content = '#{v}'/>"
+      @html << "<meta name = '#{k}' content = '#{v}'/>"
     end
   end
   def with_css *arg

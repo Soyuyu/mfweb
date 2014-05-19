@@ -28,7 +28,7 @@ def sassTask srcGlob, relativeTargetDir, taskSymbol, base_deps = []
       require "sass"
       sass = Sass::Engine.new(File.read(src), 
         :load_paths => [srcDir] + CSS_PATHS,
-        :style => :compressed,
+        # :style => :compressed,
         :syntax => :scss)
       File.open(target, 'w') {|out| out << sass.render}
      end

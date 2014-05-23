@@ -67,6 +67,7 @@ class BibRef
   end
   def url
     case 
+    when @xml['url'] then @xml['url']
     when url_element then url_element.text
     when isbn then 'http://www.amazon.com/exec/obidos/ASIN/' + isbn
     else nil
@@ -84,11 +85,14 @@ class BibRef
   def cite
     return @xml.xpath('cite').first ? @xml.xpath('cite').first.text : "[#{name}]"
   end
-  def link_around htmlEmitter, anElement
-    text = anElement.text.empty? ? cite : anElement.text
-    if url_element
+  def link_around htmlEmitter, aCiteElement
+    text = aCiteElement.text.empty? ? cite : aCiteElement.text
+    case
+    when @xml['url']
+      htmlEmitter.a_ref(@xml['url']){htmlEmitter.text text}
+    when url_element
       htmlEmitter.a_ref(url, url_element.attributes){htmlEmitter.text text}
-    elsif isbn
+    when isbn
       htmlEmitter << amazon(isbn, text)
     else
       htmlEmitter.text text
@@ -119,7 +123,7 @@ class NullBibRef < BibRef
   def url
     nil
   end
-  def link_around htmlEmitter, anElement
+  def link_around htmlEmitter, aCiteElement
     puts 'missing bib reference for : ' + @name
     htmlEmitter.span('todo') {htmlEmitter << "[TODO Add Bib Reference for '%s']" % @name}
   end

@@ -132,7 +132,7 @@ blockquote {
   background: linear-gradient(rgb(176,29,218), $purple);
 }
 
-.button {
+@mixin span-button {
   color: darken($light-gray-background, 60%);
   font-family: $sans;
   font-style: normal;
@@ -144,13 +144,10 @@ blockquote {
   white-space: nowrap;
   background: linear-gradient($light-gray-background, darken($light-gray-background, 30%));
   cursor: pointer;
+  border: thin solid black;
 
-  :hover {
+  &:hover {
     background: $light-gray-background;
   }
 }
 
-.button:hover {
-  background: $light-gray-background;
-  text-decoration: none;
-}

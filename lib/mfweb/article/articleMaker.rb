@@ -13,7 +13,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     @pattern_server = PatternServer.new
     @code_server = CodeServer.new
     @bib_server = Bibliography.new
-    @footnote_server = FootnoteServer.new
+    @footnote_server = FootnoteServer.new(infile)
     @code_dir = './'
   end
 

@@ -12,7 +12,7 @@ module Mfweb::InfoDeck
       @output_dir = output_dir
       @partials = {}
       @asset_server = AssetServer.new('.')
-      @css_paths = %w[lib/mfweb/infodeck css]
+      @css_paths = %w[lib/mfweb/infodeck css] + [input_dir]
       @google_analytics_file = 'partials/footer/google-analytics.html'
       @mfweb_dir = "mfweb/"
       @css_out = StringIO.new
@@ -149,7 +149,7 @@ module Mfweb::InfoDeck
 
     def build_css
       sass = Sass::Engine.new(File.read(base_scss), 
-                              :syntax => :scss, :load_paths => @css_paths)
+                              :syntax => :scss, :load_paths => css_paths)
       File.open("#{@output_dir}/infodeck.css", 'w') do |out| 
         out << sass.render
         return if @css_out.string.empty?
@@ -250,7 +250,7 @@ module Mfweb::InfoDeck
     end
     def build_fallback_css
       sass = Sass::Engine.new(File.read(asset('fallback.scss')), 
-                              :syntax => :scss, :load_paths => @css_paths)
+                              :syntax => :scss, :load_paths => css_paths)
       File.open("#{@output_dir}/fallback.css", 'w') do |out| 
         out << sass.render
       end

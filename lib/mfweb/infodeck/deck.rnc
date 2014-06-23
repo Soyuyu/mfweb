@@ -94,6 +94,8 @@ tile.content =
     | quote
     | element abstract {inline}
     | element list-tags {empty}
+    | include_element
+
 
 quote = element quote {
   attribute name {text},

@@ -157,6 +157,7 @@ end
 #TODO replace with the default maker that's easier to use
 
 class TransformerPageRenderer 
+  attr_accessor :transformer_class
   def initialize infile, outfile, transformerClass, skeleton
     @in_file = infile
     @out_file = outfile
@@ -180,7 +181,7 @@ class TransformerPageRenderer
   end 
 
   def create_transformer
-    @transformer_class.new(@html, @root, self)
+    transformer_class.new(@html, @root, self)
   end
 end
 

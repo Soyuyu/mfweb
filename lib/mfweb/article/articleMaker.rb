@@ -26,17 +26,16 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     @transformer.render
   end
 
-  def create_transformer
-    if @transformer_class 
-      return super
-    else
-      return case @root.name
-             when 'paper'   then PaperTransformer.new(@html, @root, self)
-             when 'pattern' then PatternHandler.new(@html, @root, self)
-             else raise "no transformer for #{@in_file}"
-             end
-    end
+  def transformer_class
+    return @transformer_class if @transformer_class
+    return case @root.name
+           when 'paper'   then PaperTransformer
+           when 'pattern' then PatternHandler
+           else fail "no transformer for #{@in_file}"
+           end
+    
   end
+
 
   def key
     return File.basename(@out_file, '.html')

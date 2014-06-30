@@ -19,6 +19,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
 
   def load
     super
+    resolve_includes @root
     @skeleton = @skeleton.as_draft if 'draft' == @root['status']
   end
 
@@ -47,6 +48,13 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
       return @catalog[key].tags
     else
       return []
+    end
+  end
+  def resolve_includes aRoot
+    aRoot.css('include').each do |elem|
+      inclusion = Nokogiri::XML(File.read(input_dir(elem['src']))).root
+      resolve_includes inclusion
+      elem.replace inclusion.children
     end
   end
 end

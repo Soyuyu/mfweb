@@ -183,6 +183,12 @@ class TransformerPageRenderer
   def create_transformer
     transformer_class.new(@html, @root, self)
   end
+
+  def input_dir (path = nil)
+    dir = @in_file.pathmap("%d/")
+    return path ? File.join(dir,path) : dir
+  end
+
 end
 
 end

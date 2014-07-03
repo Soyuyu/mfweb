@@ -189,6 +189,12 @@ class TransformerPageRenderer
     File.join dir, *path
   end
 
+  def output_dir *path
+    dir = @out_file.pathmap("%d/")
+    File.join dir, *path
+  end
+
+
 end
 
 end

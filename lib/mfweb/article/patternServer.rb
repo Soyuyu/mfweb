@@ -1,12 +1,12 @@
 module Mfweb::Article
 
 class PatternServer
-  def initialize path = nil
-    @path = path
+  def initialize paths = nil
+    @paths = *paths
     @patterns = {}
   end
   def load
-    @path.each  do |i| 
+    @paths.each  do |i| 
       if File.directory? i
         load_dir(i) 
       else

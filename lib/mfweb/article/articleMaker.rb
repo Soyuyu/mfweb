@@ -20,6 +20,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
   def load
     super
     @is_draft = ('draft' == @root['status'])
+    @pattern_server.load
     resolve_includes @root
     @skeleton = @skeleton.as_draft if draft?
   end

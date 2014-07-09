@@ -55,10 +55,12 @@ class PaperTransformer < Mfweb::Core::Transformer
     return @root.at_xpath('/paper/title').text
   end
 
-  def print_front_matter
-    tr = "short" == @root['style'] ? 
-      ShortFrontMatterTransformer : FrontMatterTransformer
-    tr.new(@html, @root, @maker).handle(@root)
+  def front_matter_transformer
+    "short" == @root['style'] ? ShortFrontMatterTransformer : FrontMatterTransformer
+  end
+
+  def print_front_matter    
+    front_matter_transformer.new(@html, @root, @maker).handle(@root)
   end
   def handle_topImage anElement; end
 

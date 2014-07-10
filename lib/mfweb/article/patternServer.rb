@@ -1,8 +1,8 @@
 module Mfweb::Article
 
 class PatternServer
-  def initialize paths = nil
-    @paths = *paths
+  def initialize *paths
+    @paths = paths
     @patterns = {}
   end
   def load

@@ -12,6 +12,7 @@ module Mfweb::InfoDeck
     BUILD_DIR = 'build/test/'
 
     def run_test_maker
+      flunk "Unable to find Sass::Engine, run tests with bundle exec" unless defined? Sass::Engine
       mkdir_p BUILD_DIR, :verbose => false
       maker = DeckMaker.new('test/infodeck/makertest/deck.xml', BUILD_DIR)
       maker.asset_server = AssetServer.new("lib/mfweb/infodeck")

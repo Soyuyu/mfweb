@@ -219,8 +219,8 @@ div.frontMatter {
   div.soundbite {
     @extend .sidebar;
     color: $purple;
-    font-size: 20px;
-    font-family: $cursive-font;
+    font-size: 110%;
+    font-style: italic;
     width: 20em;
     p {margin: 0;}
   }
@@ -238,7 +238,7 @@ div.footnote-list {
   background-color: $light-gray-background;
   margin: 2em -20% 5em 40%;
   h2 {
-    font-family: $cursive-font;
+    font-style: italic;
     font-weight: normal;
     margin-bottom: 0;
     color: $purple;

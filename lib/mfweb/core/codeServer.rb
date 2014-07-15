@@ -1,4 +1,4 @@
-module Mfweb::Article
+module Mfweb::Core
 
 class CodeServer
 

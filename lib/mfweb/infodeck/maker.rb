@@ -27,7 +27,7 @@ module Mfweb::InfoDeck
         unless File.exists? @mfweb_dir + 'lib/mfweb/infodeck.rb'
           raise "unable to find mfweb library at <#{@mfweb_dir}>" 
         end
-        @code_server = Mfweb::Article::CodeServer.new(input_dir + 'code/')
+        @code_server = Mfweb::Core::CodeServer.new(input_dir + 'code/')
         @gen_dir = File.join('gen', input_dir)
         @js = JavascriptEmitter.new
         @build_collector = BuildCollector.new

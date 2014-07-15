@@ -1,6 +1,6 @@
 module Mfweb::InfoDeck
   class RegexpHighlighterTransformer < Mfweb::Core::Transformer
-    include Mfweb::Article
+    include Mfweb::Core
     def initialize out_emitter, in_root, maker
       super(out_emitter, in_root)
       @maker = maker

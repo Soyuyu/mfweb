@@ -98,7 +98,7 @@ class SimpleArticleBuilder
         maker = Mfweb::Article::ArticleMaker.new( t.prerequisites[0], 
                                                   t.name, skeleton)
         maker.bib_server = Mfweb::Article::Bibliography.new src
-        maker.code_server = Mfweb::Article::CodeServer.new 'articles/simple/code/'   
+        maker.code_server = Mfweb::Core::CodeServer.new 'articles/simple/code/'   
         maker.footnote_server = Mfweb::Article::FootnoteServer.new src
         customize_maker maker, src
         begin

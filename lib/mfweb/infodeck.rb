@@ -10,9 +10,6 @@ module InfoDeck
   include Mfweb::Core
 end
 
-#TODO move codeserver to core
-require 'mfweb/article' # TODO break this dependency (move code server to core)
-
 require 'mfweb/infodeck/assetServer'
 require 'mfweb/infodeck/maker'
 require 'mfweb/infodeck/deckSkeleton'

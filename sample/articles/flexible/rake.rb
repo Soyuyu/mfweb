@@ -5,7 +5,7 @@ FileList['articles/flexible/flexible-article.xml'].each do |src|
     transformer = './articles/flexible/flexible.rb'
     require transformer
 		maker = Mfweb::Article::ArticleMaker.new(src, target, skeleton, FlexibleTr)
-		maker.code_server = Mfweb::Article::CodeServer.new 'articles/flexible/code/'
+		maker.code_server = Mfweb::Core::CodeServer.new 'articles/flexible/code/'
     maker.run
 	end
 	task :articles => target

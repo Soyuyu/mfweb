@@ -18,5 +18,6 @@ require 'mfweb/core/transformer.rb'
 require 'mfweb/core/xpathFunctions.rb'
 require 'mfweb/core/maker'
 require 'mfweb/core/author'
+require 'mfweb/core/codeServer.rb'
 
 

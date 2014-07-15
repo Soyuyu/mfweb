@@ -42,23 +42,31 @@ class CodeServer
     end
     html.element('pre', attributes) do
       begin
-        use_class_name = 'true' == anElement['useClassName']
-        unless use_class_name
-          if anElement['class'] #TODO remove class element from old docs
-            html.text "class #{anElement['class']}...\n"
-          elsif anElement['label']
-            html.text "#{anElement['label']}...\n"
-          end
-        end
-        frag = find anElement['file'], anElement['fragment']
-        html.text "#{frag.class}...\n" if use_class_name
-        html.cdata(frag.result.gsub("\t", "  "))
+        frag = find(anElement['file'], anElement['fragment'])
+        emit_collected_code(html, frag, anElement)
       rescue MissingFragmentFile
         html.error "missing file: #{anElement['file']} in #{path}"
       rescue MissingFragment
         html.error "missing fragment: #{anElement['fragment']}"
       end
     end
+  end
+
+  def emit_collected_code html, frag, anElement
+    heading = case
+              when 'true' == anElement['useClassName']
+                "#{frag.class}...\n"
+              when anElement['label']
+                "#{anElement['label']}...\n"
+              when anElement['class'] #TODO remove class element from old docs
+                "class #{anElement['class']}...\n"
+              else nil
+              end
+    leading = heading ? 2 : 0
+    body = Indenter.new(frag.result.gsub("\t", "  ")).leading(leading)
+    # body = frag.result.gsub("\t", "  ")
+    html.text heading if heading
+    html.cdata(body)
   end
 
 end
@@ -78,6 +86,10 @@ class Fragmentor
 
   def run
     raise MissingFragmentFile, @file unless FileTest.exists? @file
+    extract_fragments
+  end
+
+  def extract_fragments
     fragsByName = Hash.new
     fragNames = []
     File.new(@file).each_line do |line|

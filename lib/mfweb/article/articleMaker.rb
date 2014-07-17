@@ -11,7 +11,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
       with_banner_for_tags(tags)
     puts "#{@in_file} -> #{@out_file}" #TODO move to rake task
     @pattern_server = PatternServer.new
-    @code_server = CodeServer.new
+    @code_server = Mfweb::Core::CodeServer.new
     @bib_server = Bibliography.new
     @footnote_server = FootnoteServer.new(infile)
     @code_dir = './'

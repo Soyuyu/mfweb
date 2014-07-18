@@ -1,7 +1,7 @@
 module Mfweb::InfoDeck
   class DeckSkeleton
     include Mfweb::Core::HtmlUtils
-    attr_accessor :js_files, :maker, :table_of_contents
+    attr_accessor :js_files, :maker, :table_of_contents, :logo
     def initialize 
       @css = []
     end
@@ -62,9 +62,8 @@ module Mfweb::InfoDeck
       @js_files.each {|f| @html.js f}
     end
     def emit_logo
-      @html.a_ref("http://martinfowler.com") do
-        @html.element_span 'img', {:src => 'mf-name-white.png', 
-          :class => "logo"}
+      @html.a_ref(@maker.logo[:url]) do
+        @html.element_span 'img', {:src => @maker.logo[:src], :class => "logo"}
       end
     end
     def emit_navigator
@@ -141,5 +140,6 @@ module Mfweb::InfoDeck
         @html.p {@html << "Loading... please wait"}
       end
     end
+    
   end
 end

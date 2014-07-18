@@ -71,6 +71,10 @@ module Mfweb::InfoDeck
       end
     end 
 
+    def logo 
+      {src: 'mf-name-white.png', url: "http://martinfowler.com"}
+    end
+
     def table_of_contents
       titles = @root.css('slide[title]')
       return nil if titles.empty?

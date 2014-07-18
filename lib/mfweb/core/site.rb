@@ -23,9 +23,14 @@ class Site
     load_skeleton
     return @skeleton
   end
+  def author_server
+    @author_server ||= load_authors
+    return @author_server
+  end
 
   # hook methods
   def load_skeleton; end
   def load_catalog; end
+  def load_authors; end
 end
 end

@@ -2,9 +2,10 @@ module Mfweb::Article
 
 class ArticleMaker < Mfweb::Core::TransformerPageRenderer
   attr_accessor :pattern_server, 
-    :code_server, :bib_server, :footnote_server, :catalog
+    :code_server, :bib_server, :footnote_server, :catalog, :author_server
   def initialize infile, outfile, skeleton = nil, transformerClass = nil
     @catalog = Mfweb::Core::Site.catalog
+    @author_server = Mfweb::Core::Site.author_server
     super(infile, outfile, transformerClass, skeleton)
     @skeleton ||=  Mfweb::Core::Site.
       skeleton.with_css('article.css').
@@ -62,6 +63,9 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
       resolve_includes inclusion
       elem.replace inclusion.children
     end
+  end
+  def author key
+    @author_server.get key
   end
 end
 

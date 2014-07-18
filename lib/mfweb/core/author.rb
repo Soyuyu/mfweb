@@ -20,5 +20,8 @@ module Mfweb::Core
     def key
       @data['key']
     end
+    def xml
+      @data
+    end
   end
 end

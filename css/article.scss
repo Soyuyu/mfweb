@@ -3,6 +3,8 @@
 
 $paper-font-size: 16px;
 
+$side-color: $tw-earth1;
+
 body {
   font-size: $paper-font-size;
   font-family: $sans;
@@ -211,14 +213,14 @@ div.frontMatter {
     margin: 1em -15em 1em 2em;
     font-size: 80%;
     font-family: $sans;
-    background-color: $light-gray_background;
+    background-color: $side-color;
     line-height: $default-line-height;
     padding: 1em; 
   }
 
   div.soundbite {
     @extend .sidebar;
-    color: $purple;
+    color: $tw-green3;
     font-size: 110%;
     font-style: italic;
     width: 20em;
@@ -256,5 +258,17 @@ div.footnote-list {
     margin-left: 2em;
   }
 }
+
+.next {
+  background-color: $tw-earth1;
+  color: $tw-green3;
+  padding: 10px;
+  font-style: italic;
+  font-size: 110%;
+  a:link, a:visited {
+    color: $tw-green1;
+  }
+}
+
 
 @import 'short-front'

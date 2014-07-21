@@ -3,6 +3,13 @@ MFWEB_DIR = './'
 
 require 'mfweb/infodeck/infodeck.rake'
 
+class TestSite < Mfweb::Core::Site
+  def load_skeleton
+    @skeleton = Mfweb::Core::PageSkeleton.new nil, nil, []
+  end
+end
+
+
 namespace :infodeck do
   desc "builds infodeck jasmine page"
   task :jasmine => ["^test", :js] do
@@ -17,10 +24,12 @@ namespace :infodeck do
     maker.google_analytics_file = nil
     maker.css_paths += %w[sample/css]
     sh "coffee  -j #{target}/infodeck-tester.js -c #{src}*.coffee", QUIET
+    Mfweb::Core::Site.init(TestSite.new)
     maker.run
     create_jasmine_file src, target
-    log "use `rake jasmine_server` to launch webserver to run tests at "
+    log "use `rake infodeck:jasmine_server` to launch webserver to run tests at "
     log "http://localhost:2929/jasmine/test.html"
+    log "see test deck at http://localhost:2929/jasmine"
   end
 
   desc "runs server for infodeck jasmine page"
@@ -92,6 +101,7 @@ namespace :infodeck do
     end
     def emit_js_in_body; end
     def emit_help_panel; end
+    def emit_logo; end
   end
 
 

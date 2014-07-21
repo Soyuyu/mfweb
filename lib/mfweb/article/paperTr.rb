@@ -251,6 +251,7 @@ class PaperTransformer < Mfweb::Core::Transformer
     handle_tbd anElement
   end
   def handle_tbd anElement
+    return if %w[never later].include? anElement['when']
     if draft?
       emitTbd anElement
     else
@@ -279,7 +280,9 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.a_ref('#' + a_name(ref)) {@html.text ref_text}
   end 
   def handle_pre anElement
-    @html.element('pre') {apply anElement}
+    attrs = {}
+    attrs['class'] = anElement['class'] if anElement['class']
+    @html.element('pre', attrs) {apply anElement}
   end
 
   def handle_insertCode anElement

@@ -13,3 +13,35 @@ $text-line-height: 1.4;
 $light-purple:  #f8c8fe;
 $dark-gray-background: #666666;
 $light-gray-background: #EEEEEE;
+
+
+// TW Colors from playbook
+
+$tw-earth1: rgb(254, 224, 201);
+$tw-earth2: rgb(240, 186, 149);
+$tw-earth3: rgb(158, 120,  95);
+$tw-earth4: rgb( 94,  62,  42);
+$tw-grey:   rgb(128, 140, 133);
+
+/*
+tw-grey is hsl(145, 5%, 52%)
+*/
+
+
+$tw-yellow: rgb(255, 244,  80);
+$tw-orange: rgb(247, 143,  49);
+$tw-red:    rgb(238,  49,  45);
+$tw-maroon: rgb(177,  28,  84);
+$tw-purple: rgb(106,  37, 105);
+$tw-pink:   rgb(239,  91, 161);
+
+
+$tw-green1: rgb(181, 185, 53);
+$tw-green2: rgb(137, 183, 127);
+$tw-green3: rgb(17, 170, 88);
+$tw-blue1: rgb(128, 201, 207);
+$tw-blue2: rgb(38, 189, 207);
+$tw-blue3: rgb(26, 115, 186);
+
+
+$earth-background: transparentize($tw-earth1, 0.5);

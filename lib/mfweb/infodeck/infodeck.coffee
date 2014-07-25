@@ -9,7 +9,7 @@ class Infodeck
     @loadingCurrent = LoadingSlide.newResolved()
 
   log: (message) ->
-    # console.log(message)
+    #console.log(message)
     false
 
   resolvedPromise: ->

@@ -355,6 +355,9 @@ describe "infodeck object", ->
 
         
     it "performs backward setup build on bacwards", ->
+      # fails mostly when run in suite
+      # passes when run solo
+      # mocha version passes reliably
       runs ->
         window.deck.location = -> {hash: "#less"}
         window.deck.load()
@@ -368,7 +371,8 @@ describe "infodeck object", ->
         expect($('.create-text')).toHaveClass('charred')
 
       
-    it "goes forwards with a build", ->
+    it "jump to slide with builds then forwards", ->
+      # fails reliably in jasmine and mocha
       runs ->
         window.deck.location = -> {hash: "#begin"}
         window.deck.load()
@@ -395,7 +399,9 @@ describe "infodeck object", ->
       runs ->
         expect().toHaveSlides('begin', 'less', undefined)
       
-    it "goes backwards into a slide with a build", ->
+    it "backwards into build slide", ->
+      # fails occasionally in suite, passes solo
+      # passes in mocha
       runs ->
         window.deck.location = -> {hash: "#less"}
         window.deck.load()
@@ -436,6 +442,8 @@ describe "infodeck object", ->
           expect($('g.when')).not.toHaveClass('hidden')
 
   it "skips backwards then forwards to initial state of slide", ->
+    # fails occasionally in suite, passes solo
+    # passes in mocha
     runs ->
       window.deck.location = -> {hash: "#less"}
       window.deck.load()
@@ -451,6 +459,8 @@ describe "infodeck object", ->
       expect($('.insert-text')).toHaveClass('hidden')
 
   it "skips forwards then backwards to final state of slide", ->
+    # fails very occasionally in suite
+    # fails regularly in mocha
     runs ->
       window.deck.location = -> {hash: "#contents"}
       window.deck.load()

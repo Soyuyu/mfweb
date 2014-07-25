@@ -30,7 +30,7 @@ class Infodeck
       slide = $(data)
       @attachSlide(slide, 'current', @loadingCurrent)
       @removeLoadingMessage()
-      @busy(true)
+      @busy(true) if 'pending' == @loadingCurrent.state()
     @loadingCurrent.domLoading.fail =>
       console.log ("error reading current slide #{@currentURI()}")
 

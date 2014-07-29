@@ -3,7 +3,7 @@
 
 $paper-font-size: 16px;
 
-$side-color: $tw-earth1;
+$side-color: $earth-background;
 
 body {
   font-size: $paper-font-size;
@@ -225,6 +225,7 @@ div.frontMatter {
     font-style: italic;
     width: 20em;
     p {margin: 0;}
+    i {font-weight: bold;}
   }
 
 div.footnote-list {

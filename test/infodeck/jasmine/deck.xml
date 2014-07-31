@@ -1,43 +1,37 @@
 <deck title="Infodeck Tests" >
-    <partial id="tw-logo">
+  <partial id="tw-logo">
     <img src = "TW.svg" top="30" right="20" width="200" href="http://www.thoughtworks.com/"/>
   </partial>
   <slide id = "cover">
     <include ref="tw-logo"/>
-     <lede left="100" top="150">Tests for Jasmine to work on</lede>
-     <tile left="250" top="200" width="400">
-       <p>Tests, taken from the schemaless material</p>
-     </tile>
+    <lede left="100" top="150">Tests for Jasmine to work on</lede>
+    <tile left="250" top="200" width="400">
+      <p>Tests, taken from the schemaless material</p>
+    </tile>
     <tile  left="50" top = "450"><p><b><a href="http://martinfowler.com">Martin
     Fowler</a></b></p>
     <p>December 7 2012</p>
     </tile>
     <img src="mf.jpg" width = "100" top = "450" left = "200"/>
-   </slide>
-   <slide id = "contents">
-     <lede top="10">Our agenda</lede>
-     <diagram src="what-when.svg" width="960" top="50"/>
-     <tile top="300">
-       <tile left="100">
-       <ul  class = "contents">
-         <li><a href = "#begin">What we mean by "schemaless"</a></li>
-         <li><a href = "#implicit-schema">The notion of an implicit
-         schema</a></li>
-         <li><a href = "#in-memory">In-memory schema</a></li>
-         <li><a href = "#relational-schemaless">Implementing schemaless  structures in relational databases</a></li>
-         <li><a href = "#storage">Storage and Predicate Schemas</a></li>
-       </ul>
-     </tile>
-     <tile left = "600" >
-       <ul class = "contents">
-         <li><a href = "#implicit-hidden">Implicit schemas are hidden</a></li>
-         <li><a href = "#custom-fields">Custom fields</a></li>
-         <li><a href = "#non-uniform-types">Non-uniform types</a></li>
-         <li><a href = "#schema-migration">Schema Migration</a></li>
-       </ul>
-     </tile>
-     </tile>
-   </slide>
+  </slide>
+  <slide id = "contents">
+    <lede top="10">Our agenda</lede>
+    <diagram src="what-when.svg" width="960" top="50"/>
+    <tile top="300">
+      <tile left="100">
+        <ul  class = "contents">
+          <li><a href = "#begin">What we mean by "schemaless"</a></li>
+          <li><a href = "#what">The notion of an implicit
+          schema</a></li>
+          <li>In-memory schema</li>
+          <li>Implementing schemaless  structures in relational databases</li>
+          <li>Storage and Predicate Schemas</li>
+        </ul>
+      </tile>
+    </tile>
+   <tile  left="50" top = "450"><p><b><a href="http://martinfowler.com">Martin
+    Fowler</a></b></p></tile>
+  </slide>
 
 
   <deck src="define.xml"/>

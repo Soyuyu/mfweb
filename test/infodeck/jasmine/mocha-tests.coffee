@@ -37,7 +37,12 @@ doQuiet = (result, retries) ->
     #console.log("DELAY: #{retries} at " + $('.slide.current').attr('id'))
     Q.delay(10).then(-> doQuiet(result, retries - 1))
     
-    
+currentID = ->
+  sel = $(".slide.current")
+  if sel.length == 0
+    "No Slide"
+  else
+    sel.first().attr('id')
 
       
 
@@ -101,8 +106,9 @@ assertAtSecondBuild = ->
 describe "Infodeck Tests", ->
   beforeEach ->
     #make sure we have a fresh deck
-    Q(deck.loading()).then(initialize_deck())
-
+    Q(deck.loading()).then ->
+      initialize_deck()
+      window.deck.location = -> {hash: null}
 
   describe "initial load", ->
   
@@ -330,13 +336,4 @@ describe "Infodeck Tests", ->
         loaded()
       .then(backwards)
       .then(assertAtSecondBuild)
-       
 
-        
-
-      
-        
-          
-
-
-      

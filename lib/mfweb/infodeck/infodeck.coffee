@@ -8,8 +8,8 @@ class Infodeck
     @loadingNext = LoadingSlide.newResolved()
     @loadingCurrent = LoadingSlide.newResolved()
 
-  log: (message) ->
-    #console.log(message)
+  log: (args...) ->
+    #console.log(args...)
     false
 
   resolvedPromise: ->
@@ -146,6 +146,7 @@ class Infodeck
     @loadNextSlide()
     @loadPreviousSlide()
     @loadingCurrent.done =>
+      @saveHistory()
       @raiseCurtain =>
         @currentSlide().trigger('deck-becameCurrent')
         @buildsFor(@currentSlide())?.immediateBuild?.forwards()
@@ -168,6 +169,7 @@ class Infodeck
     $('.current').on "transitionend webkitTransitionEnd oTransitionEnd", =>
       @currentSlide().trigger('deck-becameCurrent')
       @buildsFor(@currentSlide())?.immediateBuild?.forwards()
+    @saveHistory()
     @loadNextSlide()
 
   showPreviousSlide: ->
@@ -186,7 +188,13 @@ class Infodeck
     wasCurrent.removeClass('current').addClass('next')
     @currentSlide().trigger('deck-becameCurrent')
     @log "<- " + @currentURI()
+    @saveHistory()
     @loadPreviousSlide()
+
+  saveHistory: ->
+    id = @currentSlide().attr('id')
+    location_hash = if @slideIndex == 0 then "" else "#" + id
+    window.history.replaceState({id:id}, id, location_hash)
 
   baseLocation: ->
     'http://' + window.location.host + window.location.pathname
@@ -308,14 +316,13 @@ class Infodeck
     @loadingPrevious.always =>
       @runSetupBuild($('.slide.next'), 'next')
 
-  pushSlideUrl: ->
-    history.pushState('','',deck.permalink())
-
   reloadThisSlide: ->
     window.location.replace(@permalink())
     window.location.reload()
     
-
+  popStateHandler: (ev) ->
+    @log "pop state ", ev, ev.state
+    @goToHash(@location().hash) unless @loading().state() == 'pending'
 
   bindKeyboardEvents: ->
     $(document).keyup (event) =>

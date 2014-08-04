@@ -7,9 +7,6 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     @catalog = Mfweb::Core::Site.catalog
     @author_server = Mfweb::Core::Site.author_server
     super(infile, outfile, transformerClass, skeleton)
-    @skeleton ||=  Mfweb::Core::Site.
-      skeleton.with_css('article.css').
-      with_banner_for_tags(tags)
     puts "#{@in_file} -> #{@out_file}" #TODO move to rake task
     @pattern_server = PatternServer.new
     @code_server = Mfweb::Core::CodeServer.new
@@ -23,6 +20,9 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     @is_draft = ('draft' == @root['status'])
     @pattern_server.load
     resolve_includes @root
+    @skeleton ||=  Mfweb::Core::Site.
+      skeleton.with_css('article.css').
+      with_banner_for_tags(tags)
     @skeleton = @skeleton.as_draft if draft?
   end
 
@@ -45,14 +45,14 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
   end
 
 
-  def key
-    return File.basename(@out_file, '.html')
+  def catalog_ref
+    return @root['catalog-ref'] || File.basename(@out_file, '.html')
   end
 
   def tags
     # some old papers are not registered in catalog
-    if @catalog && @catalog[key]
-      return @catalog[key].tags
+    if @catalog && @catalog[catalog_ref]
+      return @catalog[catalog_ref].tags
     else
       return []
     end

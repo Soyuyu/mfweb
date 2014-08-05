@@ -6,7 +6,7 @@ module Mfweb::InfoDeck
     include FileUtils
     attr_reader :output_dir, :js
     attr_accessor :code_server, 
-       :asset_server, :google_analytics_file, :css_paths, :mfweb_dir
+       :asset_server, :google_analytics_file, :css_paths, :mfweb_dir, :js_dir
     def initialize input_file, output_dir
       @input_file = input_file
       @output_dir = output_dir
@@ -16,6 +16,7 @@ module Mfweb::InfoDeck
       @google_analytics_file = 'partials/footer/google-analytics.html'
       @mfweb_dir = "mfweb/"
       @css_out = StringIO.new
+      @js_dir = File.join(@output_dir, 'js')
     end
 
     
@@ -39,7 +40,8 @@ module Mfweb::InfoDeck
         install @mfweb_dir + 'lib/mfweb/infodeck/public/*'
         install @mfweb_dir + 'lib/mfweb/infodeck/modernizr.custom.js'
         install_graphics
-        install_jquery_svg
+        install_jquery_svg_css
+        install_js_components
         js_files = Dir[File.join(input_dir, 'js/*.js')]
         js_files.each {|f| install f}
         skeleton = DeckSkeleton.new
@@ -98,10 +100,19 @@ module Mfweb::InfoDeck
       end
     end
 
-    def input_dir
-      @input_file.pathmap("%d/")
+    def input_dir *path
+      dir = @input_file.pathmap("%d/")
+      File.join dir, *path
     end
-    
+
+    def output_dir *path
+      File.join @output_dir, *path
+    end
+
+    def output_file
+      output_dir 'index.html'
+    end
+
     def load_included_decks aDeckRoot
       aDeckRoot.css('deck[src]').each do |d|
         inclusion = Nokogiri::XML(File.read(File.join(input_dir, d['src']))).root
@@ -121,10 +132,6 @@ module Mfweb::InfoDeck
       SvgInstaller.new(file_name, @output_dir).run
     end
 
-    def output_file
-      File.join @output_dir, 'index.html'
-    end
-
     def uri
       @output_dir.pathmap "%{build,}p"
     end
@@ -134,11 +141,13 @@ module Mfweb::InfoDeck
       ruby_files.each {|f| require f}
     end
 
-    def install glob
+    def install glob, subdir = nil
       files = Dir[glob]
+      target = subdir ? File.join(@output_dir, subdir) : @output_dir
+      mkdir_p target, :verbose => false
       files.each do |f|
         log.warn "missing file to install %s", f unless File.exist? f
-        cp f, @output_dir, :verbose => false
+        cp f, target, :verbose => false
       end
     end
     
@@ -162,17 +171,33 @@ module Mfweb::InfoDeck
       end
     end
 
-
-    JQUERY_SVG_FILES = %w[jquery.svg.min.js jquery.svgdom.min.js jquery.svganim.min.js]
     JQUERY_CSS_FILES = %w[jquery.svg.css]
 
-    def install_jquery_svg
-      (JQUERY_CSS_FILES + JQUERY_SVG_FILES).each do |f|
-        install @mfweb_dir + 'vendor/jquerysvg/' + f
-      end
-    end     
+    def install_jquery_svg_css
+      install @mfweb_dir + 'vendor/jquerysvg/jquery.svg.css'
+    end
 
-    
+    def js_svg_components
+      %w[jquery.svg.min.js jquery.svgdom.min.js jquery.svganim.min.js]
+        .map{|p| 'jquerysvg/' + p}
+    end
+
+    def js_components
+      %w[jquery-1.7.2.min.js spin.js/spin.js q.js] + js_svg_components
+    end
+
+    def install_js_components
+      mkdir_p @js_dir, :verbose => false
+      js_components.each do |f| 
+        src = File.join(@mfweb_dir, 'vendor', f)
+        target = File.join(@js_dir, File.basename(f))
+        FileUtils.install src, target
+      end
+    end
+
+    def js_for_html
+      js_components.map{|p| File.basename(p)} + %w[infodeck.js]
+    end
 
     def img_file file_name
       gen_dir_file = @gen_dir + file_name
@@ -276,6 +301,12 @@ module Mfweb::InfoDeck
         return []
       end
     end
+
+    def self.compile_infodeck_js output, srcs, staging_dir
+      mkdir_p staging_dir, QUIET
+      mkdir_p output.pathmap('%d'), QUIET
+      sh "coffee -o #{staging_dir} -c #{srcs}", QUIET
+      sh "cat #{staging_dir}/*.js > #{output}", QUIET
+    end
   end
 end
-

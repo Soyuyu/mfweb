@@ -118,16 +118,9 @@ module Mfweb::InfoDeck
         @html.p('button goto') {@html.text "Go to<br/>slide #"}
       end
     end
-    def self.js_dependencies
-      %w[jquery-1.7.2.min.js spin.js/spin.js]
-    end
     def emit_infodeck_js_files
-      deps = self.class.js_dependencies.map{|p| File.basename(p)}
-      (deps + %w[infodeck.js]).each do |f|
+      @maker.js_for_html.each do |f|
         @html.js "/js/" + f
-      end
-      DeckMaker::JQUERY_SVG_FILES.each do |f|
-        @html.js f
       end
     end
     def emit_google_analytics

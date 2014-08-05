@@ -12,6 +12,8 @@ verbose(true)
 require 'rubygems'
 require 'bundler/setup'
 
+task :home # use this for the home page
+
 # define clobber task to delete output directory
 require 'rake/clean'
 CLOBBER.include BUILD_DIR

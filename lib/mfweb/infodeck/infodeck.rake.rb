@@ -11,6 +11,7 @@ namespace :infodeck do
     deps << BUILD_DIR + 'js/infodeck.js'
     file maker.output_file => deps + slide_libs do
       puts "building deck " + maker.output_file.pathmap('%d')
+      maker.js_dir = BUILD_DIR + 'js'
       maker.run
     end
     task 'infodeck:all' => maker.output_file
@@ -18,17 +19,13 @@ namespace :infodeck do
 
 
   task :js => BUILD_DIR + 'js/infodeck.js'
-  infodeck_coffee_srcs =  "#{MFWEB_DIR}lib/mfweb/infodeck/*.coffee" 
+  infodeck_coffee_srcs =  Mfweb::InfoDeck::JsCompiler.srcs(MFWEB_DIR)
   file BUILD_DIR + 'js/infodeck.js' => FileList[infodeck_coffee_srcs] do |t|
-    staging = 'gen/js/infodeck'
-    mkdir_p staging, QUIET
-    mkdir_p t.name.pathmap('%d'), QUIET
-    sh "coffee -o #{staging} -c #{infodeck_coffee_srcs}", QUIET
-    sh "cat #{staging}/*.js > #{t.name}", QUIET
-    Mfweb::InfoDeck::DeckSkeleton.js_dependencies.each do |f|
-      src = MFWEB_DIR + 'vendor/' + f
-      install src, t.name.pathmap('%d'), QUIET
-    end
+    jc = Mfweb::InfoDeck::JsCompiler.new(t.name, 'gen/js/infodeck')
+    jc.mfweb_dir = MFWEB_DIR
+    jc.run
   end
+  
 end
+
 

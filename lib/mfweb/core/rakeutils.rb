@@ -21,7 +21,7 @@ def sassTask srcGlob, relativeTargetDir, taskSymbol, base_deps = []
     target = File.join(targetDir, src.pathmap("%n.css"))
     srcDir = src.pathmap "%d"
     deps << MFWEB_DIR + 'css/global.scss' unless /global.scss/ =~ src 
-    task taskSymbol => target
+    Rake::Task[taskSymbol].prerequisites << target
     file target => [src] + deps do 
       puts "sass #{src}"
       mkdir_p targetDir, QUIET
@@ -38,7 +38,7 @@ end
 def xslTask src, relativeTargetDir, taskSymbol, style, css = 'global.css'
   targetDir = BUILD_DIR + relativeTargetDir
   target = File.join(targetDir, File.basename(src, '.xml') + '.html')
-  task taskSymbol => target
+  Rake::Task[taskSymbol].prerequisites << target
   file target => [src, style, BANNER] do |t|
     puts "xsl: " + src
     mkdir_p targetDir, QUIET
@@ -58,8 +58,8 @@ def copyTask srcGlob, targetDirSuffix, taskSymbol
       mkdir_p targetDir, QUIET
       install f, target, QUIET
     end
-    task taskSymbol => target
-  end
+    Rake::Task[taskSymbol].prerequisites << target
+    end
 end
 
 def copyGraphicsTask srcDir, targetDirSuffix, taskSymbol
@@ -71,7 +71,7 @@ end
 def markdown_task src, relativeTargetDir, taskSymbol, title, skeleton = nil
   targetDir = BUILD_DIR + relativeTargetDir
   target = File.join(targetDir, src.pathmap('%n.html'))
-  task taskSymbol => target
+  Rake::Task[taskSymbol].prerequisites << target
   file target => [src] do |t|
     skeleton ||= Mfweb::Core::Site.skeleton.with_css('/global.css')
     build_markdown src, target, skeleton, title

@@ -17,7 +17,8 @@ class Infodeck
         
   load: ->
     @initializeUI()
-    @showSlideIndex(@indexForHash(@location().hash))
+    ix = @indexForHash(@location().hash)
+    if ix then @showSlideIndex(ix) else @goToFirst()
 
   loading: ->
     $.when(@loadingCurrent, @loadingNext, @loadingPrevious)

@@ -102,19 +102,25 @@ class DeckTransformer < Mfweb::Core::Transformer
   def emit_svg anElement, attrs
     svg_file = @maker.img_file(anElement['src'])
     raise "Unable to find #{svg_file} from #{Dir.pwd}" unless File.exists? svg_file
-    svg_doc = read_svg_doc(svg_file)
-    manipulate_svg anElement, svg_doc
-    check_only_allowed_fonts_in_svg svg_doc, svg_file
+    svg = read_svg_doc(svg_file)
+    manipulate_svg anElement, svg
+    check_only_allowed_fonts_in_svg svg, svg_file
+    fix_viewbox svg
     inject_class attrs, anElement
     inject_position attrs,  anElement
     inject_id attrs, anElement
-    attrs['viewbox'] = "0 0 %s %s" % [svg_doc['width'], svg_doc['height']]
-    inject_svg_dimensions attrs, anElement, svg_doc    
-    @html.element('svg', attrs) {@html << svg_doc.to_xml}
+    inject_svg_dimensions attrs, anElement, svg
+    attrs.each{|k,v| svg[k] = v}
+    @html << svg.to_xml
   end
 
   def inject_id attrs, anElement
     attrs['id'] = anElement['id'] if anElement.has_attribute? 'id'
+  end
+
+  def fix_viewbox svgElement
+    return if svgElement['viewBox']
+    svgElement['viewBox'] ||= "0 0 %s %s" % [svgElement['width'], svgElement['height']]
   end
 
   def handle_use anElement

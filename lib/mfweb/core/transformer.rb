@@ -139,17 +139,21 @@ class Transformer
     [e] + collect_run(e.next_element) : [e]
   end
 
-  def add_to_style attrHash, values
-    return unless values
-    attrHash[:style] ||= ""
-    keys = values.reject{|k,v| nil == v}.keys
-    attrHash[:style] += keys.sort.inject("") do |res, k| 
-      res += "%s: %s;" % [k, values[k]] 
-    end
-    attrHash.delete(:style) if attrHash[:style].empty?
-    return attrHash
+  def add_to_style(attrsHash, fromHash = nil)
+    return unless fromHash
+    return if fromHash.empty?
+    attrsHash[:style] ||= ""
+    attrsHash[:style] += style_string(fromHash)
+    attrsHash.delete(:style) if attrsHash[:style].empty?
   end
 
+  def style_string valuesHash
+    keys = valuesHash.reject{|k,v| nil == v}.keys
+    return keys.sort.reduce("") do |res, k| 
+      res += "%s: %s;" % [k, valuesHash[k]] 
+    end
+  end
+  
 end
 
 #==== Transformer Page Renderer ================

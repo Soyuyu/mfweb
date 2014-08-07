@@ -38,4 +38,15 @@ namespace :infodeck do
     s.start   
   end
 
+  FileList['test/infodeck/visual/deck.xml'].each do |src|
+    require './test/infodeck/visual/maker'
+    maker = TestVisualDeck::Maker.new(src,'build/visual')
+    maker.mfweb_dir = './'
+    maker.css_paths << 'sample/css'
+    maker.asset_server = Mfweb::InfoDeck::AssetServer.new("lib/mfweb/infodeck")
+    maker.google_analytics_file = nil
+    infodeck_task maker
+    task :visual => maker.output_file
+  end
+
 end

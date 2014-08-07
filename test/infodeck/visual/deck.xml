@@ -1,0 +1,23 @@
+<deck title = "Visual Test Deck">
+  <slide id = "cover">
+    <lede top="10" left="10">This deck is for visual testing</lede>
+    <tile top="100" left="50">
+      <diagram src="graffle-sq.svg"/>
+      <p>Graffle, original size</p>
+      <tile top="200">
+        <diagram src="graffle-sq.svg" height="50" />
+        <p>Graffle, half size</p>     
+      </tile>
+    </tile>
+    <tile left="300" top="100">
+      <diagram src ="inkscape-sq.svg"/>
+      <p>Original size</p>
+      <tile top="200">
+        <diagram src ="inkscape-sq.svg" height="50"/>
+      </tile>
+    </tile>
+  </slide>
+  <slide id="second">
+    
+  </slide>
+</deck>

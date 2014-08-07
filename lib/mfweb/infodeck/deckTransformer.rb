@@ -82,7 +82,11 @@ class DeckTransformer < Mfweb::Core::Transformer
   end
 
   def check_only_allowed_fonts_in_svg  svg_doc, file_name
-    styles = svg_doc.css('text').map{|e| SvgManipulator.new(svg_doc).style(e)}
+    begin
+      styles = svg_doc.css('text').map{|e| SvgManipulator.new(svg_doc).style(e)}
+    rescue SvgManipulator::MissingStyleError
+      raise "text present in svg file without styling\n" + $!.message
+    end
     unless styles.all?{|s|@maker.allowed_fonts.include?(s['font-family'])}
       bad_fonts = styles.reject{|s|@maker.allowed_fonts.include?(s['font-family'])}.
         map{|s| s['font-family']}.

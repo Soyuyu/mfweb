@@ -235,9 +235,11 @@ class PaperTransformer < Mfweb::Core::Transformer
         # img_attrs['align'] = 'top'
         @html.element('img', img_attrs) {}
       end
-      @html.p('figureCaption') do 
-        @html.text "Figure #{fig_num}: "
-        apply anElement
+      unless anElement.children.empty?
+        @html.p('figureCaption') do 
+          @html.text "Figure #{fig_num}: "
+          apply anElement
+        end
       end
     end
   end

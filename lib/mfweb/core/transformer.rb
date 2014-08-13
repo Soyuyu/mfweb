@@ -172,6 +172,7 @@ class TransformerPageRenderer
   def run
     load
     @skeleton.emit(@html, @transformer.title_bar_text){|html| render_body}    
+    @html.close
   end
 
   def load

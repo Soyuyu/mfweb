@@ -198,11 +198,11 @@ class Infodeck
     window.history.replaceState({id:id}, id, location_hash)
 
   baseLocation: ->
-    'http://' + window.location.host + window.location.pathname
+    window.location.protocol + '//' + window.location.host + window.location.pathname
 
   trimAddressBar: ->
     return if window.location.hash == ""
-    window.history.replaceState '', '', @baseLocation() 
+    window.history.replaceState '', '', @baseLocation()
 
   busy: (bool) ->
       $('.slide.current').spin(bool)

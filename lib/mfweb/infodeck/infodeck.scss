@@ -60,6 +60,10 @@ body {
   margin:$body-margin;
 }
 
+.help-icon:before {
+  @include icon-fontawesome("\f05a");
+}
+
 
 #deck-container {
   position: relative;

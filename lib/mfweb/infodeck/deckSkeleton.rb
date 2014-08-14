@@ -67,10 +67,9 @@ module Mfweb::InfoDeck
       end
     end
     def emit_navigator
-      @html.element_span 'img', {:src => 'left-arrow.svg',
-        :class => "deck-prev-link", :title => "previous slide"}
-      @html.element_span 'img', {:src => 'right-arrow.svg',
-        :class => "deck-next-link", :title => "next slide"}
+      @html.element("span", class: "deck-first-link", :title => "start of deck")
+      @html.element("span", class: "deck-prev-link", :title => "previous slide")
+      @html.element("span", class: "deck-next-link", :title => "next slide")
     end
     def emit_deck_status
       @html.element('span', :class => 'deck-status', :title => "go to slide") do
@@ -78,15 +77,12 @@ module Mfweb::InfoDeck
         @html << "/"
         @html.span('deck-status-total')
       end
-      @html.element('span', :class => 'deck-permalink', :title => 'permalink') {@html.text '#'}
     end
     def emit_help_button
-      @html.element_span 'img', {:src => 'help-button.svg',
-        :class => "deck-help", :title => "show help"}
+      @html.span("deck-help", :title => "show help")
     end
     def emit_toc_button
-      @html.element_span 'img', {:src => 'toc-button.svg',
-        :class => "deck-toc-button", :title => "show Table of Contents"}
+      @html.span("deck-toc-button", :title => "show Table of Contents")
     end
     def emit_help_panel
       @html.div('deck-help-panel') do

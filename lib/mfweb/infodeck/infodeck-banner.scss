@@ -10,7 +10,7 @@
     cursor: pointer; 
     position: absolute;
     font-size: 14px;
-    bottom: 2px;
+    bottom: 7px;
     right: 30px;
     margin: 0px; 
   }
@@ -23,7 +23,7 @@
     right: 10px;
   }
 
-  .deck-prev-link, .deck-next-link, .deck-help, .deck-toc-button {
+  .deck-prev-link, .deck-next-link, .deck-help, .deck-toc-button, .deck-first-link {
     position: absolute;
     top: 5px;
     height: 25px;
@@ -31,12 +31,25 @@
     cursor: pointer;
   }
 
+  .deck-first-link {
+    left: 300px;
+    &:before {
+      @include icon-fontawesome("\f048");
+    }
+  }
+
   .deck-prev-link {
     left: 400px;
+    &:before {
+      @include icon-fontawesome("\f060");
+    }
   }
 
   .deck-next-link {
     left: 450px;
+    &:before {
+      @include icon-fontawesome("\f061");
+    }
   }
 
 	.deck-nav-disabled {
@@ -45,9 +58,13 @@
 
   .deck-help {
     left: 600px;
+    @extend .help-icon;
   }
   .deck-toc-button {
     left: 650px;
+    &:before {
+      @include icon-fontawesome("\f03a");
+    }
   }
   
   .logo {
@@ -57,12 +74,6 @@
     position: absolute;
   }
 
-  .deck-permalink {
-    @extend .clickable;
-    color: white;
-    text-decoration: none;
-    margin-left: 20px;
-  }
 
   
 }

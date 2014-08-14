@@ -1,7 +1,7 @@
 How to use this [Infodeck][]
 ================
 
-- Tap the question mark in the top banner to show this panel, tap it
+- Tap the info icon <span class = "help-icon"/> in the top banner to show this panel, tap it
   again to hide it. 
 - Move forward and backward using the arrow buttons at the top banner.
 - If you're on a touch device then a tap on the left or right will
@@ -21,11 +21,9 @@ How to use this [Infodeck][]
   - press "home" to go to the first slide, "end" to the last
   - press "c" to bring up the table of contents (if there is one). Tap
    c to hide it again.
-- The ' # ' in the banner puts a deep link to the currently visible slide
-  into the address bar
 
 The deck should work well in the latest versions of most browsers. If
-you are using Internet Explorer you will need version 10 to get a
+you are using Internet Explorer you will need at least version 10 to get a
 proper experience.
 
 [Infodeck]: http://martinfowler.com/bliki/Infodeck.html

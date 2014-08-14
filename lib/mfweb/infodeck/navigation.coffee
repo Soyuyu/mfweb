@@ -7,8 +7,7 @@ $(document).ready ->
     $('.deck-help-panel').toggleClass('deck-help-visible')
   $('.deck-status').click  ->
     deck.toggleGoToPanel()
-  $('.deck-permalink').click (ev) ->
-    history.pushState('','',deck.permalink())
+  $('.deck-first-link').click -> deck.goToFirst()
   $('#deck-container').on 'deck-becameCurrent', ->
     $('.deck-prev-link').toggleClass('deck-nav-disabled', deck.currentIsFirst())
     $('.deck-next-link').toggleClass('deck-nav-disabled', deck.currentIsLast())

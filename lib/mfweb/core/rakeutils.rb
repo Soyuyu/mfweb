@@ -136,4 +136,7 @@ class ArticleTask
  def self.deps 
    [BANNER] + srcs
  end
+ def self.css
+   'mfweb/css/article.scss'
+ end
 end

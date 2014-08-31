@@ -40,19 +40,17 @@ class CodeServer
     if anElement['cssClass']
       attributes = { 'class' => anElement['cssClass'] }
     end
-    html.element('pre', attributes) do
-      begin
-        frag = find(anElement['file'], anElement['fragment'])
-        emit_collected_code(html, frag, anElement)
-      rescue MissingFragmentFile
-        html.error "missing file: #{anElement['file']} in #{path}"
-      rescue MissingFragment
-        html.error "missing fragment: #{anElement['fragment']}"
-      end
+    begin
+      frag = find(anElement['file'], anElement['fragment'])
+      emit_collected_code(html, frag, attributes, anElement)
+    rescue MissingFragmentFile
+      html.error "missing file: #{anElement['file']} in #{path}"
+    rescue MissingFragment
+      html.error "missing fragment: #{anElement['fragment']}"
     end
   end
 
-  def emit_collected_code html, frag, anElement
+  def emit_collected_code html, frag, attributes, anElement
     heading = case
               when 'true' == anElement['useClassName']
                 "#{frag.class}...\n"
@@ -65,8 +63,8 @@ class CodeServer
     leading = heading ? 2 : 0
     body = Indenter.new(frag.result.gsub("\t", "  ")).leading(leading)
     # body = frag.result.gsub("\t", "  ")
-    html.text heading if heading
-    html.cdata(body)
+    html.p('code-label') {html.text heading} if heading
+    html.element('pre', attributes) {html.cdata(body)}
   end
 
 end

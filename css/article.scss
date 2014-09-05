@@ -242,15 +242,15 @@ div.footnote-list {
   }  
 }
 
-.paperBody .similar-articles, .similar-articles {
+.paperBody .end-box, .end-box {
   padding: 10px 20px;
-  background-color: $light-gray-background;
+  background-color: $tw-earth1;
   margin: 2em -20% 5em 40%;
   h2 {
     font-style: italic;
     font-weight: normal;
     margin-bottom: 0;
-    color: $purple;
+    color: $tw-green3;
   }
   p {
     margin: 0.5em 0 1em 2em;
@@ -263,6 +263,10 @@ div.footnote-list {
   }
   span.tags {
     margin-left: 2em;
+  }
+  .shares {
+    color: $tw-green3;
+    margin: 0 0 2em 0;
   }
 }
 

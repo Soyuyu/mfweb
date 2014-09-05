@@ -101,4 +101,16 @@ end
     %[<link href = "#{fileName}" rel = "stylesheet" type = "text/css"/>]
   end
 
+  def emit_shares lede, url
+    twitter = "https://twitter.com/intent/tweet?url=%s&text=%s" % [url, lede]
+    facebook = "https://facebook.com/sharer.php?u=%s" % [url]
+    google = "https://plus.google.com/share?url=%s" % [url]
+    @html.p('shares') do
+      @html.span('label') {@html.text "Share: "}
+      @html.a_ref(twitter, title: "Share on Twitter") {@html.img "/t_mini-a.png"}
+      @html.a_ref(facebook, title: "Share on Facebook") {@html.img "/fb-icon-20.png"}
+      @html.a_ref(google, title: "Share on Google Plus") {@html.img "/gplus-16.png"}
+    end
+  end
+
 end

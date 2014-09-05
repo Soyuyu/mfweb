@@ -1,5 +1,6 @@
 @import 'reset';
 @import 'banner';
+@import 'icons';
 
 $left-margin: 30px;
 
@@ -119,7 +120,7 @@ blockquote {
 }
 
 @mixin tag-button {
-  background: $purple;
+  background: $tw-green3;
   color: white;
   font-family: $sans;
   font-style: normal;
@@ -129,7 +130,9 @@ blockquote {
   border-radius: 5px;
   margin: 2px;
   white-space: nowrap;
-  background: linear-gradient(rgb(176,29,218), $purple);
+  &:hover {
+    background: $tw-green2;
+  }
 }
 
 @mixin span-button {
@@ -151,3 +154,12 @@ blockquote {
   }
 }
 
+.shares {
+  .label {
+    margin-right: 15px;
+  }
+  img {
+    height: 16px;
+    margin-right: 10px;
+  }
+}

@@ -27,6 +27,13 @@ class Site
     @author_server ||= load_authors
     return @author_server
   end
+  def url
+    'http://martinfowler.com'
+  end
+  def target_to_url path
+    result = path.pathmap "%{^build,#{url}}d/%f"
+    return result.sub('index.html','')
+  end
 
   # hook methods
   def load_skeleton; end

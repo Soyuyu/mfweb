@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Mfweb::Article
 
 class ArticleMaker < Mfweb::Core::TransformerPageRenderer
@@ -51,8 +52,8 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
 
   def tags
     # some old papers are not registered in catalog
-    if @catalog && @catalog[catalog_ref]
-      return @catalog[catalog_ref].tags
+    if @catalog && @catalog.src(@in_file)
+      return @catalog.src(@in_file).tags
     else
       return []
     end
@@ -67,7 +68,48 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
   def author key
     @author_server.get key
   end
+  def url
+    Site.target_to_url(@out_file)
+  end
+  def title
+    case @root.name
+      when 'paper' then @root.at_css('title').text
+      else fail "unable to find title for #{@in_file}"
+    end
+  end
+  def render_end_box
+    EndBoxRenderer.new(@html, self).run
+  end
+
+  class EndBoxRenderer
+    include Mfweb::Core::HtmlUtils
+
+    def initialize html, maker
+      @maker = maker
+      @html = html
+    end
+    def run
+      @html.div('end-box') do
+        emit_shares @maker.title, @maker.url
+        render_similar_articles
+      end
+    end
+    def render_similar_articles
+      return if @maker.tags.empty?
+      @html.h(2) {@html.text "For articles on similar topics…"}
+      if  @maker.tags.size > 1
+        @html.p {@html.text  "…take a look at the following tags:"}
+        @html.p('tags') do
+          @html << @maker.tags.collect{|t| t.link}.join(" ")
+        end
+      else
+        @html.p do
+          @html.text  "…take a look at the tag: "
+          @html.span('tags') {@html << @maker.tags[0].link}
+        end
+      end
+    end
+
+  end
 end
-
-
 end

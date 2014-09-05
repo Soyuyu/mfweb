@@ -135,28 +135,11 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.div('paperBody') do
       apply anElement
       @html.element('hr', attrs){}
-      render_similar_articles
+      @maker.render_end_box if @maker.respond_to?(:render_end_box)
     end
   end
   def handle_appendix anElement
     @html.div('appendix') {apply anElement}
-  end
-  def render_similar_articles
-    return if @maker.tags.empty?
-    @html.div('similar-articles') do
-      @html.h(2) {@html.text "For articles on similar topics…"}
-      if  @maker.tags.size > 1
-        @html.p {@html.text  "…take a look at the following tags:"}
-        @html.p('tags') do
-          @html << @maker.tags.collect{|t| t.link}.join(" ")
-        end
-      else
-        @html.p do
-          @html.text  "…take a look at the tag: "
-          @html.span('tags') {@html << @maker.tags[0].link}
-        end
-      end
-    end
   end
   def section_title aSectionElement
     flatten_content aSectionElement.at_xpath('H|h')

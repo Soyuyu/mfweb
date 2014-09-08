@@ -80,6 +80,7 @@ module HtmlUtils
   #   return base[0..width]
   # end
 
+
   def amazon asin, text
     amazon_pre(asin) + text + amazon_post
   end
@@ -90,7 +91,6 @@ module HtmlUtils
   def amazon_post 
     '</a><img src="http://www.assoc-amazon.com/e/ir?t=martinfowlerc-20&amp;l=as2&amp;o=1&amp;a=0321601912" width="1" height="1" border="0" alt="" style="width: 1px !important; height: 1px !important; border:none !important; margin:0px !important;"/>'
   end
-end
 
 def informit isbn, text
   %[<a href="http://click.linksynergy.com/fs-bin/click?id=tEHDyk1X8h0&amp;subid=&amp;offerid=145238.1&amp;type=10&amp;tmpid=3559&amp;RD_PARM1=http%253A%252F%252Fwww.informit.com%252Fstore%252Fproduct.aspx%253Fisbn%253D#{isbn}">#{text}</a>
@@ -113,4 +113,6 @@ end
     end
   end
 
+
+end
 end

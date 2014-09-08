@@ -69,7 +69,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     @author_server.get key
   end
   def url
-    Site.target_to_url(@out_file)
+    Mfweb::Core::Site.target_to_url(@out_file)
   end
   def title
     case @root.name

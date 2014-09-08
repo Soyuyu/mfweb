@@ -22,7 +22,7 @@ PLATFORMS
 DEPENDENCIES
   builder
   kramdown
-  nokogiri
+  nokogiri (= 1.6.1)
   pry
   rake
   sass

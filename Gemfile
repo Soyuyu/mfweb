@@ -1,6 +1,6 @@
 source 'http://rubygems.org'
 
-gem 'nokogiri'
+gem 'nokogiri', '1.6.1'
 gem 'builder'
 gem 'kramdown'
 gem 'sass'

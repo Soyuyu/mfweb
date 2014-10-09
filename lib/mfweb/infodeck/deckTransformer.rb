@@ -11,6 +11,7 @@ class DeckTransformer < Mfweb::Core::Transformer
     @copy_set = %w[ul li p b i a code table tr th td br]
     @p_set = {'h' => 'h2'}
     @builds = SlideBuildSet.new(@root['id'])
+    @ignore_set = %w[credits]
    end
   def default_handler anElement
     raise "unknown element: " + anElement.name

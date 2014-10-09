@@ -34,6 +34,7 @@ slide.content =
     | include_element
     | highlight_seq
     | arrow
+    | element credits {text}
 
 
 lede = element lede {

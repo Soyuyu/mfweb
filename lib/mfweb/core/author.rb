@@ -23,5 +23,9 @@ module Mfweb::Core
     def xml
       @data
     end
+    def twitter_handle
+      e = @data.at_css('author-twitter')
+      return e ? e.text : nil
+    end
   end
 end

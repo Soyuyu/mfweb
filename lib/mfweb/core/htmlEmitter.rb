@@ -215,6 +215,13 @@ class HtmlEmitter
     yield
     @out << amazon_post
   end
+  def meta name, content
+    if name.start_with? 'og:'
+      element_block "meta", {property: name, content: content}
+    else
+      element_block "meta", {name: name, content: content}
+    end
+  end
 end
 
 class LinkFixingEmitter < DelegateClass(HtmlEmitter)

@@ -11,7 +11,7 @@ class PageSkeleton
     @banner_photo = nil
     @is_draft = false
   end
-  def emit aStream, title
+  def emit aStream, title, meta_emitter: nil
     @html = aStream.kind_of?(HtmlEmitter) ? aStream : 
                                             HtmlEmitter.new(aStream)
     emit_doctype
@@ -19,6 +19,7 @@ class PageSkeleton
       @html.head do
         @html.title title
         emit_encoding
+        meta_emitter.emit if meta_emitter
         @css.each{|uri| @html.css uri}
       end
       @html.body do

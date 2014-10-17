@@ -34,6 +34,10 @@ class Site
     result = path.pathmap "%{^build,#{url}}d/%f"
     return result.sub('index.html','')
   end
+  def url_path *args
+    ([url] + args).join('/')
+  end
+
 
   # hook methods
   def load_skeleton; end

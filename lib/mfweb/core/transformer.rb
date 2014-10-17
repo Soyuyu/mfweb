@@ -171,7 +171,10 @@ class TransformerPageRenderer
 
   def run
     load
-    @skeleton.emit(@html, @transformer.title_bar_text){|html| render_body}    
+    @skeleton.emit(@html, @transformer.title_bar_text, 
+                   meta_emitter: meta_emitter) do |html|
+      render_body
+    end
     @html.close
   end
 
@@ -197,6 +200,10 @@ class TransformerPageRenderer
   def output_dir *path
     dir = @out_file.pathmap("%d/")
     File.join dir, *path
+  end
+
+  def meta_emitter 
+    nil
   end
 
 

@@ -21,5 +21,6 @@ require 'mfweb/core/author'
 require 'mfweb/core/codeServer.rb'
 require 'mfweb/core/indenter.rb'
 require 'mfweb/core/authorServer.rb'
+require 'mfweb/core/metadataEmitter.rb'
 
 

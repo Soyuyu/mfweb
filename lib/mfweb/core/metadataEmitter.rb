@@ -10,7 +10,7 @@ module Mfweb::Core
 
       card_val = @src.image ? 'summary_large_image' : 'summary'
       @html.meta 'twitter:card', card_val
-      @html.meta 'twitter:site:id', '16665197'
+      @html.meta 'twitter:site:id', Site.twitter_site_id
       @html.meta 'og:title', title
       @html.meta 'og:url', @src.url
       @html.meta 'og:description', @src.description

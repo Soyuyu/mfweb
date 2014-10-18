@@ -10,14 +10,17 @@ module Mfweb::Article
       @maker.url
     end
     def description
-      result = @maker.xml.at_css('meta-description')
-      return result ? result.text : fallback_description
+      result = @maker.xml.at_css('meta-description') ||
+        (@maker.xml.at_css('intent') if 'pattern' == @maker.xml.name)
+      return result ? result.text.squish : fallback_description
     end
     def fallback_description
       %[A long-form article entitled: "#{title}"]
     end
     def image
-      nil
+      img = @maker.xml.at_css('meta-image')
+      return nil unless img
+      return Site.url_path 'articles', img['src']
     end
     def publication_time
       @maker.xml.at_css('version')['date']

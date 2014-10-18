@@ -43,5 +43,6 @@ module Mfweb::Article
     def handle_author_name anElement ; end
     def handle_author_url anElement; end
     def handle_author_photo anElement; end
+    def handle_author_twitter anElement; end
   end
 end

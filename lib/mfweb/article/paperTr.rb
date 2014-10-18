@@ -38,7 +38,8 @@ class PaperTransformer < Mfweb::Core::Transformer
     super output, root
     @maker = maker
     @copy_set = %w[b i p ul li a code img table tr th td div ol]
-    @ignore_set = %w[footnote-list bibliography title subtitle abstract meta-description]
+    @ignore_set = %w[footnote-list bibliography title subtitle
+                     abstract meta-description meta-image]
     @apply_set = %w[sample]
     @section_depth = 1
     @has_printed_version = false

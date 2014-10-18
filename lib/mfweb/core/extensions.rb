@@ -7,6 +7,9 @@ class String
     result2 = result.scan(nmtokens).join
     return result2
   end
+  def squish
+    self.split.join(' ')
+  end
 end
 
 def parse_date aString

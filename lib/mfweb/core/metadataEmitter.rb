@@ -8,8 +8,7 @@ module Mfweb::Core
     def emit
       check_validity
 
-      card_val = @src.image ? 'summary_large_image' : 'summary'
-      @html.meta 'twitter:card', card_val
+      @html.meta 'twitter:card', twitter_card
       @html.meta 'twitter:site:id', Site.twitter_site_id
       @html.meta 'og:title', title
       @html.meta 'og:url', @src.url
@@ -28,7 +27,13 @@ module Mfweb::Core
       check("title <#{title}> is more than 70 chars") {title.length <= 70}
       check("description for  <#{title}> is more than 200 chars") {
         @src.description.length < 200}
-      raise "meta data errors: \n%s" % @errors.join("\n") unless @errors.empty?
+
+      if  ! (@src.description.length < 200)
+        puts "<\n#{@src.description}\n"
+      end
+
+      raise "meta data errors: \n%s" % @errors.join("\n") unless
+      @errors.empty?
     end
     def check message
       @errors << message unless yield
@@ -39,5 +44,14 @@ module Mfweb::Core
     def fallback_image
       "http://martinfowler.com/logo-sq.png"
     end
+    def twitter_card
+      return case
+             when @src.respond_to?(:twitter_card) && @src.twitter_card 
+               @src.twitter_card
+             when @src.image then 'summary_large_image'
+             else 'summary'
+             end
+    end
+    
   end
 end

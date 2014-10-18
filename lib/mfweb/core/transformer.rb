@@ -172,7 +172,7 @@ class TransformerPageRenderer
   def run
     load
     @skeleton.emit(@html, @transformer.title_bar_text, 
-                   meta_emitter: meta_emitter) do |html|
+                   meta_emitter: metadata_emitter) do |html|
       render_body
     end
     @html.close
@@ -202,7 +202,7 @@ class TransformerPageRenderer
     File.join dir, *path
   end
 
-  def meta_emitter 
+  def metadata_emitter 
     nil
   end
 

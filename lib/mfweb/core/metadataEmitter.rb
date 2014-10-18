@@ -37,7 +37,7 @@ module Mfweb::Core
       @html.meta 'twitter:creator', anAuthor.twitter_handle if anAuthor.twitter_handle
     end
     def fallback_image
-      "http://martinfowler.com/mf.jpg"
+      "http://martinfowler.com/logo-sq.png"
     end
   end
 end

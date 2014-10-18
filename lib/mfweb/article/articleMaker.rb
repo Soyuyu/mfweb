@@ -31,6 +31,14 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     @is_draft
   end
 
+  def authors
+    @root.css('author').map{|tag| Mfweb::Core::Author.new(tag)}
+  end
+
+  def xml
+    @root
+  end
+
   def render_body
     @transformer.render
   end
@@ -76,6 +84,9 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
       when 'paper' then @root.at_css('title').text
       else fail "unable to find title for #{@in_file}"
     end
+  end
+  def metadata_emitter
+    Mfweb::Core::MetadataEmitter.new(@html, Metadata.new(self))
   end
   def render_end_box
     EndBoxRenderer.new(@html, self).run

@@ -18,7 +18,7 @@ module Mfweb::Core
       @html.meta 'og:site_name', 'martinfowler.com'
       @html.meta 'og:type', 'article'
       @html.meta 'og:article:modified_time', @src.publication_time
-      @src.authors.each{|a| emit_author a}
+      emit_author 
     end
     def title
       @src.title
@@ -38,8 +38,12 @@ module Mfweb::Core
     def check message
       @errors << message unless yield
     end
-    def emit_author anAuthor
-      @html.meta 'twitter:creator', anAuthor.twitter_handle if anAuthor.twitter_handle
+    def emit_author 
+      handle = @src.authors
+        .map{|a| a.twitter_handle}
+        .compact
+        .first
+      @html.meta 'twitter:creator', handle if handle
     end
     def fallback_image
       "http://martinfowler.com/logo-sq.png"

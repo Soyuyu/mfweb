@@ -9,7 +9,7 @@ module Mfweb::Core
       check_validity
 
       @html.meta 'twitter:card', twitter_card
-      @html.meta 'twitter:site:id', Site.twitter_site_id
+      @html.meta 'twitter:site:id', Site.twitter_site_id if Site.twitter_site_id
       @html.meta 'og:title', title
       @html.meta 'og:url', @src.url
       @html.meta 'og:description', @src.description

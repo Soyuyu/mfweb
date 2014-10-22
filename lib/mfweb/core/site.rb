@@ -37,7 +37,10 @@ class Site
   def url_path *args
     ([url] + args).join('/')
   end
-
+  def twitter_site_id
+    nil
+    # override to provide twitter metadata
+  end
 
   # hook methods
   def load_skeleton; end

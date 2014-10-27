@@ -20,6 +20,7 @@ module Mfweb::InfoDeck
     def emit_header title
       @html.title title
       @html.element('meta', {:charset => "UTF-8"})
+      maker.emit_metadata(@html)
       @html.css "infodeck.css"
       DeckMaker::JQUERY_CSS_FILES.each {|f| @html.css f}
       @css.each{|uri| @html.css uri}

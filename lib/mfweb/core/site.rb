@@ -35,7 +35,7 @@ class Site
     return result.sub('index.html','')
   end
   def url_path *args
-    ([url] + args).join('/')
+    File.join([url] + args)
   end
   def twitter_site_id
     nil

@@ -6,6 +6,7 @@ any = element * {any}*
 deck = element deck {
      attribute status {'draft'}?,
      attribute title {text}?,
+     meta-tags?,
      (attribute src {text} | deck.contents *)
 } 
 
@@ -96,6 +97,7 @@ tile.content =
     | element abstract {inline}
     | element list-tags {empty}
     | include_element
+    | element author-twitter {text}
 
 
 quote = element quote {
@@ -208,3 +210,8 @@ arrow = element arrow {
   attribute to {text},
   attribute curve {'left'|'right'}?
 }
+
+meta-tags = 
+ element meta-description {text}?
+ &  element meta-image {attribute src {text}}?
+  

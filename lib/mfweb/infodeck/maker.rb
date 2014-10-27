@@ -90,7 +90,6 @@ module Mfweb::InfoDeck
     end
 
     def build_index_page skeleton
-      title = @root['title'] || "Untitled Infodeck"
       HtmlEmitter.open(output_file) do |html|
         skeleton.emit(html, title) do |html|
           html.div('init') do
@@ -98,6 +97,10 @@ module Mfweb::InfoDeck
           end
         end
       end
+    end
+
+    def title
+      @root['title'] || "Untitled Infodeck"
     end
 
     def input_dir *path
@@ -307,6 +310,11 @@ module Mfweb::InfoDeck
       mkdir_p output.pathmap('%d'), QUIET
       sh "coffee -o #{staging_dir} -c #{srcs}", QUIET
       sh "cat #{staging_dir}/*.js > #{output}", QUIET
+    end
+
+    def emit_metadata html
+      md = Mfweb::Infodeck::Metadata.new(self, @root)
+      MetadataEmitter.new(html, md).emit
     end
   end
 end

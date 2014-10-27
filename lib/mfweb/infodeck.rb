@@ -26,4 +26,6 @@ require 'mfweb/infodeck/indexTransformer'
 require 'mfweb/infodeck/highlightSequenceTr'
 require 'mfweb/infodeck/arrowTr'
 require 'mfweb/infodeck/jsCompiler'
+require 'mfweb/infodeck/metadata'
+
 

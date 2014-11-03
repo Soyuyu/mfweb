@@ -38,6 +38,16 @@ namespace :infodeck do
     s.start   
   end
 
+  class SampleSite < Mfweb::Core::Site
+    def load_skeleton
+      @header = "<div id = 'banner'></div>"
+      @footer = "<div id = 'footer'></div>"
+      @skeleton = Mfweb::Core::PageSkeleton.new(@header, @footer, 'global.css')    
+    end
+  end
+
+  Mfweb::Core::Site.init(SampleSite.new)
+
   FileList['test/infodeck/visual/deck.xml'].each do |src|
     require './test/infodeck/visual/maker'
     maker = TestVisualDeck::Maker.new(src,'build/visual')
@@ -48,5 +58,6 @@ namespace :infodeck do
     infodeck_task maker
     task :visual => maker.output_file
   end
+
 
 end

@@ -1,5 +1,6 @@
 module Mfweb::Infodeck
   class Metadata
+    include Mfweb::Core
     def initialize maker, xml
       @maker = maker
       @xml = xml
@@ -23,7 +24,8 @@ module Mfweb::Infodeck
       Site.url_path @maker.uri, img['src']
     end
     def publication_time
-      @xml.at_css('pub-date').text
+      elem = @xml.at_css('pub-date')
+      return elem ? elem.text : nil
     end
     def authors
       #TODO replace tile class = "author' with author tag

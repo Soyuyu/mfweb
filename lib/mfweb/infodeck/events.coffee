@@ -10,6 +10,9 @@ $('#deck-container').on 'deck-becameCurrent', ->
   $('.deck-help').off()
   $('.deck-help').click -> $('.deck-help-panel').toggleClass('deck-help-visible')
 
+
+# TODO: replace this with a call to deck.toggleTableOfContents
+# also sort out how to substitute this as Toby did in microservice testing
 $('.deck-toc-button').click -> $('.deck-toc-panel').toggleClass('show')
 fixLocalLinks('.deck-toc-panel')
       

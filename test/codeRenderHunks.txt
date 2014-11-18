@@ -1,0 +1,31 @@
+input
+
+  private void validateDate(Notification note) {
+    if (date == null) {
+      note.addError("date is missing");
+      return;
+    }
+
+    LocalDate parsedDate;
+    try {
+      parsedDate = LocalDate.parse(getDate());
+    }
+  }
+
+%%
+
+one-line
+
+  private void validateDate(Notification note) {
+    if (date == null) {
+<span class = 'highlight'>      note.addError("date is missing");
+</span>      return;
+    }
+
+    LocalDate parsedDate;
+    try {
+      parsedDate = LocalDate.parse(getDate());
+    }
+  }
+
+%%

@@ -62,11 +62,34 @@ class CodeServer
               end
     leading = heading ? 2 : 0
     body = Indenter.new(frag.result.gsub("\t", "  ")).leading(leading)
-    # body = frag.result.gsub("\t", "  ")
     html.p('code-label') {html.text heading} if heading
-    html.element('pre', attributes) {html.cdata(body)}
+    html.element('pre', attributes) {emit_code_body html, body, anElement}
   end
 
+  def emit_code_body html, body, insertElement
+    if insertElement.kind_of? Nokogiri::XML::Element and not insertElement.children.empty?
+      html << CodeHighlighter.new(insertElement).call(body)
+    else
+      html.cdata(body)
+    end
+  end
+
+end
+
+class CodeHighlighter
+  def initialize insertCodeElement
+    @data = insertCodeElement
+  end
+  def highlights
+    @data.css('highlight')
+  end
+  def call aString
+    aString.lines.map{|line| highlight_line line}.join
+  end
+  def highlight_line line
+    matching = highlights.select{|h| Regexp.new(h['line']).match(line)}
+    matching.reduce(line){|acc, each| acc = "<span class = 'highlight'>%s</span>" % acc}
+  end
 end
 
 

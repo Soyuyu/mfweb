@@ -88,7 +88,18 @@ class CodeHighlighter
   end
   def highlight_line line
     matching = highlights.select{|h| Regexp.new(h['line']).match(line)}
-    matching.reduce(line){|acc, each| acc = "<span class = 'highlight'>%s</span>" % acc}
+    matching.reduce(line){|acc, each| acc = apply_markup acc, each}
+  end
+  def apply_markup line, element
+    open = "<span class = 'highlight'>"
+    close = "</span>"                 
+    if element.key? 'span'
+      r = Regexp.new(element['span'])
+      m = r.match line
+      m.pre_match + open + m[0] + close + m.post_match
+    else
+      open + line.chomp + close + "\n"
+    end
   end
 end
 

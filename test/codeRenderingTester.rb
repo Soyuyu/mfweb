@@ -47,6 +47,10 @@ class CodeRenderingTester
     actual = with_highlights(element)
     assert_equal hunks['one-line'], actual
   end
+  def test_highlight_span
+    element = form_element "<highlight line = 'missing' span = 'addError'/>"
+    assert_equal hunks['one-span'], with_highlights(element)
+  end
 end
 
 

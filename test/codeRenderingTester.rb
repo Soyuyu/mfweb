@@ -51,6 +51,33 @@ class CodeRenderingTester
     element = form_element "<highlight line = 'missing' span = 'addError'/>"
     assert_equal hunks['one-span'], with_highlights(element)
   end
+  def test_highlight_range
+    e = '<highlight-range start-line = "(date == null)" end-line = "}"/>'
+    assert_equal hunks['range'], with_highlights(form_element(e))    
+  end
+  def test_highlight_range_at_start
+    e = '<highlight-range start-line = "private" end-line = "}"/>'
+    assert_equal hunks['range-start'], with_highlights(form_element(e))    
+  end
+  def test_highlight_range_at_end
+    e = '<highlight-range start-line = "try" end-line = "//end"/>'
+    assert_equal hunks['range-end'], with_highlights(form_element(e))    
+  end
+  def test_backwards_range
+    e = '<highlight-range start-line = "try" end-line = "addError"/>'
+    assert_raises(RuntimeError) { with_highlights(form_element(e)) } 
+  end
+  def test_range_no_match_start
+    e = '<highlight-range start-line = "zzzzz" end-line =
+    "addError"/>'
+    assert_raises(RuntimeError){ with_highlights(form_element(e))}
+  end
+  def test_range_no_match_end
+    e = '<highlight-range start-line = "try" end-line = "zzzz"/>'
+    assert_raises(RuntimeError){ with_highlights(form_element(e))}
+  end
+    
+    
 end
 
 

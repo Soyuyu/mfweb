@@ -10,7 +10,7 @@ input
     try {
       parsedDate = LocalDate.parse(getDate());
     }
-  }
+  } //end
 
 %%
 
@@ -26,7 +26,7 @@ one-line
     try {
       parsedDate = LocalDate.parse(getDate());
     }
-  }
+  } //end
 
 %%
 
@@ -42,6 +42,53 @@ one-span
     try {
       parsedDate = LocalDate.parse(getDate());
     }
-  }
+  } //end
+
+%%
+
+range
+
+  private void validateDate(Notification note) {
+<span class = 'highlight'>    if (date == null) {
+      note.addError("date is missing");
+      return;
+    }</span>
+
+    LocalDate parsedDate;
+    try {
+      parsedDate = LocalDate.parse(getDate());
+    }
+  } //end
+
+%%
+
+range-start
+
+<span class = 'highlight'>  private void validateDate(Notification note) {
+    if (date == null) {
+      note.addError("date is missing");
+      return;
+    }</span>
+
+    LocalDate parsedDate;
+    try {
+      parsedDate = LocalDate.parse(getDate());
+    }
+  } //end
+
+%%
+range-end
+
+  private void validateDate(Notification note) {
+    if (date == null) {
+      note.addError("date is missing");
+      return;
+    }
+
+    LocalDate parsedDate;
+<span class = 'highlight'>    try {
+      parsedDate = LocalDate.parse(getDate());
+    }
+  } //end</span>
 
 %%

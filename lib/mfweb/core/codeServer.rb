@@ -80,25 +80,54 @@ class CodeHighlighter
   def initialize insertCodeElement
     @data = insertCodeElement
   end
+  def opening
+    "<span class = 'highlight'>"
+  end
+  def closing
+    "</span>"
+  end
   def highlights
     @data.css('highlight')
   end
+  def highlight_ranges
+    @data.css('highlight-range')
+  end
   def call aString
-    aString.lines.map{|line| highlight_line line}.join
+    apply_highlights(apply_ranges(aString.lines))
+  end
+  def apply_ranges lines
+    highlight_ranges.reduce(lines){|acc, each| apply_one_range(acc, each)}
+  end
+  def apply_one_range lines, element
+    start_ix = lines.find_index {|line| line =~ Regexp.new(element['start-line'])}
+    raise "unable to match %s in code insert" % element['start-line'] unless start_ix
+    finish_offset = lines[start_ix..-1].find_index do |line| 
+      line =~ Regexp.new(element['end-line'])
+    end
+    raise "unable to match %s in code insert" % element['end-line'] unless finish_offset
+    finish_ix = start_ix + finish_offset
+    pre = 0 == start_ix ? [] : lines[0..(start_ix - 1)]
+    start = [opening + lines[start_ix]]
+    mid = (lines[(start_ix + 1)..(finish_ix -1)])
+    finish = [lines[finish_ix].chomp + closing + "\n"]
+    rest = lines.size == (finish_ix + 1) ? [] : lines[(finish_ix + 1)..-1]
+    return pre + start + mid + finish + rest
+  end
+  
+  def apply_highlights lines
+    lines.map{|line| highlight_line line}.join
   end
   def highlight_line line
     matching = highlights.select{|h| Regexp.new(h['line']).match(line)}
     matching.reduce(line){|acc, each| acc = apply_markup acc, each}
   end
   def apply_markup line, element
-    open = "<span class = 'highlight'>"
-    close = "</span>"                 
     if element.key? 'span'
       r = Regexp.new(element['span'])
       m = r.match line
-      m.pre_match + open + m[0] + close + m.post_match
+      m.pre_match + opening + m[0] + closing + m.post_match
     else
-      open + line.chomp + close + "\n"
+      opening + line.chomp + closing + "\n"
     end
   end
 end

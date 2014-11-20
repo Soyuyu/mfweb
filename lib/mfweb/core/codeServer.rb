@@ -105,6 +105,7 @@ class CodeHighlighter
       line =~ Regexp.new(element['end-line'])
     end
     raise "unable to match %s in code insert" % element['end-line'] unless finish_offset
+    raise "start and end match same line" unless finish_offset > 0
     finish_ix = start_ix + finish_offset
     pre = 0 == start_ix ? [] : lines[0..(start_ix - 1)]
     start = [opening + lines[start_ix]]
@@ -125,6 +126,7 @@ class CodeHighlighter
     if element.key? 'span'
       r = Regexp.new(element['span'])
       m = r.match line
+      raise "unable to match span %s" % element['span'] unless m
       m.pre_match + opening + m[0] + closing + m.post_match
     else
       opening + line.chomp + closing + "\n"

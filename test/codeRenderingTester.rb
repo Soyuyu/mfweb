@@ -76,8 +76,14 @@ class CodeRenderingTester
     e = '<highlight-range start-line = "try" end-line = "zzzz"/>'
     assert_raises(RuntimeError){ with_highlights(form_element(e))}
   end
-    
-    
+  def test_span_no_match
+    element = form_element "<highlight line = 'missing' span = 'zzzz'/>"
+    assert_raises(RuntimeError) { with_highlights(element) }
+  end
+  def test_range_both_match_start_line
+    element = form_element "<highlight-range start-line = 'null' end-line = '{'/>"
+    assert_raises(RuntimeError) { with_highlights(element) }
+  end
 end
 
 

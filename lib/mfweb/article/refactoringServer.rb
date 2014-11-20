@@ -1,19 +1,29 @@
 module Mfweb::Article
 
   class RefactoringServer
+    def initialize *paths
+      @paths = paths
+      @refactorings = {}
+    end
     def load
-      fake_load
+      @paths.each {|p| load_dir p}
     end
     def find key
       return @refactorings[key] || MissingRefactoringEntry.new
     end
     def fake_load
-      @refactorings = {}
       add_refactoring(RefactoringEntry.new('replaceNestedConditionalWithGuardClauses', 'Replace Nested Conditional With Guard Clauses'))
       add_refactoring(RefactoringEntry.new('extractMethod', 'Extract Method'))
     end
     def add_refactoring r
       @refactorings[r.key] = r
+    end
+    def load_dir path
+      Dir[File.join(path, '*.xml')].each do |file|
+        xml = Nokogiri::XML(File.read(file)).root
+        ref = RefactoringEntry.new(File.basename(file, '.xml'), xml.at_css('name').text)
+        add_refactoring ref
+      end
     end
   end
 

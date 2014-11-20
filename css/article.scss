@@ -281,5 +281,12 @@ div.footnote-list {
   }
 }
 
+.code-remark {
+  color: $tw-earth3;
+  font-size: 80%;
+  margin-left: 3em;
+  font-style: italic;
+}
+
 
 @import 'short-front'

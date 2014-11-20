@@ -182,6 +182,10 @@ class PaperTransformer < Mfweb::Core::Transformer
       @html.a_ref(pattern.url){@html.text name}
     end     
   end
+  def handle_refactoring anElement
+    r = @maker.refactoring_server.find(anElement['key'])
+    @html.a_ref(r.url) {@html.text r.name}
+  end
   def handle_blikiRef anElement
     name = anElement['name']
     href = "http://martinfowler.com/bliki/#{name}.html"

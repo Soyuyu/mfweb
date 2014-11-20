@@ -2,8 +2,8 @@
 module Mfweb::Article
 
 class ArticleMaker < Mfweb::Core::TransformerPageRenderer
-  attr_accessor :pattern_server, 
-    :code_server, :bib_server, :footnote_server, :catalog, :author_server
+  attr_accessor :pattern_server, :code_server, :bib_server, 
+  :footnote_server, :catalog, :author_server, :refactoring_server
   def initialize infile, outfile, skeleton = nil, transformerClass = nil
     @catalog = Mfweb::Core::Site.catalog
     @author_server = Mfweb::Core::Site.author_server
@@ -13,6 +13,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     @code_server = Mfweb::Core::CodeServer.new
     @bib_server = Bibliography.new
     @footnote_server = FootnoteServer.new(infile)
+    @refactoring_server = RefactoringServer.new
     @code_dir = './'
   end
 
@@ -20,6 +21,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     super
     @is_draft = ('draft' == @root['status'])
     @pattern_server.load
+    @refactoring_server.load
     resolve_includes @root
     @skeleton ||=  Mfweb::Core::Site.
       skeleton.with_css('article.css').

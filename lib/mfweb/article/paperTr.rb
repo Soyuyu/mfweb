@@ -300,30 +300,26 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.element('blockquote', attrs) do
       apply anElement
       @html.p('quote-attribution') do
-        text = lambda {@html.text "-- " + anElement['credit']}
-        case
-        when anElement['href'] then 
-          @html.a_ref(anElement['href'], &text)
-        when anElement.has_attribute?('isbn') then
-          @html.amazon(anElement['isbn'], &text)
-        else render_cite anElement
-        end
+        emit_quote_attribution anElement
       end
     end
   end
-  def render_cite anElement
-    ref = anElement['ref']
-    bibref = @maker.bib_server[ref] if ref
-    credit = anElement['credit'] || anElement['source']
+  def emit_quote_attribution anElement
+    bibref = @maker.bib_server[anElement['ref']] if anElement['ref']
+    credit = anElement['credit'] || anElement['source'] || (bibref && bibref.cite)
     # HACKTAG use of source attr comes from bliki
-    uri = anElement['url'] || (bibref && bibref.url)
-    return unless ref || credit
-    @html.text "-- "
-    cite_text = credit || bibref.cite
-    if uri
-      @html.a_ref(uri){@html.text cite_text}
-    else
-      @html.text cite_text
+    return unless credit
+    text = lambda {@html.text "-- " + credit}
+    case
+    when anElement.has_attribute?('href') then 
+      @html.a_ref(anElement['href'], &text)
+    when anElement.has_attribute?('url') then 
+      @html.a_ref(anElement['url'], &text)
+    when anElement.has_attribute?('isbn') then
+      @html.amazon(anElement['isbn'], &text)
+    when bibref 
+      bibref.link_around(@html, &text)
+    else text.call
     end
   end
 

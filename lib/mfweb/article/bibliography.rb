@@ -85,26 +85,41 @@ class BibRef
   def cite
     return @xml.xpath('cite').first ? @xml.xpath('cite').first.text : "[#{name}]"
   end
-  def link_around htmlEmitter, aCiteElement
-    text = aCiteElement.text.empty? ? cite : aCiteElement.text
+  def link_around htmlEmitter, aCiteElement = nil, &block
+    case 
+    when block_given?
+      link_around_block htmlEmitter, &block
+    when aCiteElement && aCiteElement.text.empty?
+      link_around_block(htmlEmitter){htmlEmitter.text cite}
+    when aCiteElement
+     link_around_block(htmlEmitter){htmlEmitter.text aCiteElement.text}
+    else 
+      throw "no cite element or block given"
+    end
+  end
+  def link_around_block htmlEmitter, &block
     case
     when @xml['url']
-      htmlEmitter.a_ref(@xml['url']){htmlEmitter.text text}
+      htmlEmitter.a_ref(@xml['url'], &block)
     when url_element
-      htmlEmitter.a_ref(url, url_element.attributes){htmlEmitter.text text}
+      htmlEmitter.a_ref(url, url_element.attributes, &block)
     when isbn
-      htmlEmitter << amazon(isbn, text)
+      htmlEmitter.amazon(isbn, &block)
     else
-      htmlEmitter.text text
+      block.call
     end
   end
   def isbn
-    book_elem = @xml.xpath('book').first
-    if book_elem
-      return book_elem.xpath('isbn').first.text
+    book_elem = @xml.at_css('book')
+    case
+    when @xml.has_attribute?('isbn')
+      @xml['isbn']
+    when book_elem
+      book_elem.at_css('isbn').text
+    when @xml.at_css('isbn')
+      @xml.at_css('isbn').text
     else
-      isbn_only = @xml.xpath('isbn').first
-      return isbn_only ? isbn_only.text : nil
+      nil
     end
   end
 end
@@ -123,7 +138,7 @@ class NullBibRef < BibRef
   def url
     nil
   end
-  def link_around htmlEmitter, aCiteElement
+  def link_around htmlEmitter, aCiteElement = nil
     puts 'missing bib reference for : ' + @name
     htmlEmitter.span('todo') {htmlEmitter << "[TODO Add Bib Reference for '%s']" % @name}
   end

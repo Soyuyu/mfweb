@@ -37,7 +37,7 @@ class CodeRenderingTester
   
   def with_highlights element, input = nil
     input ||= hunks['input']
-    CodeHighlighter.new(element).call(input)
+    CodeHighlighter.new(element,input).call
   end
   def test_no_highlights
     assert_equal hunks['input'], with_highlights(form_element(""))

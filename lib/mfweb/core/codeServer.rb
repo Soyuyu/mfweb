@@ -55,7 +55,7 @@ class CodeServer
               when 'true' == anElement['useClassName']
                 "#{frag.class}...\n"
               when anElement['label']
-                "#{anElement['label']}...\n"
+                "#{anElement['label']}\n"
               when anElement['class'] #TODO remove class element from old docs
                 "class #{anElement['class']}...\n"
               else nil
@@ -68,7 +68,7 @@ class CodeServer
 
   def emit_code_body html, body, insertElement
     if insertElement.kind_of? Nokogiri::XML::Element and not insertElement.children.empty?
-      html << CodeHighlighter.new(insertElement).call(body)
+      html << CodeHighlighter.new(insertElement, body).call
     else
       html.cdata(body)
     end
@@ -77,8 +77,9 @@ class CodeServer
 end
 
 class CodeHighlighter
-  def initialize insertCodeElement
+  def initialize insertCodeElement, fragment
     @data = insertCodeElement
+    @fragment = fragment
   end
   def opening
     "<span class = 'highlight'>"
@@ -92,8 +93,8 @@ class CodeHighlighter
   def highlight_ranges
     @data.css('highlight-range')
   end
-  def call aString
-    apply_highlights(apply_ranges(aString.lines))
+  def call
+    apply_highlights(apply_ranges(@fragment.lines))
   end
   def apply_ranges lines
     highlight_ranges.reduce(lines){|acc, each| apply_one_range(acc, each)}
@@ -119,8 +120,9 @@ class CodeHighlighter
     lines.map{|line| highlight_line line}.join
   end
   def highlight_line line
-    matching = highlights.select{|h| Regexp.new(h['line']).match(line)}
-    matching.reduce(line){|acc, each| acc = apply_markup acc, each}
+    highlights
+      .select{|h| Regexp.new(h['line']).match(line)}
+      .reduce(line){|acc, each| acc = apply_markup acc, each}
   end
   def apply_markup line, element
     if element.key? 'span'

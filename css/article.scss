@@ -188,6 +188,10 @@ div.frontMatter {
     font-size: 90%;
   }
 
+  pre span.highlight {
+    color:$tw-pink;  
+  }
+
   p.code-label {
     margin-bottom: 0;
     font-style: italic;

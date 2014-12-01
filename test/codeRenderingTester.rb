@@ -19,16 +19,17 @@ end
 class CodeRenderingTester
   include Mfweb::Core
   def hunks
-    raw = File.read('test/codeRenderHunks.txt').split("\n%%\n")
+    raw = File.read('test/codeRenderHunks.txt').split("\n%%")
     raw.map {|r| process_raw_hunk r}.to_h
   end
   def process_raw_hunk hunk
     lines = hunk.lines
-    key = lines.find {|line| /[^[:space:]]/ =~ line}
+    key = lines.first.strip
     value = lines
-      .drop_while {|line| (/[^[:space:]]/ !~ line) or (key == line)}
+      .drop(1)
+      .drop_while {|line| (/[^[:space:]]/ !~ line)}
       .join
-    return [key.chomp, value]
+    return [key, value]
   end
 
   def form_element s
@@ -44,8 +45,7 @@ class CodeRenderingTester
   end
   def test_one_line_highlight
     element = form_element "<highlight line = 'missing'/>"
-    actual = with_highlights(element)
-    assert_equal hunks['one-line'], actual
+    assert_equal hunks['one-line'], with_highlights(element)
   end
   def test_highlight_span
     element = form_element "<highlight line = 'missing' span = 'addError'/>"
@@ -83,6 +83,10 @@ class CodeRenderingTester
   def test_range_both_match_start_line
     element = form_element "<highlight-range start-line = 'null' end-line = '{'/>"
     assert_raises(RuntimeError) { with_highlights(element) }
+  end
+  def test_highlight_with_class
+    element = form_element "<highlight line = 'missing' css-class = 'some-class'/>"
+    assert_equal hunks['css-class'], with_highlights(element)
   end
 end
 

@@ -192,6 +192,11 @@ div.frontMatter {
     color:$tw-pink;  
   }
 
+  pre span.deleted {
+    color:$tw-pink; 
+    text-decoration: line-through;
+  }
+
   p.code-label {
     margin-bottom: 0;
     font-style: italic;

@@ -79,10 +79,11 @@ end
 class CodeHighlighter
   def initialize insertCodeElement, fragment
     @data = insertCodeElement
-    @fragment = fragment
+    @fragment = fragment.encode(xml: :text)
   end
-  def opening
-    "<span class = 'highlight'>"
+  def opening element
+    css_class = element['css-class'] || 'highlight'
+    "<span class = '#{css_class}'>"
   end
   def closing
     "</span>"
@@ -109,7 +110,7 @@ class CodeHighlighter
     raise "start and end match same line" unless finish_offset > 0
     finish_ix = start_ix + finish_offset
     pre = 0 == start_ix ? [] : lines[0..(start_ix - 1)]
-    start = [opening + lines[start_ix]]
+    start = [opening(element) + lines[start_ix]]
     mid = (lines[(start_ix + 1)..(finish_ix -1)])
     finish = [lines[finish_ix].chomp + closing + "\n"]
     rest = lines.size == (finish_ix + 1) ? [] : lines[(finish_ix + 1)..-1]
@@ -129,9 +130,9 @@ class CodeHighlighter
       r = Regexp.new(element['span'])
       m = r.match line
       raise "unable to match span %s" % element['span'] unless m
-      m.pre_match + opening + m[0] + closing + m.post_match
+      m.pre_match + opening(element) + m[0] + closing + m.post_match
     else
-      opening + line.chomp + closing + "\n"
+      opening(element) + line.chomp + closing + "\n"
     end
   end
 end

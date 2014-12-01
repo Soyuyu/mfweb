@@ -12,9 +12,7 @@ input
     }
   } //end
 
-%%
-
-one-line
+%% one-line
 
   private void validateDate(Notification note) {
     if (date == null) {
@@ -28,9 +26,7 @@ one-line
     }
   } //end
 
-%%
-
-one-span
+%% one-span
 
   private void validateDate(Notification note) {
     if (date == null) {
@@ -44,9 +40,7 @@ one-span
     }
   } //end
 
-%%
-
-range
+%% range
 
   private void validateDate(Notification note) {
 <span class = 'highlight'>    if (date == null) {
@@ -60,9 +54,7 @@ range
     }
   } //end
 
-%%
-
-range-start
+%% range-start
 
 <span class = 'highlight'>  private void validateDate(Notification note) {
     if (date == null) {
@@ -76,8 +68,7 @@ range-start
     }
   } //end
 
-%%
-range-end
+%% range-end
 
   private void validateDate(Notification note) {
     if (date == null) {
@@ -91,4 +82,16 @@ range-end
     }
   } //end</span>
 
-%%
+%% css-class
+
+  private void validateDate(Notification note) {
+    if (date == null) {
+<span class = 'some-class'>      note.addError("date is missing");</span>
+      return;
+    }
+
+    LocalDate parsedDate;
+    try {
+      parsedDate = LocalDate.parse(getDate());
+    }
+  } //end

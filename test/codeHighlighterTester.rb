@@ -1,4 +1,4 @@
-class CodeRenderingTester < MiniTest::Unit::TestCase
+class CodeHighlighterTester < MiniTest::Unit::TestCase
   def input
     %|
   private void validateDate(Notification note) {
@@ -16,10 +16,10 @@ class CodeRenderingTester < MiniTest::Unit::TestCase
 end
 
 
-class CodeRenderingTester
+class CodeHighlighterTester
   include Mfweb::Core
   def hunks
-    raw = File.read('test/codeRenderHunks.txt').split("\n%%")
+    raw = File.read('test/codeHighlighterHunks.txt').split("\n%%")
     raw.map {|r| process_raw_hunk r}.to_h
   end
   def process_raw_hunk hunk

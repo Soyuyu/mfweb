@@ -11,8 +11,8 @@ How to use this [Infodeck][]
   the top banner. Tap it to bring up a list of links to some of the
   slides in the deck. Tap it again to hide it.
 - You can also use a keyboard:
-  -  left-arrow, down-arrow, page-down, and space move forwards. 
-  -  right-arrow, up-arrow, page-up, and backspace move backwards
+  -  right-arrow, down-arrow, page-down, and space move forwards. 
+  -  left-arrow, up-arrow, page-up, and backspace move backwards
   - If you're on a slide with many builds, then the up and down arrow
     keys will skip over the builds
   - press "g" to bring up a dialog which allows you to jump to any

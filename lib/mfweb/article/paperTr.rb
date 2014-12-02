@@ -381,6 +381,15 @@ class PaperTransformer < Mfweb::Core::Transformer
       #@html << footnote_server.body(key)
     end
   end
+
+  def handle_tweet anElement
+    @html.element('blockquote', class: 'twitter-tweet', lang: 'en') do
+      apply anElement
+      credit = "-- " + (anElement['credit'] || anElement['url'])
+      @html.a_ref(anElement['url']){@html.text credit}
+    end
+    @html << '<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>'
+  end
 end
 
 class FigureReader

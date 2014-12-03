@@ -123,7 +123,7 @@ class CodeHighlighter
   def highlight_line line
     highlights
       .select{|h| Regexp.new(h['line']).match(line)}
-      .reduce(line){|acc, each| acc = apply_markup acc, each}
+      .reduce(line){|acc, each| apply_markup acc, each}
   end
   def apply_markup line, element
     if element.key? 'span'

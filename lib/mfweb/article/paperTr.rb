@@ -4,12 +4,13 @@ module Mfweb::Article
 module PhotoHandlers
   def handle_photo anElement
     width = anElement['width']
-    css_class = case anElement['layout'] 
-                  when "full" then "fullPhoto"
-                  when "right" then "photo"
-                  when nil then "photo"
-                  else raise "unknown photo layout: " + anElement
-                end
+    layout_class = case anElement['layout'] 
+                   when "full" then "fullPhoto"
+                   when "right" then "photo"
+                   when nil then "photo"
+                   else raise "unknown photo layout: " + anElement
+                   end
+    css_class = [layout_class, anElement['class']].join(" ")
     @html.element('div', {:class => css_class, 
                     :style => "width: #{width}px;" }) do
       attrs = {:src => anElement['src'], title: anElement['title']}

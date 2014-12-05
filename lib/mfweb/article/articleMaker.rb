@@ -8,7 +8,6 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     @catalog = Mfweb::Core::Site.catalog
     @author_server = Mfweb::Core::Site.author_server
     super(infile, outfile, transformerClass, skeleton)
-    puts "#{@in_file} -> #{@out_file}" #TODO move to rake task
     @pattern_server = PatternServer.new
     @code_server = Mfweb::Core::CodeServer.new
     @bib_server = Bibliography.new
@@ -19,6 +18,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
 
   def load
     super
+    puts "#{@in_file} -> #{@out_file}" #TODO move to rake task
     @is_draft = ('draft' == @root['status'])
     @pattern_server.load
     @refactoring_server.load

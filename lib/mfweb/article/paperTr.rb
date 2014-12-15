@@ -13,7 +13,8 @@ module PhotoHandlers
     css_class = [layout_class, anElement['class']].join(" ")
     @html.element('div', {:class => css_class, 
                     :style => "width: #{width}px;" }) do
-      attrs = {:src => anElement['src'], title: anElement['title']}
+      #also put width here for RSS display
+      attrs = {:src => anElement['src'], title: anElement['title'], width: width}
       @html.element('img', attrs){}
       render_photo_credit anElement
       @html.p('photoCaption') {apply anElement}

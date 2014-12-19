@@ -171,7 +171,11 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
   def handle_cite anElement   
     bibref = @maker.bib_server[anElement['name']]
-    bibref.link_around(@html, anElement)
+    if anElement.children.empty?
+      bibref.link_around(@html, anElement)
+    else
+      bibref.link_around(@html) {apply anElement}
+    end
   end
   def handle_patternRef anElement
     key = anElement['name']

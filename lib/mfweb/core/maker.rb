@@ -1,3 +1,6 @@
+#TODO check to see if this class is ever used. ArticleMaker subclasses off TransformerPageRenderer that's defined in transformer.rb. Should unify to only one maker class
+
+
 module Mfweb::Core
 
 class Maker

@@ -1,11 +1,11 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'stringio'
 require 'mfweb/infodeck'
 require './test/infodeck/testSupport'
 
 module Mfweb::InfoDeck
 
-class DeckTransformerTester < Test::Unit::TestCase
+class DeckTransformerTester < Minitest::Test
   include TestTransform
   def style key, node
     style_str = node['style']
@@ -69,7 +69,7 @@ class DeckTransformerTester < Test::Unit::TestCase
   end
   def test_show_emits_children
     transform_slide "<build ref='notthis'><show class='b1'><tile width= '177'/></show></build>"
-    assert_not_nil @html.at_css('div.tile'), "did not emit child of show"
+    refute_nil @html.at_css('div.tile'), "did not emit child of show"
     assert_match(/width: 177px/, @html.at_css('div.tile')['style'])  #checks get right element
   end
   def test_inject_ref_from_parent_show
@@ -86,7 +86,7 @@ class DeckTransformerTester < Test::Unit::TestCase
   end
   def test_inject_width_does_nothing_if_no_width
     transform_slide "<tile/>"
-    assert_no_match /width/, @html.at_css('div.tile')['style']
+    refute_match /width/, @html.at_css('div.tile')['style']
   end
 
   def test_warn_if_font_in_svg_file_as_img

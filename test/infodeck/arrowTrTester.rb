@@ -5,7 +5,7 @@ require './test/infodeck/testSupport'
 
 module Mfweb::InfoDeck
 
-  class ArrowTransformerTester < MiniTest::Unit::TestCase
+  class ArrowTransformerTester < Minitest::Test
 
     def transform aString
       @emitter = Mfweb::Core::HtmlEmitter.new

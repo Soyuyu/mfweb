@@ -1,4 +1,4 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'stringio'
 require 'mfweb/core'
 require 'mfweb/infodeck'
@@ -6,7 +6,7 @@ require './test/infodeck/testSupport'
 
 module Mfweb::InfoDeck
 
-  class HighlightSequenceTrTester < Test::Unit::TestCase
+  class HighlightSequenceTrTester < Minitest::Test
     include TestTransform
 
     def transform aString

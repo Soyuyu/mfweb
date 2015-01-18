@@ -1,9 +1,9 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'stringio'
 require 'rubygems'
 require 'mfweb/core'
 
-class LinkFixingEmitterTester < Test::Unit::TestCase
+class LinkFixingEmitterTester < Minitest::Test
   include Mfweb::Core
   def setup
     @raw_emitter = HtmlEmitter.new

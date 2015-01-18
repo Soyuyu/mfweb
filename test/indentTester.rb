@@ -1,5 +1,5 @@
 
-class IndenterTester < Test::Unit::TestCase
+class IndenterTester < Minitest::Test
   include Mfweb::Core
   def test_no_change_on_zero
     @input = "first\n"+

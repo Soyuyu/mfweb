@@ -1,4 +1,4 @@
-class CodeHighlighterTester < MiniTest::Unit::TestCase
+class CodeHighlighterTester < MiniTest::Test
   def input
     %|
   private void validateDate(Notification note) {

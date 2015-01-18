@@ -1,7 +1,7 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'mfweb/article'
 
-class PaperTransformerTester < Test::Unit::TestCase
+class PaperTransformerTester < Minitest::Test
   include Mfweb::Core
   include Mfweb::Article
 

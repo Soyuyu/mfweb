@@ -1,7 +1,7 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'mfweb/core'
 
-class HtmlUtilTester < Test::Unit::TestCase
+class HtmlUtilTester < Minitest::Test
   include Mfweb::Core
   include HtmlUtils
   def test_amazon

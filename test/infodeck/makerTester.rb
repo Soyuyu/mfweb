@@ -1,4 +1,4 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'stringio'
 
 
@@ -6,7 +6,7 @@ require 'infodeck'
 
 module Mfweb::InfoDeck
 
-  class MakerTester < Test::Unit::TestCase
+  class MakerTester < Minitest::Test
     include InfoDeck
 
     BUILD_DIR = 'build/test/'
@@ -14,6 +14,7 @@ module Mfweb::InfoDeck
     def run_test_maker
       flunk "Unable to find Sass::Engine, run tests with bundle exec" unless defined? Sass::Engine
       mkdir_p BUILD_DIR, :verbose => false
+      Site.init(TestSite.new)
       maker = DeckMaker.new('test/infodeck/makertest/deck.xml', BUILD_DIR)
       maker.asset_server = AssetServer.new("lib/mfweb/infodeck")
       maker.google_analytics_file = nil
@@ -30,10 +31,9 @@ module Mfweb::InfoDeck
     end
 
     def test_included_external_deck
-      Site.init(TestSite.new)
       run_test_maker
       @included =  Nokogiri::HTML(File.read(BUILD_DIR + 'included-slide.html'))
-      assert_not_nil  @included.at_css('#included-slide')
+      refute_nil  @included.at_css('#included-slide')
     end
   end
 

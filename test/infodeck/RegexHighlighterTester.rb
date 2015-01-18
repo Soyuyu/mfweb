@@ -1,9 +1,9 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'mfweb/infodeck'
 
 module Mfweb::InfoDeck
 
-  class DeckTransformerTester < Test::Unit::TestCase
+  class DeckTransformerTester < Minitest::Test
     def test_simple_highlight
       input = "if if = if then then = then"
       actual = RegexpHighlighter.input(input).regexp(/if = if/).span('highlight').html

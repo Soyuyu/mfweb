@@ -1,7 +1,7 @@
-require 'test/unit'
+require 'minitest/autorun'
 require 'mfweb/article'
 
-class BibliographyTester < Test::Unit::TestCase
+class BibliographyTester < Minitest::Test
   include Mfweb::Core
   include Mfweb::Article
   def bib_containing aString

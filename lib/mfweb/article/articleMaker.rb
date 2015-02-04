@@ -10,7 +10,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     super(infile, outfile, transformerClass, skeleton)
     @pattern_server = PatternServer.new
     @code_server = Mfweb::Core::CodeServer.new
-    @bib_server = Bibliography.new
+    @bib_server = Bibliography.new(infile)
     @footnote_server = FootnoteServer.new(infile)
     @refactoring_server = RefactoringServer.new
     @code_dir = './'

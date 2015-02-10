@@ -3,7 +3,7 @@ module Mfweb::Article
 
 class ArticleMaker < Mfweb::Core::TransformerPageRenderer
   attr_accessor :pattern_server, :code_server, :bib_server, 
-  :footnote_server, :catalog, :author_server, :refactoring_server
+  :footnote_server, :catalog, :author_server, :refactoring_server, :img_dir
   def initialize infile, outfile, skeleton = nil, transformerClass = nil
     @catalog = Mfweb::Core::Site.catalog
     @author_server = Mfweb::Core::Site.author_server
@@ -14,6 +14,7 @@ class ArticleMaker < Mfweb::Core::TransformerPageRenderer
     @footnote_server = FootnoteServer.new(infile)
     @refactoring_server = RefactoringServer.new
     @code_dir = './'
+    @img_dir = "./"
   end
 
   def load

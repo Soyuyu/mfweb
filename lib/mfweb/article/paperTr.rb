@@ -224,11 +224,12 @@ class PaperTransformer < Mfweb::Core::Transformer
       fig_num = @figureReader.number(src)
       @html.p('figureImage')do
         @html.element('a', 'name' => a_name(src)) {}
-        img_attrs = copy_some_attributes(anElement, :width => :width, :src => :src)
+        img_attrs = copy_some_attributes(anElement, :width => :width)
         img_style = {}
         img_style['max-width'] = 'none' if img_attrs.has_key?(:width)      
         img_attrs['alt'] = "Figure #{fig_num}"
         img_attrs['style'] = style_string(img_style)
+        img_attrs['src'] = File.join(@maker.img_dir,src)
         @html.element('img', img_attrs) {}
       end
       unless anElement.children.empty?

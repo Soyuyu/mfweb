@@ -3,7 +3,7 @@ module Mfweb::Article
 
 module PhotoHandlers
   def handle_photo anElement
-    width = anElement['width']
+    width = anElement['width'] 
     layout_class = case anElement['layout'] 
                    when "full" then "fullPhoto"
                    when "right" then "photo"
@@ -11,11 +11,14 @@ module PhotoHandlers
                    else raise "unknown photo layout: " + anElement
                    end
     css_class = [layout_class, anElement['class']].join(" ")
-    @html.element('div', {:class => css_class, 
-                    :style => "width: #{width}px;" }) do
+    div_attrs = {class: css_class}
+    div_attrs[:style] = "width: #{width}px;" if width
+    @html.element('div', div_attrs) do
       #also put width here for RSS display
-      attrs = {:src => anElement['src'], title: anElement['title'], width: width}
-      @html.element('img', attrs){}
+      img_attrs = {:src => img_dir(anElement['src'])}
+      img_attrs[:title] = anElement['title'] if anElement['title']
+      img_attrs[:width] = width if width
+      @html.element('img', img_attrs){}
       render_photo_credit anElement
       @html.p('photoCaption') {apply anElement}
     end
@@ -25,6 +28,14 @@ module PhotoHandlers
       @html.p('credit') do
         @html << "photo: " + anElement['credit']
       end
+    end
+  end
+  def img_dir src
+    case
+    when @maker && @maker.img_dir
+      File.join @maker.img_dir, src
+    else
+      src
     end
   end
 end

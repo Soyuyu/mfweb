@@ -143,7 +143,7 @@ class Fragmentor
 # can be chopped. Surround between <codeFragment name = 'THE_NAME'>
 # and </codeFragment
 
-  attr_reader :class
+  attr_reader :class, :frags
   def initialize file
     @file = file
     @class = nil
@@ -153,6 +153,8 @@ class Fragmentor
   def run
     raise MissingFragmentFile, @file unless FileTest.exists? @file
     extract_fragments
+  rescue
+    raise FragmentorError.new(@file, $!)
   end
 
   def extract_fragments
@@ -191,8 +193,16 @@ class Fragmentor
     @class = $~[1] if $~
   end
 
+end
 
-
+class FragmentorError < StandardError
+  def initialize file, base
+    @file = file
+    @base = base
+  end
+  def message
+    "Error fragmenting %s: %s" % [@file, @base]
+  end
 end
 
 class CodeFragment

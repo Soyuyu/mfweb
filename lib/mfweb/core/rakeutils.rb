@@ -16,10 +16,10 @@ end
 
 def sassTask srcGlob, relativeTargetDir, taskSymbol, base_deps = []
   FileList[srcGlob].each do |src|
-    deps = base_deps.dup
+    srcDir = src.pathmap "%d"
+    deps = base_deps.dup + Dir[srcDir + '**/*.scss'] - [src]
     targetDir = build_dir_path(relativeTargetDir) 
     target = File.join(targetDir, src.pathmap("%n.css"))
-    srcDir = src.pathmap "%d"
     deps << MFWEB_DIR + 'css/global.scss' unless /global.scss/ =~ src 
     Rake::Task[taskSymbol].prerequisites << target
     file target => [src] + deps do 

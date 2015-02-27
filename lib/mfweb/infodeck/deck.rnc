@@ -97,7 +97,7 @@ tile.content =
     | element abstract {inline}
     | element list-tags {empty}
     | include_element
-    | element author-twitter {text}
+    | element author-twitter {attribute id {text}?, attribute handle {text}}
 
 
 quote = element quote {

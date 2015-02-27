@@ -38,12 +38,28 @@ module Mfweb::Core
     def check message
       @errors << message unless yield
     end
-    def emit_author 
-      handle = @src.authors
+    def emit_author
+      a = @src.authors.find{|i| i.has_twitter?}
+      if a
+        @html.meta 'twitter:creator:id', a.twitter_id if a.twitter_id
+        handle = a.twitter_handle
+        if handle
+          @html.meta 'twitter:creator', a.twitter_handle
+          fail "bad twitter handle #{handle}" unless "@" == handle[0]
+        end
+      end
+    end
+    def first_twitter_handle
+      @src.authors
         .map{|a| a.twitter_handle}
         .compact
         .first
-      @html.meta 'twitter:creator', handle if handle
+    end
+    def first_twitter_id
+      @src.authors
+        .map{|a| a.twitter_id}
+        .compact
+        .first
     end
     def fallback_image
       "http://martinfowler.com/logo-sq.png"

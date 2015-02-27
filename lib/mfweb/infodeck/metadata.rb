@@ -30,7 +30,14 @@ module Mfweb::Infodeck
     def authors
       #TODO replace tile class = "author' with author tag
       handles = @xml.css('author-twitter')
-      return handles.map {|h| OpenStruct.new(twitter_handle: h.text)}
+      return handles.map {|h| AuthorAdapter.new(h['handle'])}
+    end
+    class AuthorAdapter
+      attr_accessor :twitter_handle, :twitter_id
+      def initialize handle
+        @twitter_handle = handle
+      end
+      def has_twitter?; true; end
     end
   end
 end

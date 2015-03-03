@@ -16,10 +16,14 @@ module Mfweb::Core
 
     def emit_code_body body
       if @anElement.kind_of? Nokogiri::XML::Element and not @anElement.children.empty?
-        @html << CodeHighlighter.new(@anElement, body).call
+        @html << highlighted_code(body)
       else
         @html.cdata(body)
       end
+    end
+
+    def highlighted_code body
+      CodeHighlighter.new(@anElement, body).call
     end
 
     def heading

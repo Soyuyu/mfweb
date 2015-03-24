@@ -1,37 +1,55 @@
-#TODO check to see if this class is ever used. ArticleMaker subclasses off TransformerPageRenderer that's defined in transformer.rb. Should unify to only one maker class
-
-
 module Mfweb::Core
 
-class Maker
- attr_accessor :skeleton, :transformer
-  def initialize out_file, in_file, transformer_class, 
-    skeleton, title_bar_text = nil
+  class Maker
+    attr_accessor :transformer_class, :transformer
+    def initialize infile, outfile, transformerClass, skeleton
+      @in_file = infile
+      @out_file = outfile
+      @transformer_class = transformerClass
+      @skeleton = skeleton
+    end
 
-    @out_file = out_file
-    @in_file = in_file
-    @transformer_class = transformer_class
-    @skeleton = skeleton
-    @title_bar_text =  title_bar_text
-  end
-  def run
-    load
-    render
-  end
-  def render
-    @skeleton.emit(@html, title_bar_text){@transformer.render}
-  end
-  def load
-    @root = MfXml.root(File.new(@in_file))
-    @html = HtmlEmitter.new(File.new(@out_file, 'w'))
-    @transformer = create_transformer
-  end
-  def create_transformer
-    @transformer_class.new(@html, @root)
-  end
-  def title_bar_text
-    @title_bar_text || transformer.title_bar_text
-  end
-end
+    def run
+      load
+      render
+    end
 
+    def render
+      @skeleton.emit(@html, @transformer.title_bar_text, 
+        meta_emitter: metadata_emitter) do |html|
+        render_body
+      end
+    ensure
+      @html.close     
+    end
+
+    def load
+      @root = MfXml.root(File.new(@in_file))
+      @html = HtmlEmitter.new(File.new(@out_file, 'w'))
+      @transformer = create_transformer
+    end
+
+    def render_body
+      @transformer.render
+    end 
+
+    def create_transformer
+      transformer_class.new(@html, @root, self)
+    end
+
+    def input_dir *path
+      dir = @in_file.pathmap("%d/")
+      File.join dir, *path
+    end
+
+    def output_dir *path
+      dir = @out_file.pathmap("%d/")
+      File.join dir, *path
+    end
+
+    def metadata_emitter 
+      nil
+    end
+
+  end
 end

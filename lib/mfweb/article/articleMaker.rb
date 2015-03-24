@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 module Mfweb::Article
 
-class ArticleMaker < Mfweb::Core::TransformerPageRenderer
+class ArticleMaker < Mfweb::Core::Maker
   attr_accessor :pattern_server, :code_server, :bib_server, 
   :footnote_server, :catalog, :author_server, :refactoring_server, :img_dir
   def initialize infile, outfile, skeleton = nil, transformerClass = nil

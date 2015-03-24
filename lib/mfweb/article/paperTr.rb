@@ -48,8 +48,7 @@ class PaperTransformer < Mfweb::Core::Transformer
 
   def initialize output, root, maker
     raise 'heck' unless output
-    super output, root
-    @maker = maker
+    super output, root, maker
     @copy_set = %w[b i p ul li a code img table tr th td div ol span]
     @ignore_set = %w[footnote-list bibliography title subtitle
                      abstract meta-description meta-image]

@@ -17,9 +17,10 @@ module Mfweb::Core
 class Transformer
   include Mfweb::Core::HtmlUtils
 
-  def initialize output, root
+  def initialize output, root, maker = nil
     @html = output  #an instance of HtmlEmitter
     @root = root  #root of this document
+    @maker = maker
     @copy_set = [] #these elements will just be copied to the output
     @apply_set = [] #these elements will get the recursive apply
     @ignore_set = []
@@ -154,59 +155,6 @@ class Transformer
     end
   end
   
-end
-
-#==== Transformer Page Renderer ================
-
-#TODO replace with the default maker that's easier to use
-
-class TransformerPageRenderer 
-  attr_accessor :transformer_class
-  def initialize infile, outfile, transformerClass, skeleton
-    @in_file = infile
-    @out_file = outfile
-    @transformer_class = transformerClass
-    @skeleton = skeleton
-  end
-
-  def run
-    load
-    @skeleton.emit(@html, @transformer.title_bar_text, 
-                   meta_emitter: metadata_emitter) do |html|
-      render_body
-    end
-    @html.close
-  end
-
-  def load
-    @root = MfXml.root(File.new(@in_file))
-    @html = HtmlEmitter.new(File.new(@out_file, 'w'))
-    @transformer = create_transformer
-  end
-
-  def render_body
-    @transformer.render
-  end 
-
-  def create_transformer
-    transformer_class.new(@html, @root, self)
-  end
-
-  def input_dir *path
-    dir = @in_file.pathmap("%d/")
-    File.join dir, *path
-  end
-
-  def output_dir *path
-    dir = @out_file.pathmap("%d/")
-    File.join dir, *path
-  end
-
-  def metadata_emitter 
-    nil
-  end
-
-
 end
 
 end

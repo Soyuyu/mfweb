@@ -21,15 +21,6 @@ class DeckTransformer < Mfweb::Core::Transformer
     anElement.ancestors("slide").first['id']
   end
 
-  def add_class attrHash, class_name
-    return unless class_name
-    if attrHash.key? :class
-      attrHash[:class] += " " + class_name
-    else
-      attrHash[:class] = class_name
-    end
-  end
-
   def handle_slide anElement
     attrs = copy_some_attributes(anElement, :id => 'id')
     add_class attrs, 'slide'

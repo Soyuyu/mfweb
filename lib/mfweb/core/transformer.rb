@@ -140,6 +140,15 @@ class Transformer
     [e] + collect_run(e.next_element) : [e]
   end
 
+  def add_class attrHash, class_name
+    return unless class_name
+    if attrHash.key? :class
+      attrHash[:class] += " " + class_name
+    else
+      attrHash[:class] = class_name
+    end
+  end
+
   def add_to_style(attrsHash, fromHash = nil)
     return unless fromHash
     return if fromHash.empty?

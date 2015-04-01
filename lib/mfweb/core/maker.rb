@@ -50,6 +50,13 @@ module Mfweb::Core
     def metadata_emitter 
       nil
     end
+    def resolve_includes aRoot
+      aRoot.css('include').each do |elem|
+        inclusion = Nokogiri::XML(File.read(input_dir(elem['src']))).root
+        resolve_includes inclusion
+        elem.replace inclusion.children
+      end
+    end
 
   end
 end

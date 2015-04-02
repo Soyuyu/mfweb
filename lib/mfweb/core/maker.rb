@@ -1,6 +1,7 @@
 module Mfweb::Core
 
   class Maker
+    include FileUtils
     attr_accessor :transformer_class, :transformer
     def initialize infile, outfile, transformerClass, skeleton
       @in_file = infile
@@ -25,6 +26,7 @@ module Mfweb::Core
 
     def load
       @root = MfXml.root(File.new(@in_file))
+      mkdir_p(output_dir)
       @html = HtmlEmitter.new(File.new(@out_file, 'w'))
       @transformer = create_transformer
     end

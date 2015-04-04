@@ -25,8 +25,11 @@ module Mfweb::Core
     end
     def check_validity
       check("title <#{title}> is more than 70 chars") {title.length <= 70}
-      check("description for  <#{title}> is more than 200 chars") {
-        @src.description.length < 200}
+      check(
+        "description for <%s> is %d cars (limit is 200)" %
+        [title, @src.description.length]) do
+          @src.description.length < 200
+      end
 
       if  ! (@src.description.length < 200)
         puts "<\n#{@src.description}\n"

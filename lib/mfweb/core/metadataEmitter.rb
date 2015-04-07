@@ -17,7 +17,7 @@ module Mfweb::Core
       @html.meta 'og:image', image_val
       @html.meta 'og:site_name', 'martinfowler.com'
       @html.meta 'og:type', 'article'
-      @html.meta 'og:article:modified_time', @src.publication_time
+      @html.meta 'og:article:modified_time', @src.publication_time if @src.publication_time
       emit_author 
     end
     def title

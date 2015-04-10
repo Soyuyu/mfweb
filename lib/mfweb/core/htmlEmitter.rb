@@ -215,6 +215,17 @@ class HtmlEmitter
     yield
     @out << amazon_post
   end
+  alias_method :book, :amazon
+  def link anElement
+    case
+    when nil == anElement then yield
+    when anElement['href'] then a_ref(anElement['href']) {yield}
+    when anElement['url']  then a_ref(anElement['url']) {yield}
+    when anElement['isbn'] then book(anElement['isbn'])  {yield}
+    when anElement['asin'] then amazon(anElement['asin'])  {yield}
+    else yield
+    end
+  end
   def meta name, content
     if name.start_with? 'og:'
       element_block "meta", {property: name, content: content}

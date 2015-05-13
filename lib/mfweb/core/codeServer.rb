@@ -34,9 +34,9 @@ class CodeServer
     return @code_dir
   end
 
-  def render_insertCode anElement, html
+  def render_insertCode anElement, html, tr: nil
     frag = find(anElement['file'], anElement['fragment'])
-    CodeRenderer.new(html, frag, anElement).call
+    CodeRenderer.new(html, frag, anElement, tr: tr).call
   rescue MissingFragmentFile
     html.error "missing file: #{anElement['file']} in #{path}"
   rescue MissingFragment

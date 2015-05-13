@@ -4,6 +4,9 @@ module Mfweb::Core
       @data = insertCodeElement
       @fragment = fragment.encode(xml: :text)
     end
+    def self.highlighting_elements
+      %w[highlight highlight-range]
+    end
     def opening element
       css_class = element['css-class'] || 'highlight'
       "<span class = '#{css_class}'>"
@@ -34,7 +37,7 @@ module Mfweb::Core
       finish_ix = start_ix + finish_offset
       pre = 0 == start_ix ? [] : lines[0..(start_ix - 1)]
       start = [opening(element) + lines[start_ix]]
-      mid = (lines[(start_ix + 1)..(finish_ix -1)])
+      mid = (lines[(start_ix + 1)..(finish_ix - 1)])
       finish = [lines[finish_ix].chomp + closing + "\n"]
       rest = lines.size == (finish_ix + 1) ? [] : lines[(finish_ix + 1)..-1]
       return pre + start + mid + finish + rest

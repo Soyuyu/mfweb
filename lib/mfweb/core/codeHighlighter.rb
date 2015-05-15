@@ -21,7 +21,7 @@ module Mfweb::Core
       @data.css('highlight-range')
     end
     def call
-      apply_highlights(apply_ranges(@fragment.lines))
+      apply_inserts(apply_highlights(apply_ranges(@fragment.lines))).join
     end
     def apply_ranges lines
       highlight_ranges.reduce(lines){|acc, each| apply_one_range(acc, each)}
@@ -44,7 +44,7 @@ module Mfweb::Core
     end
     
     def apply_highlights lines
-      lines.map{|line| highlight_line line}.join
+      lines.map{|line| highlight_line line}
     end
     def highlight_line line
       highlights
@@ -60,6 +60,27 @@ module Mfweb::Core
       else
         opening(element) + line.chomp + closing + "\n"
       end
+    end
+
+    def highlight_inserts
+      @data.css('highlight-insert')
+    end
+    def apply_inserts lines
+      highlight_inserts.reduce(lines) do |acc, element|
+        lines.map do |line|
+          Regexp.new(element['line']).match(line) ? perform_insert(line, element) : line
+        end
+      end
+    end
+    def perform_insert line, element
+      m = Regexp.new(element['after']).match(line)
+      raise "unable to match <#{element['after']}>" unless m
+      insert = opening(element) + insert_text(element) + closing
+      return m.pre_match + m[0] + insert + m.post_match
+    end
+    def insert_text element
+      cdata = element.children.detect{|e| e.cdata?}
+      return cdata ? cdata.text : element.text
     end
   end
 end

@@ -163,7 +163,10 @@ class Transformer
       res += "%s: %s;" % [k, valuesHash[k]] 
     end
   end
-  
+  def form_css anElement, *classes
+    [anElement['class'], *classes].join(" ")
+  end
+
 end
 
 end

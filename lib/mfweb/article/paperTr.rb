@@ -214,14 +214,12 @@ class PaperTransformer < Mfweb::Core::Transformer
     end
   end
   def handle_sidebar anElement
-    css_class = [anElement['class'], 'sidebar'].join(" ")
     attrs = {}
     attrs[:id] = anchor_for(anElement) if anchor_for(anElement)
-    @html.div(css_class, attrs) {apply anElement}
+    @html.div(form_css(anElement, 'sidebar'), attrs) {apply anElement}
   end
   def handle_soundbite anElement
-    css_class = [anElement['class'], 'soundbite'].join(" ")
-    @html.div(css_class) do
+    @html.div(form_css(anElement, 'soundbite')) do
       @html.p {apply anElement}
     end
   end
@@ -402,12 +400,14 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
 
   def handle_tweet anElement
-    @html.element('blockquote', class: 'twitter-tweet', lang: 'en') do
-      apply anElement
-      credit = "-- " + (anElement['credit'] || anElement['url'])
-      @html.a_ref(anElement['url']){@html.text credit}
+    @html.div(form_css(anElement, 'tweet')) do
+      @html.element('blockquote', class: 'twitter-tweet', lang: 'en') do
+        apply anElement
+        credit = "-- " + (anElement['credit'] || anElement['url'])
+        @html.a_ref(anElement['url']){@html.text credit}
+      end
+      @html << '<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>'
     end
-    @html << '<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>'
   end
 end
 

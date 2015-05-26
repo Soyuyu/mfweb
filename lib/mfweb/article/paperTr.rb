@@ -401,7 +401,9 @@ class PaperTransformer < Mfweb::Core::Transformer
 
   def handle_tweet anElement
     @html.div(form_css(anElement, 'tweet')) do
-      @html.element('blockquote', class: 'twitter-tweet', lang: 'en') do
+      @html.element('blockquote',
+                    class: 'twitter-tweet', lang: 'en',
+                    'data-cards' => 'hidden') do
         apply anElement
         credit = "-- " + (anElement['credit'] || anElement['url'])
         @html.a_ref(anElement['url']){@html.text credit}

@@ -4,8 +4,12 @@ class SampleSite < Mfweb::Core::Site
   def load_skeleton
     @header = "<div id = 'banner'></div>"
     @footer = "<div id = 'footer'></div>"
-    @skeleton = Mfweb::Core::PageSkeleton.new(@header, @footer, 'global.css')    
+    @skeleton = DraftSkeleton.new(@header, @footer, 'global.css')    
   end
+  class DraftSkeleton < Mfweb::Core::PageSkeleton
+    def with_banner_photo(pick_photo); return self; end
+  end
+
 end
 
 Mfweb::Core::Site.init(SampleSite.new)

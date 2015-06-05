@@ -63,7 +63,7 @@ def copyTask srcGlob, targetDirSuffix, taskSymbol
 end
 
 def copyGraphicsTask srcDir, targetDirSuffix, taskSymbol
-  %w[gif jpg png JPG].each do |i|
+  %w[gif jpg png JPG svg].each do |i|
     copyTask srcDir + "/*." + i, targetDirSuffix, taskSymbol
   end
 end

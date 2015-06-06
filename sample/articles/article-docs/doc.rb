@@ -1,4 +1,4 @@
-class FlexibleTr < Mfweb::Article::PaperTransformer
+class DocTr < Mfweb::Article::PaperTransformer
   def handle_database_list anElement
     @html.table('database-list') do 
       @html.th {@html << 'database'}

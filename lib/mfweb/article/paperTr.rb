@@ -44,7 +44,7 @@ class PaperTransformer < Mfweb::Core::Transformer
   def initialize output, root, maker
     raise 'heck' unless output
     super output, root, maker
-    @copy_set = %w[b i p ul li a code img table tr th td div ol span]
+    @copy_set = %w[b i p ul li a code table tr th td div ol span]
     @ignore_set = %w[footnote-list bibliography title subtitle
                      abstract meta-description meta-image]
     @apply_set = %w[sample]
@@ -217,6 +217,11 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.div(form_css(anElement, 'soundbite')) do
       @html.p {apply anElement}
     end
+  end
+  def handle_img anElement
+    attrs = attribute_hash anElement
+    attrs['src'] = @maker.img_out_dir(anElement['src'])
+    @html.element('img', attrs)
   end
   def handle_figure anElement
     @html.div('figure') do

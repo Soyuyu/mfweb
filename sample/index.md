@@ -6,9 +6,8 @@ This is a simple home page for the sample site. I include links here to the vari
 Documentation Pages
 --------------------
 
-- [Simple Article](articles/simpleArticle.html)
-- [Flexible Article](articles/flexible.html)
-- [Infodeck](/infodeck)
+- [Articles](articles/article-docs.html)
+- [Infodecks](/infodeck)
 
 
 Building this home page

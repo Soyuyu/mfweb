@@ -171,111 +171,13 @@ it.</p>
   use semantic markup in these cases.</p>
 </section>
 
-<section>
-<h>Referring to other things</h>
-<p>There are a number of mechanisms I use for references to other
-things on web and in older worlds. The simplest web reference is the
-<code>a</code> element, which works just like HTML usually does.</p>
-<p>For a simple reference to a book, eg <book isbn="0321278658">XP
-Explained</book> you can use the <code>book</code> element. This uses an
-<code>isbn</code> attribute to link directly to amazon (using my amazon affiliate
-information so I can buy more Nice Things). For an amazon link that
-<amazon key="B0040JHVCC">isn't a book</amazon>, there is a different
-<code>amazon</code> element.</p>
-<p>To refer to an article in my bliki, there is a
-<code>blikiRef</code> element, so I can easily refer to a <blikiRef
-name="MemoryImage"/> with some very crude pluralization for <blikiRef
-name="MemoryImage" mode="plural"/>.</p>
-
-<p>When building a paper, you can supply a bibliography for citations.
-You can then include a citation either as <cite
-name="beckXPE"> a link around text</cite> or just
-stand-alone <cite name="beckXPE"/>. </p>
-<p>For simple articles, the bibliography section must be in
-the article itself.</p>
-<p>My processing of the bibliography is limited, as all
-I want is links. The bibliography consists of a list of
-<code>ref</code> elements. The processor looks for a
-<code>url</code>element embedded somewhere in the ref element, and
-uses that. Failing that it looks to see if there's a <code>book</code>
-element in there, and if that book contains an <code>isbn</code>
-element. If so it forms a url to amazon using that isbn. Everything
-else is ignored as I find that with web material, only links count.</p>
-<p>On the whole the bibilography processing is rather more messy than
-I would like and I'm tempted to junk it entirely. Most of my
-references these days are to links or books, for which I can use
-regular <code>a</code> and <code>book</code> elements.</p>
 
 
-</section>
-<section>
-  <h>Images</h>
-  <p>Simple inline images <img src="images/simpleArticle/blob.png"
-  height = "12px"/> can be made with an <code>img</code> 
-  element. </p>
-  <p>For more involved figures, you can use a <code>figure</code>
-  element.</p>
-  <figure src="images/simpleArticle/2box.png">Some meaningless diagram
-  with an uninformative caption</figure>
-  <p>Figures can have captions and can be referred to with a
-  <code>figureRef</code> element, which will link to it with a
-  numbered bit of hypertext  like <figureRef
-  ref="images/simpleArticle/2box.png"/></p>
- <photo src="images/simpleArticle/tower.jpg" 
-         width="200" layout="right">Tower bridge in colorful light</photo>
-  <p>I have a different block element for <code>photo</code>. This can
-  also accept a caption, but doesn't generate a figure number. It can
-  also accept a photo credit, so that the photo is properly
-  attributed.</p>
-   <p>The photo can either be made to float to the right, or be in
-  flow by setting the <code>layout</code> attribute. This generates
-  div blocks for the photo and caption with different css classes.</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
-    do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-    enim ad minim veniam, quis nostrud exercitation ullamco laboris
-    nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-    reprehenderit in voluptate velit esse cillum dolore eu fugiat
-    nulla pariatur. Excepteur sint occaecat cupidatat non proident,
-    sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-  <photo src="images/simpleArticle/tower.jpg" credit="Martin Fowler"
-         width="500" layout="full"/>
-</section>
-<section>
-  <h>Quotes</h>
-  <quote ref = "beckXPE" credit = "Kent Beck"><p>Embrace
-  Change</p></quote>
-  <p>Quotes act as their own block. The <code>ref</code> attribute is
-  a key into the bibliography, the <code>credit</code> attribute puts
-  accreditation to the quote. Both of the attributes are optional.</p>
-</section>
-<section>
-  <h>Footnotes</h>
-  <p>To add a footnote, use a <code>footRef</code> element. <footRef
-  key="simple"/><footRef key = "head"/>. Footnotes will be displayed
-  wherever you add a <code>display-footnotes</code> element. </p>
-</section>
 </section>
 </body>
 
-<appendix>  
-<section>
-<h>Appendix</h>
-<p>The appendix is separated and rendered slightly differently. It's
-good for secondary items, acknowledgements, and the like.</p>
-</section>
-<display-footnotes/>
+<appendix>
 </appendix>
-<footnote-list>
-  <footnote key="simple">Footnotes can be written in a
-  <code>footnote-list</code> at the end of the paper. Simple footnotes
-  like this are just inline elements and text inside the
-  <code>footnote</code> element. I use this style for single-paragraph footnotes.
-</footnote>
-  <footnote key = "head">
-    <h>Footnote heading</h>
-    <p>Longer footnotes can have an optional heading and contain any block elements.</p>
-  </footnote>
-</footnote-list>
 <bibliography>
 <ref name="beckXPE">
 		<cite>[Beck XPE]</cite>

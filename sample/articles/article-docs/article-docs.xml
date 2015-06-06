@@ -1,0 +1,327 @@
+<?xml version="1.0"?>
+<paper>
+  <title>Articles</title>
+  <version date="2015-06-06 17:14 EDT">Rewritten as I eliminated
+  simple articles in shared area</version>
+  <version date="2012-08-26">First edition</version>
+  <!-- I add a new version element each time I make a significant update
+       to the article. The most recent update should go at the top, it's date
+       is used as the date of the article. There must be at least one version
+       element and all version elements need a date. -->
+  <author>
+    <!-- add one <author> element for each author on the article.
+         Only the <author-name> is required, but the other elements are usually useful.-->
+    <author-name>Martin Fowler</author-name>
+    <author-url>http://martinfowler.com</author-url>
+    <author-bio>
+      <p>Author, speaker, and loud-mouth on sofware development. </p>
+    </author-bio>
+    <author-photo src="mf.jpg" />
+    <author-twitter handle="@martinfowler"/>
+  </author>
+  <meta-description>
+    Summary of article for twitter and other social media. 200 chars
+    max. 
+  </meta-description>
+
+  <!-- If you don't use a meta-image, then the generated meta data
+       will use the first image mentioned in the article -->
+
+  <abstract>
+    Explains how to use the tool chain for writing web articles. 
+  </abstract>
+
+  <body>
+    <p>This is an example of a simple article that uses my xml-to-html
+    toolchain. It acts on two levels, you can read the html to
+    understand how things are put together, and you can also look at
+    the XML source to understand how that looks. I have some comments
+    in the XML source that add some further information about the XML
+    elements that are used.</p>
+    <section>
+      <h>Layout of article sources</h>
+      <p>The sources for articles live in the <code>articles</code>
+      directory of the repo. Each article sits in its own directory.
+      The individual article directory will include various files, but
+      the two mandatory files are a rake task definition
+      (<code>rake.rb</code>) file and the main article source file
+      itself - here called <code>article-docs.xml</code>. Other files
+      and directories will be needed as necessary: image directories,
+      code samples, css overrides, and code to tweak the
+      transformation process.</p>
+    </section>
+    <section>
+      <h>Overall Structure of an Article</h>
+      <p>Articles have a top-level element of <code>paper</code>.
+      The child elements of paper begin with various header elements,
+      followed by the <code>body</code> element that contains the body of
+      the article, and finally an optional <code>appendix</code>.</p>
+      <p>For most of the basic elements of an article, I just use the
+      same elements as HTML.
+      Block elements include <code>p</code>, 
+      <code>ul</code> and <code>li</code>. Inline
+      elements include <code>code</code>, <code>i</code>, <code>b</code>,
+      <code>a</code>, <code>sub</code>, <code>sup</code>, and
+      <code>br</code>.</p>
+      <section>
+        <h>Header Elements</h>
+        <p>The example article shows off the various header elements.
+        These should be fairly self-explanatory. It's worth highlighting
+        that you need at least one <code>version</code> element, as the
+        first <code>version</code> sets the date of the article. Also
+        think about the<code>meta-description</code> to get a good
+        summary for social media.</p>
+      </section>
+      <section>
+        <h>Body and appendix sections</h>
+        <p>The body of the article should include the core content of the
+        article. The body can be divided into sections. Each section must
+        start with an <code>h</code> element and then 
+        block elements. You may have block elements before the first
+        section. You may also nest sections within each other.</p>
+        <sidebar>
+          <h>Sidebars</h>
+          <p>You can specify sidebars.
+          Sidebars may have a <code>h</code> element for a heading.</p>
+        </sidebar>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+        do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris
+        nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat
+        nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+        sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <soundbite>Soundbites are like sidebars, but for the semantics of
+        pull quotes. </soundbite>
+        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+        do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+        enim ad minim veniam, quis nostrud exercitation ullamco laboris
+        nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+        reprehenderit in voluptate velit esse cillum dolore eu fugiat
+        nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+        sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <p>The appendix can also have sections in the same way as the body.</p>
+      </section>
+    </section>
+    <section>
+      <h>Code listings</h>
+      <p>A particularly important feature of the toolchain is its ability
+      to import code from live code projects. This allows me to use a
+      live code project which can compile and test. I annotate this
+      code with marker comments and then extract bits of code
+      from those code trees into the HTML output. </p>
+      <p>The element to use for a code import is <code>insertCode</code>,
+      here is an example of it in use.</p>
+      <insertCode file="example.rb" fragment="first"
+                  label="some code"/>
+      <p>A code fragment can have a label to introduce it. You can also
+      nest code fragments to pick out smaller parts that have been shown
+      in total, such as picking out one line below.</p>
+      <insertCode file="example.rb" fragment="oneLine"/>
+      <p>I often use the label atrtribute to indicate the context of a
+      code fragment. Usually this context is the name of a class, so there
+      is a crude way to get the code importer to derive the class
+      name.</p>
+      <insertCode file="example.rb" fragment="second" 
+                  useClassName="true"/>
+      <p> Beware that this mechanism is easily confused if you have nested
+      classes in a file.</p>
+      <p>The files you need for code fragments in a simple article
+      usually lives in the <code>code</code> sub-directory of the
+      article's root folder. Indeed you don't have to use code
+      inserts, you can just use <code>pre</code> elements directly.
+      One advantage with code inserts is that they automatically wrap
+      the inserted code inside <code>CDATA</code> nodes which means
+      you don't have to worry about escaping XML reserverd
+      symbols.</p>
+    </section>
+    <section>
+      <h>Tables</h>
+      <p>Tables can be specified using the same elements as HTML, which
+      are copied over directly to the output. However I usually prefer to
+      use <a href = "#semantic-markup">semantic markup</a> in these cases.</p>
+    </section>
+    <section>
+      <h>Links</h>
+      <p>The toolchain supports the usual html <code>a</code> element.
+      However many people prefer to keep all their link information
+      together one place, in a similar way to that of markdown's
+      reference links. To do this for regular web links you add a
+      <code>bibliography</code> element to the source document
+      (usually) at the end. The <code>bibliography</code> contains
+      <code>ref</code> elements, each of which has a <code>name</code>
+      and an <code>href</code>. You then refer to the bibliography by
+      using a <code>cite</code> element with the matching name: such
+      as this one to <cite name="design-dead">Is Design Dead</cite></p>
+      <p>If you want to refer to a book, such as <cite name="xpe">XP
+      Explained</cite>,then you can put the isbn of the book into the
+      <code>ref</code> element and the toolchain will link directly to
+      amazon (using my amazon affiliate information so I can buy more
+      Nice Things).</p>
+      <p>To refer to an article in my bliki, there is a
+      <code>blikiRef</code> element, so I can easily refer to a <blikiRef
+      name="MemoryImage"/> with some very crude pluralization for <blikiRef
+      name="MemoryImage" mode="plural"/>.</p>
+      <p>If you look at some older articles, you'll see
+      <code>book</code> and <code>elements</code> that do inline links
+      to amazon pages. I expect to use <code>cite</code> elements in
+      future rather than these.</p>
+    </section>
+
+    <section>
+      <h>Images</h>
+      <p>Simple inline images <img src="blob.png"
+      height = "12px"/> can be made with an <code>img</code> 
+      element. </p>
+      <p>For more involved figures, you can use a <code>figure</code>
+      element.</p>
+      <figure src="2box.png">Some meaningless diagram
+      with an uninformative caption</figure>
+      <p>Figures can have captions and can be referred to with a
+      <code>figureRef</code> element, which will link to it with a
+      numbered bit of hypertext  like <figureRef
+      ref="2box.png"/></p>
+      <photo src="tower.jpg" 
+             width="200" layout="right">Tower bridge in colorful light</photo>
+      <p>I have a different block element for <code>photo</code>. This can
+      also accept a caption, but doesn't generate a figure number. It can
+      also accept a photo credit, so that the photo is properly
+      attributed.</p>
+      <p>The photo can either be made to float to the right, or be in
+      flow by setting the <code>layout</code> attribute. This generates
+      div blocks for the photo and caption with different css classes.</p>
+      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed
+      do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+      enim ad minim veniam, quis nostrud exercitation ullamco laboris
+      nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+      reprehenderit in voluptate velit esse cillum dolore eu fugiat
+      nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+      sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+      <photo src="tower.jpg" credit="Martin Fowler"
+             width="500" layout="full"/>
+      <p>Sources for the pictures should go in the <code>img</code> subfolder of
+      the article root folder. All files from that folder with common
+      image subscripts (.jpg, .png etc) will be copied over to the
+      build file.</p>
+    </section>
+    <section>
+      <h>Quotes</h>
+      <quote ref = "xpe" credit = "Kent Beck"><p>Embrace
+      Change</p></quote>
+      <p>Quotes act as their own block. The <code>ref</code> attribute is
+      a key into the bibliography, the <code>credit</code> attribute puts
+      accreditation to the quote. Both of the attributes are optional.</p>
+    </section>
+    <section>
+      <h>Footnotes</h>
+      <p>To add a footnote, use a <code>footRef</code> element. <footRef
+      key="simple"/><footRef key = "head"/>. Footnotes will be displayed
+      wherever you add a <code>display-footnotes</code> element. </p>
+    </section>
+
+
+
+    
+    <section>
+      <h>Customizations</h>
+      <p>The basic articles provide most of what's needed for many
+      articles, but there's a lot of opportunities for customizing the
+      way articles are generated. To enable these you need to alter
+      the rake task  to configure how
+      the article is processed. The example rakefile in
+      <code>sample</code> shows how this one is done. Each of the
+      various customizations I talk about below have to be configured
+      using the rakefile.</p>
+      <p>At this point I haven't got around to writing up how the ruby
+      transformation code all works together. You'll need to learn more
+      about this for some of the customizations below - until I write it
+      up ask me.</p>
+      <section>
+        <h>CSS</h>
+        <p>I use scss to write my css as I find it helps reduce
+        duplication and improve the structure of my css. To get a scss file
+        to convert you need a sassTask line. You tell the task the source
+        scss file, the target folder (usually <code>articles</code> and
+        which build target it's part of (usually <code>:articles</code>).</p>
+        <p>The sassTask creates the css file, to use it you need to modify
+        the page skeleton that wraps the article. Again look at the
+        rakefile to see how I set this - putting <code>doc.css</code>
+        into a skeleton whch then gets used later on.</p>
+        <p>Once you have the css files plugged in, then you can add any
+        scss you like. I start the css file by importing the usual article
+        scss file that has all the defaults. </p>
+      </section>
+      <section id="semantic-markup">
+        <h>Semantic Markup</h>
+        <p>You can do a lot of writing using the vocabulary of a generic
+        article: paragraphs, sections, italic text, etc. For some
+        articles, however, it's nice to use markup vocabulary that's
+        meaningful for the article in question. For example consider
+        showing a table of nosql databases, like this.</p>
+        <database-list>
+          <data-model name = "Key-Value" >
+            <database name = "Riak" uri = "http://foo.com"/>
+            <database name = "Redis" uri = ""/>
+            <database name = "Project Voldemort" uri = ""/>
+          </data-model>
+          <data-model name = "Document" >
+            <database name="CouchDB" uri = ""/>
+            <database name = "MongoDB"  uri = ""/>
+            <database name = "RavenDB" uri = ""/>
+          </data-model>
+          <data-model name="Column-Family">
+            <database name = "Cassandra"  uri = ""/>
+            <database name = "HBase" uri = ""/>
+          </data-model>
+          <data-model name="Graph" >
+            <database name = "Neo4J" uri = ""/>
+          </data-model>
+        </database-list>
+        <p>or like this</p>
+        <databases-by-model/>
+        <p>The example is simplistic but if you look at the XML source you
+        will get the point. HTML tables are fiddly to edit, with XML we
+        can represent the underlying data in a way that makes semantic
+        sense, and then use the transformation code to turn it into a
+        suitable HTML representation. We can take the same data and
+        transform it different ways for different purposes. Such is the
+        usefulness of semantic markup.</p>
+        <p>Of course to do this, you'll need to get familiar with the ruby
+        tranformer code that I use. I haven't got around to explaining
+        that yet.</p>
+        <p>Semantic markup can also be used for document sections, which
+        is particularly handy you have many documents with similar
+        structure, such as patterns.</p>
+        <p>I use semantic markup where I have things with similar meanings
+        where I may want to make global changes to how they are rendered.
+        Or for something that I may want to extract and render in
+        different ways.</p>
+      </section>
+    </section>
+  </body>
+  <appendix>
+    <section>
+      <h>Appendix</h>
+      <p>The appendix is separated and rendered slightly differently. It's
+      good for secondary items, acknowledgements, and the like.</p>
+    </section>
+    <display-footnotes/>
+  </appendix>
+  <footnote-list>
+    <footnote key="simple">Footnotes can be written in a
+    <code>footnote-list</code> at the end of the paper. Simple footnotes
+    like this are just inline elements and text inside the
+    <code>footnote</code> element. I use this style for single-paragraph footnotes.
+    </footnote>
+    <footnote key = "head">
+      <h>Footnote heading</h>
+      <p>Longer footnotes can have an optional heading and contain any block elements.</p>
+    </footnote>
+  </footnote-list>
+
+  <bibliography>
+    <ref name="design-dead"
+         url="http://martinfowler.com/articles/designDead.html"/>
+    <ref name="xpe" isbn="0321278658"/>
+  </bibliography>
+</paper>

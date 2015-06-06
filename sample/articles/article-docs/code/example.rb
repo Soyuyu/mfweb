@@ -1,6 +1,6 @@
 class Whatever
  # <codeFragment name = "first">
- def flexible_example
+ def example
    look.here "some example code"
  # <codeFragment name = "oneLine">
    left < right

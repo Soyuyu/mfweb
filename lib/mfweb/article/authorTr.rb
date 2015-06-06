@@ -2,8 +2,8 @@ module Mfweb::Article
   class FullAuthorTransformer < Mfweb::Core::Transformer
     include Mfweb::Core::XpathFunctions
 
-    def initialize htmlRenderer, rootElement
-      super htmlRenderer, rootElement
+    def initialize htmlRenderer, rootElement, maker = nil
+      super htmlRenderer, rootElement, maker
       @apply_set = %w[author-bio]
       @copy_set = %w[p a i b]
     end
@@ -16,7 +16,7 @@ module Mfweb::Article
         photo = xpath_only('author-photo', anElement)
         if photo
           attrs = {}
-          attrs['src'] = photo['src']
+          attrs['src'] = img_src photo
           name = xpath_only('author-name', anElement).text
           attrs['alt'] = "Photo of #{name}"
           attrs[:width] = '80'
@@ -26,6 +26,13 @@ module Mfweb::Article
         apply anElement
       end
       @html.div('clear'){}
+    end
+
+    def img_src photo
+      case
+      when @maker then @maker.img_out_dir photo['src']
+      else photo['src']
+      end
     end
 
     def  print_name authorElement

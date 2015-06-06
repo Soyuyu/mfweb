@@ -52,6 +52,11 @@ module Mfweb::Core
     def metadata_emitter 
       nil
     end
+
+    def img_out_dir path
+      path
+    end
+    
     def resolve_includes aRoot
       aRoot.css('include').each do |elem|
         inclusion = Nokogiri::XML(File.read(input_dir(elem['src']))).root

@@ -80,7 +80,7 @@ module Mfweb::Article
     end
 
     def handle_author anElement
-      FullAuthorTransformer.new(@html, resolve_author(anElement)).render
+      FullAuthorTransformer.new(@html, resolve_author(anElement), @maker).render
     end
 
     def resolve_author anElement
@@ -179,7 +179,7 @@ module Mfweb::Article
     def print_authors 
       elements = xpath('/*/author')
       raise "can't do multiple authors on short form" if elements.size > 1
-      FullAuthorTransformer.new(@html, resolve_author(elements[0])).render
+      handle_author elements.first
     end
   end
 

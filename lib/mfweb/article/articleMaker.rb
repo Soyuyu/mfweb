@@ -3,7 +3,7 @@ module Mfweb::Article
 
 class ArticleMaker < Mfweb::Core::Maker
   attr_accessor :pattern_server, :code_server, :bib_server, 
-  :footnote_server, :catalog, :author_server, :refactoring_server, :img_dir
+  :footnote_server, :catalog, :author_server, :refactoring_server
   def initialize infile, outfile, skeleton = nil, transformerClass = nil
     @catalog = Mfweb::Core::Site.catalog
     @author_server = Mfweb::Core::Site.author_server
@@ -14,7 +14,7 @@ class ArticleMaker < Mfweb::Core::Maker
     @footnote_server = FootnoteServer.new(infile)
     @refactoring_server = RefactoringServer.new
     @code_dir = './'
-    @img_dir = "./"
+    @img_out_dir = nil
   end
 
   def load
@@ -69,6 +69,19 @@ class ArticleMaker < Mfweb::Core::Maker
       return []
     end
   end
+
+  def img_out_dir= path
+    @img_out_dir = path
+  end
+
+  def img_out_dir path
+    case
+    when path.start_with?('/') then path
+    when @img_out_dir then File.join(@img_out_dir, path)
+    else path
+    end
+  end
+
   def author key
     @author_server.get key
   end

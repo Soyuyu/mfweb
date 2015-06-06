@@ -31,12 +31,7 @@ module PhotoHandlers
     end
   end
   def img_dir src
-    case
-    when @maker && @maker.img_dir
-      File.join @maker.img_dir, src
-    else
-      src
-    end
+    @maker ? @maker.img_out_dir(src) : src
   end
 end
 
@@ -237,7 +232,7 @@ class PaperTransformer < Mfweb::Core::Transformer
         img_style['max-width'] = 'none' if img_attrs.has_key?(:width)      
         img_attrs['alt'] = "Figure #{fig_num}"
         img_attrs['style'] = style_string(img_style)
-        img_attrs['src'] = File.join(@maker.img_dir,src)
+        img_attrs['src'] = @maker.img_out_dir(src)
         @html.element('img', img_attrs) {}
       end
       unless anElement.children.empty?

@@ -20,7 +20,7 @@ module Mfweb::Article
     def image
       img = @maker.xml.at_css('meta-image')
       return nil unless img
-      return Site.url_path('articles', @maker.img_dir, img['src'])
+      return Site.url_path('articles', @maker.img_out_dir(img['src']))
     end
     def publication_time
       @maker.xml.at_css('version')['date']

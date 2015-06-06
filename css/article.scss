@@ -221,11 +221,8 @@ div.frontMatter {
     border: none;
   }
 
-
   div.sidebar {
-    width: 20em;
-    float: right;
-    margin: 1em -15em 1em 2em;
+    @include sidebar-offset;
     font-size: 80%;
     font-family: $sans;
     background-color: $side-color;
@@ -242,6 +239,11 @@ div.frontMatter {
     p {margin: 0;}
     i {font-weight: bold;}
   }
+
+  .tweet-sidebar {
+    @include sidebar-offset;
+  }    
+
 
 div.footnote-list {
   h3, span.num {

@@ -400,7 +400,9 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
 
   def handle_tweet anElement
-    @html.div(form_css(anElement, 'tweet')) do
+    div_class = form_css(anElement, 'tweet')
+    div_class += " tweet-sidebar" if "sidebar" == anElement['position'] 
+    @html.div(div_class) do
       @html.element('blockquote',
                     class: 'twitter-tweet', lang: 'en',
                     'data-cards' => 'hidden') do

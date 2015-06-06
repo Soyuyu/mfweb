@@ -119,6 +119,14 @@ blockquote {
   cursor: pointer;
 }
 
+@mixin sidebar-offset {
+  width: 20em;
+  float: right;
+  margin: 1em -15em 1em 2em;
+}
+
+
+
 @mixin tag-button {
   background: $tw-green3;
   color: white;

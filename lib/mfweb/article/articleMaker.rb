@@ -5,7 +5,6 @@ class ArticleMaker < Mfweb::Core::Maker
   attr_accessor :pattern_server, :code_server, :bib_server, 
   :footnote_server, :catalog, :author_server, :refactoring_server
   def initialize infile, outfile, skeleton = nil, transformerClass = nil
-    @catalog = Mfweb::Core::Site.catalog
     @author_server = Mfweb::Core::Site.author_server
     super(infile, outfile, transformerClass, skeleton)
     @pattern_server = PatternServer.new
@@ -19,7 +18,8 @@ class ArticleMaker < Mfweb::Core::Maker
 
   def load
     super
-    puts "#{@in_file} -> #{@out_file}" #TODO move to rake task
+    puts "#{@in_file} -> #{@out_file}"
+    @catalog = Mfweb::Core::Site.catalog
     @is_draft = ('draft' == @root['status'])
     @pattern_server.load
     @refactoring_server.load

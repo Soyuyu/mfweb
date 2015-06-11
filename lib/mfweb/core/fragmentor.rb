@@ -13,9 +13,11 @@ module Mfweb::Core
 
     def run
       raise MissingFragmentFile, @file unless FileTest.exists? @file
-      extract_fragments
-    rescue
-      raise FragmentorError.new(@file, $!)
+      begin
+        extract_fragments
+      rescue
+        raise FragmentorError.new(@file, $!)
+      end
     end
 
     def extract_fragments

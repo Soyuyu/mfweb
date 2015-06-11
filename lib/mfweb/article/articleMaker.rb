@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
-module Mfweb::Article
+require 'rake/ext/string'
 
+module Mfweb::Article
 class ArticleMaker < Mfweb::Core::Maker
   attr_accessor :pattern_server, :code_server, :bib_server, 
   :footnote_server, :catalog, :author_server, :refactoring_server
@@ -14,6 +15,15 @@ class ArticleMaker < Mfweb::Core::Maker
     @refactoring_server = RefactoringServer.new
     @code_dir = './'
     @img_out_dir = nil
+  end
+
+  def self.new_rich infile, outfile, tr: nil
+    self.new(infile, outfile, nil, tr).configure_rich
+  end
+
+  def configure_rich
+    @img_out_dir = File.basename(input_dir)
+    return self
   end
 
   def load
@@ -74,12 +84,17 @@ class ArticleMaker < Mfweb::Core::Maker
     @img_out_dir = path
   end
 
-  def img_out_dir path
+  def img_out_dir path = nil
     case
+    when nil == path then @img_out_dir || "."
     when path.start_with?('/') then path
     when @img_out_dir then File.join(@img_out_dir, path)
     else path
     end
+  end
+
+  def input_deps
+    Dir[input_dir('**/*')]
   end
 
   def author key

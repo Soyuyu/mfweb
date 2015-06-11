@@ -6,8 +6,10 @@ def ensure_rm file
 end
 QUIET = {:verbose => false}
 
-def build_dir_path arg
-  return (/^#{BUILD_DIR}/ =~ arg) ? arg : File.join(BUILD_DIR, arg)
+def build_dir_path *paths
+  return (/^#{BUILD_DIR}/ =~ paths.first) ?
+    File.join(*paths) :
+    File.join(BUILD_DIR, *paths)
 end
 
 

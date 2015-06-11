@@ -242,7 +242,11 @@ div.frontMatter {
 
   .tweet-sidebar {
     @include sidebar-offset;
-  }    
+  }
+
+  blockquote.aside {
+    @include sidebar-offset;
+  }
 
 
 div.footnote-list {

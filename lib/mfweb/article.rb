@@ -2,6 +2,7 @@ require 'stringio'
 require 'mfweb/core'
 
 require 'mfweb/article/articleMaker'
+require 'mfweb/article/richMaker'
 require 'mfweb/article/paperTr'
 require 'mfweb/article/bibliography'
 require 'mfweb/article/patternServer'

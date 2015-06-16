@@ -4,7 +4,7 @@ require 'rake/ext/string'
 module Mfweb::Article
 class ArticleMaker < Mfweb::Core::Maker
   attr_accessor :pattern_server, :code_server, :bib_server, 
-  :footnote_server, :catalog, :author_server, :refactoring_server
+  :footnote_server, :catalog, :author_server, :refactoring_server, :transformer_class
   def initialize infile, outfile, skeleton = nil, transformerClass = nil
     @author_server = Mfweb::Core::Site.author_server
     super(infile, outfile, transformerClass, skeleton)
@@ -17,14 +17,6 @@ class ArticleMaker < Mfweb::Core::Maker
     @img_out_dir = nil
   end
 
-  def self.new_rich infile, outfile, tr: nil
-    self.new(infile, outfile, nil, tr).configure_rich
-  end
-
-  def configure_rich
-    @img_out_dir = File.basename(input_dir)
-    return self
-  end
 
   def load
     super
@@ -34,10 +26,18 @@ class ArticleMaker < Mfweb::Core::Maker
     @pattern_server.load
     @refactoring_server.load
     resolve_includes @root
-    @skeleton ||=  Mfweb::Core::Site.
-      skeleton.with_css('article.css').
-      with_banner_for_tags(tags)
+    @skeleton ||= default_skeleton
     @skeleton = @skeleton.as_draft if draft?
+  end
+
+  def default_skeleton
+    Mfweb::Core::Site.skeleton
+      .with_css(css_output)
+      .with_banner_for_tags(tags)
+  end
+
+  def css_output
+    'article.css'
   end
 
   def draft?
@@ -146,5 +146,9 @@ class ArticleMaker < Mfweb::Core::Maker
     end
 
   end
+
+  
 end
+
+
 end

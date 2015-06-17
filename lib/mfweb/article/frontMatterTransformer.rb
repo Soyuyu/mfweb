@@ -80,7 +80,11 @@ module Mfweb::Article
     end
 
     def handle_author anElement
-      FullAuthorTransformer.new(@html, resolve_author(anElement), @maker).render
+      author_transformer(anElement).render
+    end
+
+    def author_transformer anElement
+      FullAuthorTransformer.new(@html, resolve_author(anElement), @maker)
     end
 
     def resolve_author anElement

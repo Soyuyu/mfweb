@@ -2,8 +2,8 @@ module Mfweb::Article
   class FullAuthorTransformer < Mfweb::Core::Transformer
     include Mfweb::Core::XpathFunctions
 
-    def initialize htmlRenderer, rootElement, maker = nil
-      super htmlRenderer, rootElement, maker
+    def initialize htmlRenderer, authorElement, maker = nil
+      super htmlRenderer, authorElement, maker
       @apply_set = %w[author-bio]
       @copy_set = %w[p a i b]
     end
@@ -13,19 +13,21 @@ module Mfweb::Article
 
     def handle_author anElement
       @html.div('author') do 
-        photo = xpath_only('author-photo', anElement)
-        if photo
-          attrs = {}
-          attrs['src'] = img_src photo
-          name = xpath_only('author-name', anElement).text
-          attrs['alt'] = "Photo of #{name}"
-          attrs[:width] = '80'
-          @html.element('img', attrs) {}
-        end
+        print_author_photo anElement if anElement.at_css('author-photo')
         print_name anElement
         apply anElement
       end
       @html.div('clear'){}
+    end
+
+    def print_author_photo authorElement = nil
+      subject = authorElement || @root
+      attrs = {}
+      attrs['src'] = img_src(subject.at_css('author-photo'))
+      name = xpath_only('author-name', subject).text
+      attrs['alt'] = "Photo of #{name}"
+      attrs[:width] = '80'
+      @html.element('img', attrs) {}
     end
 
     def img_src photo
@@ -35,9 +37,10 @@ module Mfweb::Article
       end
     end
 
-    def  print_name authorElement
-      name = xpath_only('author-name', authorElement)
-      url = xpath_only('author-url', authorElement)
+    def  print_name authorElement = nil
+      subject = authorElement || @root
+      name = xpath_only('author-name', subject)
+      url = xpath_only('author-url', subject)
       @html.p('name') do
         if url
           @html.element('a', href: url.text, rel: 'author') {@html.text name.text }

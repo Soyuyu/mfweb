@@ -314,7 +314,7 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
   def handle_quote anElement
     attrs = copy_some_attributes anElement, 'class' => 'class'
-    add_class attrs, 'aside' if anElement['position'] = 'aside'
+    add_class attrs, 'aside' if 'aside' == anElement['position']
     @html.element('blockquote', attrs) do
       apply anElement
       @html.p('quote-attribution') do

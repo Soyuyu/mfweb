@@ -42,6 +42,10 @@ class Site
     # override to provide twitter metadata
   end
 
+  def build_path *args
+    File.join('build', *args)
+  end
+
   # hook methods
   def load_skeleton; end
   def load_catalog; end

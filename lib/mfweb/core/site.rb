@@ -30,9 +30,12 @@ class Site
   def url
     'http://martinfowler.com'
   end
-  def target_to_url path
-    result = path.pathmap "%{^build,#{url}}d/%f"
+  def target_to_local_url path
+    result = path.pathmap "%{^#{build_path},}d/%f"
     return result.sub('index.html','')
+  end
+  def target_to_url path
+    url + target_to_local_url(path)
   end
   def url_path *args
     File.join([url] + args)

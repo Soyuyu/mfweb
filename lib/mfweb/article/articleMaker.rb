@@ -103,6 +103,9 @@ class ArticleMaker < Mfweb::Core::Maker
   def url
     Mfweb::Core::Site.target_to_url(@out_file)
   end
+  def local_url
+     Mfweb::Core::Site.target_to_local_url(@out_file)
+  end
   def title
     case @root.name
       when 'paper' then @root.at_css('title').text

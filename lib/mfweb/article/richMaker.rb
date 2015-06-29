@@ -14,6 +14,7 @@ module Mfweb::Article
     def render
       super
       render_css
+      build_img
     end
     
     def base_scss
@@ -49,6 +50,11 @@ module Mfweb::Article
       Bibliography.new(@in_file, 'biblio.xml')
     end
 
-
+    def build_img
+      target =  output_dir(@img_out_dir)
+      mkdir_p target
+      img_srcs.each {|f| install f, target}
+    end
+      
   end
 end

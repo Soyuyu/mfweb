@@ -52,8 +52,10 @@ module Mfweb::Core
     def metadata_emitter 
       nil
     end
-
+    
     def img_out_dir path
+      # how to modify the src attr of an img when emitting html
+      # default is not to change it
       path
     end
     
@@ -63,6 +65,14 @@ module Mfweb::Core
         resolve_includes inclusion
         elem.replace inclusion.children
       end
+    end
+
+    def img_file_exts
+      %w[png jpg svg]
+    end
+
+    def img_srcs
+      img_file_exts.flat_map {|ext| Dir[input_dir('img/*.' + ext)] }
     end
 
   end

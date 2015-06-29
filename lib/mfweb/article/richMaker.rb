@@ -45,5 +45,10 @@ module Mfweb::Article
       end
     end
 
+    def default_bibliography
+      Bibliography.new(@in_file, 'biblio.xml')
+    end
+
+
   end
 end

@@ -199,7 +199,7 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
   def handle_blikiRef anElement
     name = anElement['name']
-    href = "http://martinfowler.com/bliki/#{name}.html"
+    href = "/bliki/#{name}.html"
     if anElement.children.empty?
       text = name.gsub(/[A-Z]/, ' \&').strip
       text += 's' if 'plural' == anElement['mode'] 

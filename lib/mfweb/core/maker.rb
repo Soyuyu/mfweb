@@ -16,6 +16,7 @@ module Mfweb::Core
     end
 
     def render
+      mkdir_p output_dir, verbose: false
       @skeleton.emit(@html, @transformer.title_bar_text, 
         meta_emitter: metadata_emitter) do |html|
         render_body

@@ -101,6 +101,10 @@ class ArticleMaker < Mfweb::Core::Maker
     Dir[input_dir('**/*')]
   end
 
+  def dependencies
+    input_deps
+  end
+
   def author key
     @author_server.get key
   end

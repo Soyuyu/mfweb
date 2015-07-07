@@ -3,7 +3,7 @@ require 'rake/ext/string'
 
 module Mfweb::Article
 class ArticleMaker < Mfweb::Core::Maker
-  attr_accessor :pattern_server, :code_server, :bib_server, 
+  attr_accessor :pattern_server, :code_server, :bib_server, :skeleton,
   :footnote_server, :catalog, :author_server, :refactoring_server, :transformer_class
   def initialize infile, outfile, skeleton = nil, transformerClass = nil
     @author_server = Mfweb::Core::Site.author_server

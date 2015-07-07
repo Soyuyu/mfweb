@@ -6,8 +6,9 @@ module Mfweb::Article
     # rake tasks
 
 
-    def initialize infile, outfile
-      super infile, outfile
+    def initialize infile, outfile = nil
+      out = outfile || default_outfile(infile)
+      super infile, out
       @img_out_dir = basename
     end
 
@@ -23,6 +24,10 @@ module Mfweb::Article
 
     def custom_css?
       File.exist? base_scss
+    end
+
+    def default_outfile infile
+      Site.build_path('articles', infile.pathmap("%n.html"))
     end
 
     def basename

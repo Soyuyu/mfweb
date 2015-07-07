@@ -50,6 +50,11 @@ module Mfweb::Core
       File.join dir, *path
     end
 
+    def target
+      #named target to use for rake deps
+      @out_file
+    end
+
     def metadata_emitter 
       nil
     end

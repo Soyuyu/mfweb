@@ -164,7 +164,19 @@ blockquote {
 
 .shares {
   .label {
-    margin-right: 15px;
+    margin-right: 1em;
+    color: $tw-green3;    
+  }
+  .icons {
+    float: left;
+    width: 40%;
+  }
+  .comment {
+    font-size: 80%;
+    color: $tw-green3;
+    float: left;
+    width: 60%;
+    margin-top: 0;
   }
   img {
     height: 16px;

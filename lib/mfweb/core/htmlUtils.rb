@@ -1,3 +1,4 @@
+# coding: utf-8
 module Mfweb::Core
 require 'uri'
 module HtmlUtils
@@ -102,7 +103,7 @@ end
   end
 
   def emit_shares lede, url
-    twitter = "https://twitter.com/intent/tweet?url=%s&text=%s" % [url, lede]
+    twitter = "https://twitter.com/intent/tweet?url=%s&text=%s" % [url, lede + " ➙ "]
     facebook = "https://facebook.com/sharer.php?u=%s" % [url]
     google = "https://plus.google.com/share?url=%s" % [url]
     @html.div('shares') do

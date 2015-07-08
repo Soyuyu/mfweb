@@ -10,6 +10,7 @@ module Mfweb::Article
       out = outfile || default_outfile(infile)
       super infile, out
       @img_out_dir = basename
+      @code_server = Mfweb::Core::CodeServer.new(input_dir('code'))
     end
 
     def render

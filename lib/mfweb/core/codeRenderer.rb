@@ -39,8 +39,19 @@ module Mfweb::Core
       CodeHighlighter.new(@anElement, body).call
     end
 
+    def call_autoheading_method
+      method = 'autoheading_' + @anElement['autoheading']
+      if self.respond_to? method
+        send method
+      else
+        fail "no autoheading method for %s at %s" % [@anElement['autoheading'], self]
+      end
+    end
+
     def heading
       case
+      when @anElement['autoheading']
+        call_autoheading_method
       when 'true' == @anElement['useClassName']
         "#{@fragment.class}...\n"
       when @anElement['label']

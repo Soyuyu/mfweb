@@ -1,3 +1,4 @@
+# coding: utf-8
 module Mfweb::Core
   class CodeHighlighter
     def initialize insertCodeElement, fragment
@@ -7,8 +8,8 @@ module Mfweb::Core
     def self.highlighting_elements
       %w[highlight highlight-range]
     end
-    def opening element
-      css_class = element['css-class'] || 'highlight'
+    def opening element, default_css = 'highlight' 
+      css_class = element['css-class'] || default_css
       "<span class = '#{css_class}'>"
     end
     def closing
@@ -21,7 +22,7 @@ module Mfweb::Core
       @data.css('highlight-range')
     end
     def call
-      apply_inserts(apply_highlights(apply_ranges(@fragment.lines))).join
+      add_suffix(apply_inserts(apply_highlights(apply_ranges(@fragment.lines)))).join
     end
     def apply_ranges lines
       highlight_ranges.reduce(lines){|acc, each| apply_one_range(acc, each)}
@@ -81,6 +82,12 @@ module Mfweb::Core
     def insert_text element
       cdata = element.children.detect{|e| e.cdata?}
       return cdata ? cdata.text : element.text
+    end
+    def add_suffix lines
+      lines << @data.css('suffix').map do |e|
+        "\n" + opening(e, 'suffix') + e.text + closing
+      end
+      return lines
     end
   end
 end

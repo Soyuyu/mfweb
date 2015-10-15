@@ -191,6 +191,10 @@ div.frontMatter {
     text-decoration: line-through;
   }
 
+  pre span.suffix {
+    font-style: italic;
+  }
+
   p.code-label {
     margin-bottom: 0;
     font-style: italic;

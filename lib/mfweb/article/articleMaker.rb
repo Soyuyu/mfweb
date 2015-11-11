@@ -101,8 +101,13 @@ class ArticleMaker < Mfweb::Core::Maker
     Dir[input_dir('**/*')]
   end
 
+  def lib_deps
+    lib_root = 'mfweb/lib/mfweb/'
+    return Dir[lib_root + 'core/**/*'] + Dir[lib_root + 'article/**/*']
+  end
+
   def dependencies
-    input_deps
+    input_deps + lib_deps
   end
 
   def author key

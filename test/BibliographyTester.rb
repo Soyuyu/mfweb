@@ -6,27 +6,27 @@ class BibliographyTester < Minitest::Test
   include Mfweb::Article
   def bib_containing aString
     input = StringIO.new "<bibliography>#{aString}</bibliography>"
-    result =  Bibliography.new.load input
+    result =  Bibliography.new.load_stream input
   end
   def test_read_bib_ref_from_single_file
-    bib = Bibliography.new('test/bib.xml')
+    bib = Bibliography.new('test/bib.xml').load
     assert_equal 'http://c2.com/ppr/checks.html', bib['cunningham-checks'].url
   end
   def test_read_bib_refs_from_article_file
-    bib = Bibliography.new('sample/articles/simple/simpleArticle.xml')
+    bib = Bibliography.new('sample/articles/simple/simpleArticle.xml').load
     assert_equal 'http://www.amazon.com/exec/obidos/ASIN/0201616416', bib['beckXPE'].url
   end
   def test_read_two_bibliographies
-    bib = Bibliography.new('test/bib.xml', 'sample/articles/simple/simpleArticle.xml')
+    bib = Bibliography.new('test/bib.xml', 'sample/articles/simple/simpleArticle.xml').load
     assert_equal 'http://c2.com/ppr/checks.html', bib['cunningham-checks'].url
     assert_equal 'http://www.amazon.com/exec/obidos/ASIN/0201616416', bib['beckXPE'].url    
   end
   def test_get_cite_when_present
-    bib = Bibliography.new('test/bib.xml')
+    bib = Bibliography.new('test/bib.xml').load
     assert_equal "[cunningham-checks]", bib['cunningham-checks'].cite
   end
   def test_get_default_cite
-    bib = Bibliography.new('test/bib.xml')
+    bib = Bibliography.new('test/bib.xml').load
     assert_equal "[cvs]", bib['cvs'].cite
   end
   def test_link_around_basic

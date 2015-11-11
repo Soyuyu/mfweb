@@ -20,11 +20,12 @@ class ArticleMaker < Mfweb::Core::Maker
 
   def load
     super
-    puts "#{@in_file} -> #{@out_file}"
+    puts "article #{@in_file}"
     @catalog = Mfweb::Core::Site.catalog
     @is_draft = ('draft' == @root['status'])
     @pattern_server.load
     @refactoring_server.load
+    @bib_server.load
     resolve_includes @root
     @skeleton ||= default_skeleton
     @skeleton = @skeleton.as_draft if draft?

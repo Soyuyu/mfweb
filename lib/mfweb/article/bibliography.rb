@@ -3,22 +3,26 @@ module Mfweb::Article
 #======== Bibliography ==========================
 # Holds data to support generating a bibliography
 
-# At the moment reads data from the supplied bibliography file and
+# Reads data from the supplied bibliography file and
 # puts in hyperlinks to books and urls in the bibliography.
 
 class Bibliography
   def initialize *files
     @entries = {}
-    files.each {|f| load_file f}
+    @bib_files = files
+  end
+  def load
+    @bib_files.each {|f| load_file f}
+    return self
   end
   def load_file file
     if FileTest.exists? file
-      load(File.new(file).read)
+      load_stream(File.new(file).read)
     else
       puts $deferr, "Unable to find bibiography file: " + file
     end
   end
-  def load aStream
+  def load_stream aStream
     root = Nokogiri::XML(aStream)
     refs = root.xpath('//bibliography/ref')
     refs.each {|e| load_bib_entry e}
@@ -48,6 +52,7 @@ class Bibliography
   end
   def [] arg
     $stderr.puts "Bibilography not loaded" unless self.loaded?
+fail unless self.loaded?
     result = @entries[arg]
     result ? result : NullBibRef.new(arg)
   end

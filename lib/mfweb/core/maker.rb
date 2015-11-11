@@ -22,7 +22,7 @@ module Mfweb::Core
         render_body
       end
     ensure
-      @html.close     
+      @html.close if @html    
     end
 
     def load

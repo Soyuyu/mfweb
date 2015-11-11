@@ -5,17 +5,20 @@ module Mfweb::Article
     # and css generation (that is traditionally handled by separate
     # rake tasks
 
+    attr_accessor :js_components
 
     def initialize infile, outfile = nil
       out = outfile || default_outfile(infile)
       super infile, out
       @img_out_dir = basename
       @code_server = Mfweb::Core::CodeServer.new(input_dir('code'))
+      @js_components = []
     end
 
     def render
       super
       render_css
+      build_js
       build_img
     end
     
@@ -56,6 +59,27 @@ module Mfweb::Article
       Bibliography.new(@in_file, 'biblio.xml')
     end
 
+    def base_js
+      input_dir('custom.js')
+    end
+
+    def custom_js?
+      File.exist? base_js
+    end
+
+    def js_output
+      basename + '.js'
+    end
+
+    def build_js
+      return unless custom_js?
+      install base_js, output_dir(js_output)
+    end
+
+    def js_imports
+      custom_js? ? js_components + [js_output] : []
+    end
+    
     def build_img
       target =  output_dir(@img_out_dir)
       mkdir_p target

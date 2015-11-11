@@ -34,6 +34,7 @@ class ArticleMaker < Mfweb::Core::Maker
     Mfweb::Core::Site.skeleton
       .with_css(css_output)
       .with_banner_for_tags(tags)
+      .with_js(js_imports)
   end
 
   def default_bibliography
@@ -42,6 +43,10 @@ class ArticleMaker < Mfweb::Core::Maker
 
   def css_output
     'article.css'
+  end
+
+  def js_imports
+    []
   end
 
   def draft?

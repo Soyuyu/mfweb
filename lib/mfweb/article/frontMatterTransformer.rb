@@ -61,7 +61,7 @@ module Mfweb::Article
     width = elem['width']
     attrs['style'] = "width: #{width}px;" if width
     @html.element('div', attrs) do
-      @html.element('img', {:src => elem['src']}){}
+      @html.element('img', {:src => @maker.img_out_dir(elem['src'])}){}
       render_photo_credit elem
       if elem.has_text?
         @html.p {apply elem}

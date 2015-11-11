@@ -415,6 +415,10 @@ class PaperTransformer < Mfweb::Core::Transformer
       @html << '<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>'
     end
   end
+
+  def handle_p_sub anElement
+    @html.p('p-sub') {apply anElement}
+  end
 end
 
 class FigureReader

@@ -10,7 +10,7 @@ class ArticleMaker < Mfweb::Core::Maker
     super(infile, outfile, transformerClass, skeleton)
     @pattern_server = PatternServer.new
     @code_server = Mfweb::Core::CodeServer.new
-    @bib_server = default_bibliography
+    @bib_server = Bibliography.new(@in_file)
     @footnote_server = FootnoteServer.new(infile)
     @refactoring_server = RefactoringServer.new
     @code_dir = './'
@@ -37,11 +37,7 @@ class ArticleMaker < Mfweb::Core::Maker
       .with_banner_for_tags(tags)
       .with_js(js_imports)
   end
-
-  def default_bibliography
-    Bibliography.new(@in_file)
-  end
-
+  
   def css_output
     'article.css'
   end

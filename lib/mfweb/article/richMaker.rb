@@ -15,6 +15,10 @@ module Mfweb::Article
       @js_components = []
     end
 
+    def self.mf *args
+      return self.new(*args).configure_mf
+    end
+
     def render
       super
       render_css
@@ -55,10 +59,6 @@ module Mfweb::Article
       end
     end
 
-    def default_bibliography
-      Bibliography.new(@in_file, 'biblio.xml')
-    end
-
     def base_js
       input_dir('custom.js')
     end
@@ -85,6 +85,13 @@ module Mfweb::Article
       mkdir_p target
       img_srcs.each {|f| install f, target}
     end
-      
+
+    def configure_mf
+      @pattern_server = PatternServer.new('patternList.xml')
+      @bib_server = Bibliography.new(@in_file, 'biblio.xml')
+      @refactoring_server = RefactoringServer.new('refactoring/entries')
+      return self
+    end
+
   end
 end

@@ -13,7 +13,7 @@ class CodeServer
       codeFile = File.join(@code_dir, file)
       @whole_files[file] = File.readlines(codeFile).join
     end
-    return CodeFragment.new(@whole_files[file])
+    return CodeFragment.new(@whole_files[file], file)
   end
 
   def find_fragment file, fragment

@@ -1,3 +1,4 @@
+# coding: utf-8
 module Mfweb::Core
   class CodeRenderer
     def initialize html, code_fragment, anElement, tr: nil
@@ -60,6 +61,13 @@ module Mfweb::Core
         "class #{@anElement['class']}...\n"
       else nil
       end
+    end
+    def autoheading_filename
+      "#{@fragment.filename}…\n"
+    end
+
+    def autoheading_class
+      "#{@fragment.class}...\n"
     end
 
   end

@@ -26,7 +26,7 @@ module Mfweb::Core
       File.new(@file).each_line do |line|
         match_class_name line
         if line =~ %r{</codeFragment>}
-          @frags[fragNames.last] = CodeFragment.new(fragsByName[fragNames.last], @class)
+          @frags[fragNames.last] = CodeFragment.new(fragsByName[fragNames.last], @file, @class)
           fragNames.pop
         end
 
@@ -70,8 +70,11 @@ module Mfweb::Core
 
   class CodeFragment
     attr_reader :result, :class
-    def initialize code, klass = ""
-      @result, @class = code, klass
+    def initialize code, path, klass = ""
+      @result, @path, @class = code, path, klass
+    end
+    def filename
+      File.basename(@path)
     end
   end
 

@@ -224,7 +224,8 @@ class PaperTransformer < Mfweb::Core::Transformer
     @html.element('img', attrs)
   end
   def handle_figure anElement
-    @html.div('figure') do
+    css = form_css(anElement, 'figure')
+    @html.div(css) do
       if anElement['align']
         puts "can't handle alignment attribute in figure yet"
       end

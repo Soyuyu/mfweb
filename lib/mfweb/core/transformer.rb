@@ -164,7 +164,7 @@ class Transformer
     end
   end
   def form_css anElement, *classes
-    [anElement['class'], *classes].join(" ")
+    [anElement['class'], *classes].join(" ").strip
   end
 
 end

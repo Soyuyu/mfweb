@@ -436,6 +436,10 @@ class PaperTransformer < Mfweb::Core::Transformer
       @html.a_ref("http://www.twitter.com/martinfowler") {@html.text "twitter stream"}
     end
   end
+
+  def handle_installment_target anElement
+    @html.element('div', id: anElement['id'], class: 'installment-target') {apply anElement}
+  end
 end
 
 class FigureReader

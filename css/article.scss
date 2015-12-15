@@ -285,8 +285,8 @@ div.footnote-list {
   }
 }
 
-.next-installment {
-  background-color: $tw-earth1;
+.next-installment, .installment-target {
+  background-color: $side-color;
   color: $tw-green3;
   padding: 10px;
   font-style: italic;
@@ -295,6 +295,7 @@ div.footnote-list {
     color: $tw-green1;
   }
 }
+
 
 .code-remark {
   color: $tw-earth3;

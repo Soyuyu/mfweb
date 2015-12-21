@@ -4,4 +4,10 @@
 .icon-rss:before {
   @include icon-fontawesome("\f09e");
 }
+.icon-bars:before {
+  @include icon-fontawesome("\f0c9");
+}
+.icon-close:before {
+  @include icon-fontawesome("\f00d");
+}
 

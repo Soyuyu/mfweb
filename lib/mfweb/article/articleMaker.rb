@@ -35,7 +35,7 @@ class ArticleMaker < Mfweb::Core::Maker
     Mfweb::Core::Site.skeleton
       .with_css(css_output)
       .with_banner_for_tags(tags)
-      .with_js(js_imports)
+      .with_added_js(js_imports)
   end
   
   def css_output

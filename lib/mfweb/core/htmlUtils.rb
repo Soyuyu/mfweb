@@ -81,6 +81,13 @@ module HtmlUtils
   #   return base[0..width]
   # end
 
+  def self.jquery_path
+    '/jquery-1.11.3.min.js'
+  end
+
+  def jquery_path
+    HtmlUtils.jquery_path
+  end
 
   def amazon asin, text
     amazon_pre(asin) + text + amazon_post

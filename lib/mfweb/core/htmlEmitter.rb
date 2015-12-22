@@ -62,7 +62,7 @@ class HtmlEmitter
     element_block "body", {}, &block
   end
   def jquery
-    js 'http://code.jquery.com/jquery-1.6.2.min.js'
+    js jquery_path
   end
   def js uri
     element_block 'script', {:type => 'text/javascript', 

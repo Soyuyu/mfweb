@@ -92,10 +92,5 @@ module Mfweb::Article
       @refactoring_server = RefactoringServer.new('refactoring/entries')
       return self
     end
-
-    def shim_jquery
-      js_components << '/jquery-1.11.3.min.js'
-    end
-
   end
 end

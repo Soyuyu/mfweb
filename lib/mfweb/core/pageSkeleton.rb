@@ -99,14 +99,5 @@ class PageSkeleton
     result.instance_variable_set(:@footer, htmlString)
     return result
   end
-
-
-  def shim_jquery
-    #while migrating, this call inserts jquery as it will be done automatically
-    result = self.dup
-    result.instance_variable_set(:@js, [jquery_path] + @js)
-    return result
-  end
-  
 end
 end

@@ -1,3 +1,5 @@
+@import 'fontawesome';
+
 .icon-twitter:before {
   @include icon-fontawesome("\f099");
 }
@@ -9,5 +11,9 @@
 }
 .icon-close:before {
   @include icon-fontawesome("\f00d");
+}
+
+.help-icon:before {
+  @include icon-fontawesome("\f05a");
 }
 

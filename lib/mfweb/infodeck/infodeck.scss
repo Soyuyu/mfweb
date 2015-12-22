@@ -1,6 +1,7 @@
 @import 'reset.css';
 @import 'mixins';
 @import 'colors';
+@import 'icons';
 
 $lede-font: serif !default;
 $text-font: sans-serif !default;
@@ -58,10 +59,6 @@ body {
   background-color: gray;
   font-family: $text-font;
   margin:$body-margin;
-}
-
-.help-icon:before {
-  @include icon-fontawesome("\f05a");
 }
 
 

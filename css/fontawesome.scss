@@ -1,0 +1,21 @@
+@font-face {
+  $font-awesome-path: "https://netdna.bootstrapcdn.com/font-awesome/4.0.0/fonts/";
+  font-family:'FontAwesome';
+  src:url($font-awesome-path + "fontawesome-webfont.eot");
+  src:url($font-awesome-path + "fontawesome-webfont.eot?#iefix") format("embedded-opentype"),
+    url($font-awesome-path + "fontawesome-webfont.woff") format("woff"),
+    url($font-awesome-path + "fontawesome-webfont.ttf") format("truetype"),
+    url($font-awesome-path + "fontawesome-webfont.svgfontawesomeregular") format("svg");
+  font-weight:normal;
+  font-style:normal
+}
+
+@mixin icon-fontawesome($icon) {
+  content: $icon;
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: inherit;
+  -webkit-font-smoothing: antialiased;
+  *margin-right: .3em; // fixes ie7 issues
+}

@@ -2,6 +2,13 @@
 @import 'banner';
 @import 'icons';
 
+/* 
+  need to refactor this as global is really just for articles etc 
+  in particular refactor this so the guide pages can use a useful common
+  subset of styles
+*/
+
+
 $left-margin: 30px;
 
 body {

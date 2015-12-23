@@ -10,6 +10,7 @@ class PageSkeleton
     @js_inline = []
     @banner_photo = nil
     @is_draft = false
+    @navmenu = ""
   end
   def emit aStream, title, meta_emitter: nil
     @html = aStream.kind_of?(HtmlEmitter) ? aStream : 
@@ -18,6 +19,7 @@ class PageSkeleton
     @html.html do
       @html.head do
         @html.title title
+        emit_viewport
         emit_encoding
         meta_emitter.emit if meta_emitter
         @css.each{|uri| @html.css uri}
@@ -28,6 +30,7 @@ class PageSkeleton
           emit_draft_notice if @is_draft
           yield @html
         end
+        @html << @navmenu
         @html << @footer
         @js.each {|url| @html.js url}
         @js_inline.each {|f| emit_inline_js f}
@@ -46,18 +49,17 @@ class PageSkeleton
   def emit_encoding
     @html << '<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />'
   end
+  def emit_viewport
+    @html << '<meta name="viewport" content="width=device-width, initial-scale=1" />'
+  end
   def with_css *arg
-    result = self.dup
-    result.instance_variable_set(:@css, arg.flatten)
-    return result
+    with_iv :@css, arg.flatten
   end
   def with_added_css *arg
     with_css(@css + arg)
   end
   def with_banner_photo arg
-    result = self.dup
-    result.instance_variable_set(:@header, custom_banner(:photo_fn => arg))
-    return result
+    with_iv :@header, custom_banner(:photo_fn => arg)
   end
   def with_banner_for_tags arg
     return with_banner_photo(pick_photo(arg))
@@ -66,22 +68,16 @@ class PageSkeleton
     "Skeleton with css: %s" % @css
   end
   def with_js *arg
-    result = self.dup
-    result.instance_variable_set(:@js, arg.flatten)
-    return result
+    with_iv :@js, arg.flatten
   end
   def with_added_js *arg
     with_js(@js + arg)
   end
   def with_inline_js *arg
-    result = self.dup
-    result.instance_variable_set(:@js_inline, arg.flatten)
-    return result
+    with_iv :@js_inline, arg.flatten
   end
   def as_draft
-    result = self.dup
-    result.instance_variable_set(:@is_draft, true)
-    return result
+    with_iv :@is_draft, true
   end
   def emit_draft_notice
     @html.div("draft-notice") do
@@ -90,14 +86,19 @@ class PageSkeleton
     end
   end
   def with_banner htmlString
-    result = self.dup
-    result.instance_variable_set(:@header, htmlString)
-    return result
+    with_iv :@header, htmlString
   end
   def with_footer htmlString
+    with_iv :@footer, htmlString
+  end
+  def with_navmenu htmlString
+    with_iv :@navmenu, htmlString
+  end
+  private
+  def with_iv name, value
     result = self.dup
-    result.instance_variable_set(:@footer, htmlString)
-    return result
+    result.instance_variable_set(name, value)
+    return result    
   end
 end
 end

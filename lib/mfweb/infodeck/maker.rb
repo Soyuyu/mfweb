@@ -13,7 +13,7 @@ module Mfweb::InfoDeck
       @partials = {}
       @asset_server = AssetServer.new('.')
       @css_paths = %w[lib/mfweb/infodeck css] + [input_dir]
-      @google_analytics_file = 'partials/footer/google-analytics.html'
+      @google_analytics_file = nil
       @mfweb_dir = "mfweb/"
       @css_out = StringIO.new
       @js_dir = File.join(@output_dir, 'js')

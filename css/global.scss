@@ -1,19 +1,16 @@
 @import 'reset';
 @import 'framing';
-@import 'icons';
 
 /* 
+
+==== global ================
+
   need to refactor this as global is really just for articles etc 
   in particular refactor this so the guide pages can use a useful common
   subset of styles
 */
 
 
-$left-margin: 30px;
-
-body {
- margin: 0;
-}
 
 body {
   font-size: 16px;
@@ -23,15 +20,12 @@ body {
   color: $text-gray;
 }
 
-body > div#banner, body > div#footer {
-  margin-left: $left-margin;
-}
 
 #content {
   background-color: white;
-    margin: 2em auto 2em $left-margin;
   width: 40em;
   min-height: 500px;
+  @import 'content'
 }
 
 

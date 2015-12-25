@@ -26,11 +26,12 @@ class PageSkeleton
       end
       @html.body do
         @html << @header
+        @html.div('div', id: 'top-navmenu') {@html << @navmenu} if @navmenu
         @html.element('div', :id => 'content') do
           emit_draft_notice if @is_draft
           yield @html
         end
-        @html << @navmenu
+        @html.div('div', id: 'bottom-navmenu') {@html << @navmenu} if @navmenu
         @html << @footer
         @js.each {|url| @html.js url}
         @js_inline.each {|f| emit_inline_js f}

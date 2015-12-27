@@ -11,6 +11,7 @@ class PageSkeleton
     @banner_photo = nil
     @is_draft = false
     @navmenu = ""
+    @use_viewport = true
   end
   def emit aStream, title, meta_emitter: nil
     @html = aStream.kind_of?(HtmlEmitter) ? aStream : 
@@ -19,7 +20,7 @@ class PageSkeleton
     @html.html do
       @html.head do
         @html.title title
-        emit_viewport
+        emit_viewport if @use_viewport
         emit_encoding
         meta_emitter.emit if meta_emitter
         @css.each{|uri| @html.css uri}
@@ -94,6 +95,9 @@ class PageSkeleton
   end
   def with_navmenu htmlString
     with_iv :@navmenu, htmlString
+  end
+  def without_viewport
+    with_iv :@use_viewport, false
   end
   private
   def with_iv name, value

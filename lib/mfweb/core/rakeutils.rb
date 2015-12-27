@@ -16,6 +16,12 @@ end
 
 #----------------------------------------------------------------
 
+def render_sass src, target, options = {}
+  defaults = {load_paths: CSS_PATHS, syntax: :scss}
+  sass = Sass::Engine.new(File.read(src), defaults.merge(options))
+  File.open(target, 'w') {|out| out << sass.render}
+end
+
 def sassTask srcGlob, relativeTargetDir, taskSymbol, base_deps = []
   FileList[srcGlob].each do |src|
     srcDir = src.pathmap "%d"

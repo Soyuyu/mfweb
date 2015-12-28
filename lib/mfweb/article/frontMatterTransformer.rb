@@ -67,6 +67,7 @@ module Mfweb::Article
         @html.p {apply elem}
       end
     end
+    @html.div('clear') if "full" == elem['layout']
   end
 
     def print_version 

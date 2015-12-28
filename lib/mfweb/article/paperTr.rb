@@ -22,6 +22,7 @@ module PhotoHandlers
       render_photo_credit anElement
       @html.p('photoCaption') {apply anElement}
     end
+    @html.div('clear') if "full" == anElement['layout']
   end
   def render_photo_credit anElement
     if anElement['credit']

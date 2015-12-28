@@ -10,166 +10,155 @@ body {
   font-family: $sans;
 }
 
+#content {
+  width: 40em;
 
-
-h1, h2, h3 {
-  font-family: $sans;
-}
-
-p.subtitle {
-  @extend h1;
-  font-size: 120%;
-}
-
-hr.topSection {
-  border-top: thick solid $dk-purple;
-  margin: 3em 50% 0px 0px;
-}
-
-h3 {
-  font-size: 120%;
-}
-
-div.paperBody {
-
-  h2 {
-    margin: 0 0 1em 0;
+  p.subtitle {
+    @extend h1;
+    font-size: 120%;
   }
 
-}
-
-div#topImage {
-  float: right;
-  margin: 0 0 1em 20px;
-  clear: both;
-  width: 220px;
-  font-size: 80%;
-  font-style: italic;
-  font-family: $sans;
-  img {
-    width: 220px;
-  }
-}
-
-
-p.abstract {
-  line-height: $text-line-height;
-  font-style: italic;
-}
-
-div.frontMatter {
-  padding: 1em 2em;
-  border-style: solid none;
-  border-width: thin 0;
-  clear: both;
-  overflow: hidden;
-  border-color: $dk-purple;
-
-  font-family: $sans;
-
-  padding: 1em 0;
-  font-size: 90%;
-
-  p, div.translations, div.tags {
-    margin: 0.3em;
-  }
-  div.topBox {
-    margin: 2em 0;
-    font-size: 90%;
+  hr.topSection {
+    border-top: thick solid $dk-purple;
+    margin: 3em 50% 0px 0px;
   }
 
 
 
+  .paperBody {
 
-
-  div.frontLeft {
-    width: 40%;
-    float:left;
-  }
-
-  div.frontLeft p {
-  }
-
-  div.frontRight {
-    width: 55%;
-    float:right;
-    padding-right: 0;
-  }
-
-
-  div.author {
-    margin: 1em 0 0 0.3em;
-    img {
-      max-width: 80px;
-      float: left;
-      margin: 0 1em 1em 0;
+    h2 {
+      margin: 0 0 1em 0;
     }
-    p {
-      margin-left: 0;
+
+  }
+
+  div#topImage {
+    float: right;
+    margin: 0 0 1em 20px;
+    clear: both;
+    width: 220px;
+    font-size: 80%;
+    font-style: italic;
+    font-family: $sans;
+    img {
+      width: 220px;
+    }
+  }
+
+
+  p.abstract {
+    line-height: $text-line-height;
+    font-style: italic;
+  }
+
+  div.frontMatter {
+    padding: 1em 2em;
+    border-style: solid none;
+    border-width: thin 0;
+    clear: both;
+    overflow: hidden;
+    border-color: $dk-purple;
+
+    font-family: $sans;
+
+    padding: 1em 0;
+    font-size: 90%;
+
+    p, div.translations, div.tags {
+      margin: 0.3em;
+    }
+    div.topBox {
+      margin: 2em 0;
       font-size: 90%;
     }
-    p.name {
-      font-weight: bold;
-      font-size: 100%;
-      margin: 1em 0;
-     }
-    a:link,  a:visited, a:hover {
-      color:  $purple;
-    }
-  }
 
-  div.contents{
-    /* puts contents to fixed right, useful when fiddling
+
+
+
+
+    div.frontLeft {
+      width: 40%;
+      float:left;
+    }
+
+    div.frontLeft p {
+    }
+
+    div.frontRight {
+      width: 55%;
+      float:right;
+      padding-right: 0;
+    }
+
+
+    div.author {
+      margin: 1em 0 0 0.3em;
+      img {
+        max-width: 80px;
+        float: left;
+        margin: 0 1em 1em 0;
+      }
+      p {
+        margin-left: 0;
+        font-size: 90%;
+      }
+      p.name {
+        font-weight: bold;
+        font-size: 100%;
+        margin: 1em 0;
+      }
+      a:link,  a:visited, a:hover {
+                            color:  $purple;
+                          }
+    }
+
+    div.contents{
+      /* puts contents to fixed right, useful when fiddling
     position: fixed;
     width: 15em;
     top: 20em;
     right: 3px;
-    */    
+     */    
 
-    a:link,  a:visited, a:hover {
-      color:  $dk-purple;
-    }
+      a:link,  a:visited, a:hover {
+                            color:  $dk-purple;
+                          }
 
-    ul {
-      margin: 0;
-      -webkit-padding-start: 0;
-    }
+      ul {
+        margin: 0;
+        -webkit-padding-start: 0;
+      }
 
-    ul ul {
-      margin: 0 1.2em;
-    }
+      ul ul {
+        margin: 0 1.2em;
+      }
 
-    li {
-      list-style-type: none;
-    }
+      li {
+        list-style-type: none;
+      }
 
-    /* to add bullet points to contents entries remove the `ul ul` margin
+      /* to add bullet points to contents entries remove the `ul ul` margin
        rule, remove `list-style-type none` from li (will pick up square
        from global) and add `margin-left: 1.5em;` to li */
 
-    h2 {
-      font-size: 100%;
-      color: $dk-purple;
-      font-weight: bold;
-      margin: 0.5em 0;
-    }
+      h2 {
+        font-size: 100%;
+        color: $dk-purple;
+        font-weight: bold;
+        margin: 0.5em 0;
+      }
 
-    h3 {
-      @extend h2;
-      margin: 0.5em 0;
-    }
+      h3 {
+        @extend h2;
+        margin: 0.5em 0;
+      }
       
+    }
   }
-}
   div.paperBody {
     clear: both;
     line-height: $text-line-height;
-  }
-
-  div.paperBody p {
-  /*
-    font-family: georgia, serif;
-    */
   }
 
   hr.bodySep {
@@ -202,7 +191,7 @@ div.frontMatter {
   }
 
   div.figure {
-     p.figureCaption {
+    p.figureCaption {
       margin-left: 2em;
       font-style: italic;
       font-size: 90%;
@@ -250,64 +239,66 @@ div.frontMatter {
   }
 
 
-div.footnote-list {
-  h3, span.num {
-    color: $dk_purple;
-    font-size: 100%;
-    font-weight: bold;
-  }  
-}
+  div.footnote-list {
+    h3, span.num {
+      color: $dk_purple;
+      font-size: 100%;
+      font-weight: bold;
+    }  
+  }
 
-.paperBody .end-box, .end-box {
-  padding: 10px 20px;
-  background-color: $tw-earth1;
-  margin: 2em -20% 5em 40%;
-  h2 {
-    font-style: italic;
-    font-weight: normal;
-    margin-bottom: 0;
-    color: $tw-green3;
-  }
-  p {
-    margin: 0.5em 0 1em 2em;
-  }
-  .tags {
-    line-height: 3;
-    a {
-      @include tag-button;
+  .paperBody .end-box, .end-box {
+    padding: 10px 20px;
+    background-color: $tw-earth1;
+    margin: 2em -20% 5em 40%;
+    h2 {
+      font-style: italic;
+      font-weight: normal;
+      margin-bottom: 0;
+      color: $tw-green3;
+    }
+    p {
+      margin: 0.5em 0 1em 2em;
+    }
+    .tags {
+      line-height: 3;
+      a {
+        @include tag-button;
+      }
+    }
+    span.tags {
+      margin-left: 2em;
+    }
+    .shares {
+      margin: 0 0 5em 0;
     }
   }
-  span.tags {
+
+  .next-installment, .installment-target {
+    background-color: $side-color;
+    color: $tw-green3;
+    padding: 10px;
+    font-style: italic;
+    font-size: 110%;
+    a:link, a:visited {
+              color: $tw-green1;
+            }
+  }
+
+
+  .code-remark {
+    color: $tw-earth3;
+    font-size: 80%;
+    margin-left: 3em;
+    font-style: italic;
+  }
+
+  .p-sub {
     margin-left: 2em;
+    font-size: 80%;
   }
-  .shares {
-    margin: 0 0 5em 0;
-  }
+
+
+  @import 'short-front'
+
 }
-
-.next-installment, .installment-target {
-  background-color: $side-color;
-  color: $tw-green3;
-  padding: 10px;
-  font-style: italic;
-  font-size: 110%;
-  a:link, a:visited {
-    color: $tw-green1;
-  }
-}
-
-
-.code-remark {
-  color: $tw-earth3;
-  font-size: 80%;
-  margin-left: 3em;
-  font-style: italic;
-}
-
-.p-sub {
-  margin-left: 2em;
-  font-size: 80%;
-}
-
-
-@import 'short-front'

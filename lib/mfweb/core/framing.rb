@@ -1,5 +1,5 @@
 module Mfweb::Core
-class PageSkeleton
+class Framing
   include HtmlUtils
   attr_reader :meta_tags, :footer, :banner
   def initialize header, footer, cssArray
@@ -67,7 +67,7 @@ class PageSkeleton
     return with_banner_photo(pick_photo(arg))
   end
   def to_s
-    "Skeleton with css: %s" % @css
+    "Framing with css: %s" % @css
   end
   def with_js *arg
     with_iv :@js, arg.flatten

@@ -3,11 +3,11 @@ require 'rake/ext/string'
 
 module Mfweb::Article
 class ArticleMaker < Mfweb::Core::Maker
-  attr_accessor :pattern_server, :code_server, :bib_server, :skeleton,
+  attr_accessor :pattern_server, :code_server, :bib_server, :framing,
   :footnote_server, :catalog, :author_server, :refactoring_server, :transformer_class
-  def initialize infile, outfile, skeleton = nil, transformerClass = nil
+  def initialize infile, outfile, framing = nil, transformerClass = nil
     @author_server = Mfweb::Core::Site.author_server
-    super(infile, outfile, transformerClass, skeleton)
+    super(infile, outfile, transformerClass, framing)
     @pattern_server = PatternServer.new
     @code_server = Mfweb::Core::CodeServer.new
     @bib_server = Bibliography.new(@in_file)
@@ -27,12 +27,12 @@ class ArticleMaker < Mfweb::Core::Maker
     @refactoring_server.load
     @bib_server.load
     resolve_includes @root
-    @skeleton ||= default_skeleton
-    @skeleton = @skeleton.as_draft if draft?
+    @framing ||= default_framing
+    @framing = @framing.as_draft if draft?
   end
 
-  def default_skeleton
-    Mfweb::Core::Site.skeleton
+  def default_framing
+    Mfweb::Core::Site.framing
       .with_css(css_output)
       .with_banner_for_tags(tags)
       .with_added_js(js_imports)

@@ -44,26 +44,26 @@ module Mfweb::InfoDeck
         install_js_components
         js_files = Dir[File.join(input_dir, 'js/*.js')]
         js_files.each {|f| install f}
-        skeleton = DeckSkeleton.new
-        skeleton.js_files = js_files.map{|f| f.pathmap("%f")}
-        skeleton.maker = self
-        skeleton.table_of_contents = table_of_contents
+        framing = DeckFraming.new
+        framing.js_files = js_files.map{|f| f.pathmap("%f")}
+        framing.maker = self
+        framing.table_of_contents = table_of_contents
         coffee_glob = File.join(input_dir, 'js/*.coffee')
         unless Dir[coffee_glob].empty?
           sh "coffee -o #{@output_dir} -c #{coffee_glob}"
-          skeleton.js_files += Dir[coffee_glob].map{|f| f.pathmap("%n.js")}
+          framing.js_files += Dir[coffee_glob].map{|f| f.pathmap("%n.js")}
         end
-        skeleton.js_files << 'contents.js'
+        framing.js_files << 'contents.js'
         coffee_src = File.join(input_dir, 'deck.coffee') 
         if File.exist?(coffee_src)
           coffee_target = File.join(@output_dir, 'deck.js')
           sh "coffee -j #{coffee_target} -c #{coffee_src}"
-          skeleton.js_files << coffee_target.pathmap('%f')
+          framing.js_files << coffee_target.pathmap('%f')
         end
         @root.css('partial').each {|e| add_partial e['id'], e}
         transform_slides
         build_css
-        build_index_page skeleton
+        build_index_page framing
         generate_contents
         File.open(File.join(@output_dir, 'contents.js'), 'w') {|f| f << @js.to_js}
         generate_fallback
@@ -89,9 +89,9 @@ module Mfweb::InfoDeck
       @asset_server[name]
     end
 
-    def build_index_page skeleton
+    def build_index_page framing
       HtmlEmitter.open(output_file) do |html|
-        skeleton.emit(html, title) do |html|
+        framing.emit(html, title) do |html|
           html.div('init') do
             IndexTransformer.new(html, @root, self).render
           end
@@ -227,7 +227,7 @@ module Mfweb::InfoDeck
       'draft' == @root['status']
     end
     def allowed_fonts
-      #should try to coordinate changes here with skeleton
+      #should try to coordinate changes here with framing
       ['Inconsolata', 'Open Sans']
     end
 
@@ -265,14 +265,14 @@ module Mfweb::InfoDeck
       HtmlEmitter.open(output_dir + '/fallback.html') do |html|
         headerTR = FallbackHeaderTransformer.new(html, @root, self)
         title = @root['title']
-        fallback_skeleton.emit(html, title) do
+        fallback_framing.emit(html, title) do
           headerTR.render
           emit_dump html
         end
       end
     end
-    def fallback_skeleton
-      Site.skeleton
+    def fallback_framing
+      Site.framing
     end
     def emit_dump html
       html.div('text-dump') do

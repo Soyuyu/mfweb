@@ -3,11 +3,11 @@ module Mfweb::Core
   class Maker
     include FileUtils
     attr_accessor :transformer_class, :transformer
-    def initialize infile, outfile, transformerClass, skeleton
+    def initialize infile, outfile, transformerClass, framing
       @in_file = infile
       @out_file = outfile
       @transformer_class = transformerClass
-      @skeleton = skeleton
+      @framing = framing
     end
 
     def run
@@ -17,7 +17,7 @@ module Mfweb::Core
 
     def render
       mkdir_p output_dir, verbose: false
-      @skeleton.emit(@html, @transformer.title_bar_text, 
+      @framing.emit(@html, @transformer.title_bar_text, 
         meta_emitter: metadata_emitter) do |html|
         render_body
       end

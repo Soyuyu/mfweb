@@ -20,6 +20,9 @@ class HtmlEmitter
       yield self.new(out)
     end
   end
+  def self.on aStreamOrEmitter
+    aStreamOrEmitter.kind_of?(HtmlEmitter) ? aStreamOrEmitter : HtmlEmitter.new(aStreamOrEmitter)
+  end
   def element(name, attributes=nil, isInline=true, &block)
     #ignores isInline arg which is kept for compatability
     if SPAN_ELEMENTS.include? name

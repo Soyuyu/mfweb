@@ -43,7 +43,7 @@ def sassTask srcGlob, relativeTargetDir, taskSymbol, base_deps = []
   end
 end
 
-def xslTask src, relativeTargetDir, taskSymbol, style, css = 'global.css'
+def xslTask src, relativeTargetDir, taskSymbol, style, css: 'global.css'
   targetDir = BUILD_DIR + relativeTargetDir
   target = File.join(targetDir, File.basename(src, '.xml') + '.html')
   Rake::Task[taskSymbol].prerequisites << target

@@ -1,6 +1,19 @@
 module Mfweb::Core
+  module MesherSource
+    def body_start
+      return self.with_output(HtmlEmitter.new).emit_pre_content.out
+    end
+    def body_end
+      return self.with_output(HtmlEmitter.new).emit_post_content.out
+    end
+    def css_paths
+     @css
+    end
+  end
+
 class Framing
   include HtmlUtils
+  include MesherSource
   attr_reader :meta_tags, :footer, :banner
   def initialize header, footer, cssArray
     @header = header
@@ -14,8 +27,7 @@ class Framing
     @use_viewport = true
   end
   def emit aStream, title, meta_emitter: nil
-    @html = aStream.kind_of?(HtmlEmitter) ? aStream : 
-                                            HtmlEmitter.new(aStream)
+    @html = HtmlEmitter.on aStream
     emit_doctype
     @html.html do
       @html.head do
@@ -26,18 +38,26 @@ class Framing
         @css.each{|uri| @html.css uri}
       end
       @html.body do
-        @html << @header
-        @html.div('div', id: 'top-navmenu') {@html << @navmenu} if @navmenu
+        emit_pre_content
         @html.element('div', :id => 'content') do
           emit_draft_notice if @is_draft
           yield @html
         end
-        @html.div('div', id: 'bottom-navmenu') {@html << @navmenu} if @navmenu
-        @html << @footer
-        @js.each {|url| @html.js url}
-        @js_inline.each {|f| emit_inline_js f}
+        emit_post_content
       end
     end
+  end
+  def emit_pre_content
+    @html << @header
+    @html.div('div', id: 'top-navmenu') {@html << @navmenu} if @navmenu
+    return @html
+  end
+  def emit_post_content
+    @html.div('div', id: 'bottom-navmenu') {@html << @navmenu} if @navmenu
+    @html << @footer
+    @js.each {|url| @html.js url}
+    @js_inline.each {|f| emit_inline_js f}
+    return @html
   end
   def emit_file file_name, title, &block
     File.open(file_name, 'w') {|f| emit(f, title, &block)}
@@ -53,6 +73,9 @@ class Framing
   end
   def emit_viewport
     @html << '<meta name="viewport" content="width=device-width, initial-scale=1" />'
+  end
+  def with_output aStreamOrEmitter
+    with_iv(:@html, HtmlEmitter.on(aStreamOrEmitter))
   end
   def with_css *arg
     with_iv :@css, arg.flatten
@@ -99,6 +122,9 @@ class Framing
   def without_viewport
     with_iv :@use_viewport, false
   end
+  def with_viewport
+    with_iv :@use_viewport, true
+  end
   private
   def with_iv name, value
     result = self.dup
@@ -106,4 +132,5 @@ class Framing
     return result    
   end
 end
+
 end

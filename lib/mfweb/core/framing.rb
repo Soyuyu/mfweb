@@ -14,7 +14,7 @@ module Mfweb::Core
 class Framing
   include HtmlUtils
   include MesherSource
-  attr_reader :meta_tags, :footer, :banner
+  attr_reader :meta_tags, :footer, :banner, :js
   def initialize header, footer, cssArray
     @header = header
     @footer = footer

@@ -12,6 +12,7 @@
 
 
 
+
 body {
   font-size: 16px;
   font-family: $sans;
@@ -24,7 +25,8 @@ body {
 #content {
   background-color: white;
   min-height: 500px;
-  @import 'content'
+  @import 'content';
+  @include top-level-placement;
 }
 
 
@@ -52,54 +54,7 @@ body {
   cursor: pointer;
 }
 
-@mixin link {
-  text-decoration: none;
-  cursor:pointer;
-  &:hover {text-decoration: underline;}
-}
 
-@mixin sidebar-offset {
-  width: 20em;
-  float: right;
-  margin: 1em -15em 1em 2em;
-}
-
-
-
-@mixin tag-button {
-  background: $tw-green3;
-  color: white;
-  font-family: $sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 5px;
-  border-radius: 5px;
-  margin: 2px;
-  white-space: nowrap;
-  &:hover {
-    background: $tw-green2;
-  }
-}
-
-@mixin span-button {
-  color: darken($light-gray-background, 60%);
-  font-family: $sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 5px;
-  border-radius: 5px;
-  margin: 2px;
-  white-space: nowrap;
-  background: linear-gradient($light-gray-background, darken($light-gray-background, 30%));
-  cursor: pointer;
-  border: thin solid black;
-
-  &:hover {
-    background: $light-gray-background;
-  }
-}
 
 
 /* ................................................................ */

@@ -52,6 +52,12 @@ body {
   cursor: pointer;
 }
 
+@mixin link {
+  text-decoration: none;
+  cursor:pointer;
+  &:hover {text-decoration: underline;}
+}
+
 @mixin sidebar-offset {
   width: 20em;
   float: right;

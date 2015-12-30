@@ -1,28 +1,31 @@
-div.photo {
-  float: right;
-  margin: 1em 0 1em 1em; 
-  font-size: 80%;
-  font-style: italic;
-  font-family: $sans;
-
-  p.credit {
-    color: #808080;
-    font-size: 80%;  
-    text-align: right;
+#content {
+  .photo {
     float: right;
+    margin: 1em 0 1em 1em; 
+    font-size: 80%;
+    font-style: italic;
+    font-family: $sans;
+    max-width: 100%;
+
+    p.credit {
+      color: #808080;
+      font-size: 80%;  
+      text-align: right;
+      float: right;
+    }
+
+    p.photoCaption {
+      min-height: 1em;
+    }
+  } 
+
+  div.fullPhoto {
+    @extend .photo;
+    float: none;
+    margin: 1em 0;
   }
 
-  p.photoCaption {
-    min-height: 1em;
+  img {
+    max-width: 100%;
   }
-} 
-
-div.fullPhoto {
-  @extend .photo;
-  float: none;
-  margin: 1em 0;
-}
-
-img {
-  max-width: 100%;
 }

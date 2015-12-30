@@ -24,7 +24,7 @@ class Framing
     @banner_photo = nil
     @is_draft = false
     @navmenu = ""
-    @use_viewport = true
+    @use_viewport = false
   end
   def emit aStream, title, meta_emitter: nil
     @html = HtmlEmitter.on aStream

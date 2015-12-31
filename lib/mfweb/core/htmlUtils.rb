@@ -135,12 +135,21 @@ end
   end
 
   def add_to_style(attrsHash, fromHash = nil)
-    return unless fromHash
-    return if fromHash.empty?
-    attrsHash[:style] ||= ""
-    attrsHash[:style] += style_string(fromHash)
-    attrsHash.delete(:style) if attrsHash[:style].empty?
+    return if style_string(fromHash).blank?
+    if attrsHash[:style].present?
+      fail "double key" if attrsHash['style']
+      attrsHash['style'] = attrsHash[:style]
+      attrsHash.delete(:style)
+    end
+    if attrsHash['style'].present?
+      left = attrsHash['style'].strip
+      left = left[0..-2] if left.end_with?(';')
+      attrsHash['style'] = left + ";" + style_string(fromHash)
+    else
+      attrsHash['style'] = style_string(fromHash)
+    end
   end
+
 
   def style_string valuesHash
     keys = valuesHash.reject{|k,v| nil == v}.keys

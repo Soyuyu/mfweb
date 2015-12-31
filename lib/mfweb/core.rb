@@ -2,6 +2,8 @@ require 'nokogiri'
 require 'builder'
 
 require 'date'
+require 'active_support'
+require 'active_support/core_ext/object/blank'
 
 module Mfweb; end
 

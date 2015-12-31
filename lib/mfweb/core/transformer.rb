@@ -140,32 +140,6 @@ class Transformer
     [e] + collect_run(e.next_element) : [e]
   end
 
-  def add_class attrHash, class_name
-    return unless class_name
-    if attrHash.key? :class
-      attrHash[:class] += " " + class_name
-    else
-      attrHash[:class] = class_name
-    end
-  end
-
-  def add_to_style(attrsHash, fromHash = nil)
-    return unless fromHash
-    return if fromHash.empty?
-    attrsHash[:style] ||= ""
-    attrsHash[:style] += style_string(fromHash)
-    attrsHash.delete(:style) if attrsHash[:style].empty?
-  end
-
-  def style_string valuesHash
-    keys = valuesHash.reject{|k,v| nil == v}.keys
-    return keys.sort.reduce("") do |res, k| 
-      res += "%s: %s;" % [k, valuesHash[k]] 
-    end
-  end
-  def form_css anElement, *classes
-    [anElement['class'], *classes].join(" ").strip
-  end
 
 end
 

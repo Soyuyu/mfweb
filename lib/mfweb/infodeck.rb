@@ -12,7 +12,7 @@ end
 
 require 'mfweb/infodeck/assetServer'
 require 'mfweb/infodeck/maker'
-require 'mfweb/infodeck/deckSkeleton'
+require 'mfweb/infodeck/deckFraming'
 require 'mfweb/infodeck/deckTransformer'
 require 'mfweb/infodeck/svgManipulator'
 require 'mfweb/infodeck/svgInstaller'

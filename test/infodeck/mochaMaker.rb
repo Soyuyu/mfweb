@@ -42,8 +42,8 @@ class MochaMaker
 
   
   class TestSite < Mfweb::Core::Site
-    def load_skeleton
-      @skeleton = Mfweb::Core::PageSkeleton.new nil, nil, []
+    def load_framing
+      @framing = Mfweb::Core::Framing.new nil, nil, []
     end
   end
 

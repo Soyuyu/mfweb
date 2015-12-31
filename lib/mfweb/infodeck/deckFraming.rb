@@ -1,5 +1,5 @@
 module Mfweb::InfoDeck
-  class DeckSkeleton
+  class DeckFraming
     include Mfweb::Core::HtmlUtils
     attr_accessor :js_files, :maker, :table_of_contents, :logo
     def initialize 

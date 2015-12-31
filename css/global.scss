@@ -1,19 +1,17 @@
 @import 'reset';
-@import 'banner';
-@import 'icons';
+@import 'framing';
 
 /* 
+
+==== global ================
+
   need to refactor this as global is really just for articles etc 
   in particular refactor this so the guide pages can use a useful common
   subset of styles
 */
 
 
-$left-margin: 30px;
 
-body {
- margin: 0;
-}
 
 body {
   font-size: 16px;
@@ -23,69 +21,14 @@ body {
   color: $text-gray;
 }
 
-body > div#banner, body > div#footer {
-  margin-left: $left-margin;
-}
 
 #content {
-    background-color: white;
-    margin: 2em auto 2em $left-margin;
-    width: 40em;
-    min-height: 500px;
+  background-color: white;
+  min-height: 500px;
+  @import 'content';
+  @include top-level-placement;
 }
 
-h1, h2, h3, h4, h5 {
-   color: $dk-purple;
-   font-weight: bold;
-   a:link, a:visited {
-     color: $dk-purple;
-   }
-}
-
-
-h1 {
-   font-size: 200%;
-}
-
-h2 {
-   font-size: 150%;
-}
-
-p, h1, h2, h3, h4, h5 ul {
-    margin: 1em 0;
-}
-
-dd {
-  margin-left: 2em;
-}
-
-a:link, a:visited {
-  color: $purple;
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-ul {
-  list-style: square;
-  margin-left: 1.5em;
-}
-
-ol {
-  list-style: decimal;
-  margin-left: 1.5em;
-}
-
-pre {
-  font-size: 90%;
-  font-family: $code-font;
-}
-
-code {
-  font-family: $code-font;
-}
 
 .error {
   background-color: rgba(253, 147, 151, 0.34);
@@ -95,19 +38,7 @@ code {
   background-color: rgba(255, 255, 0, 0.3);
 }
 
-
-span.credit {
-  color: #808080;
-  font-size: 80%;
-}
-
-hr {
-  border-style: dotted none none none;
-  border-top-width: thin;
-  margin: 10px 15px;
-}
-
-div.draft-notice { 
+.draft-notice { 
 	border: thin solid red; 
 	font-family: sans-serif; 
 	margin: 1em 10%; 
@@ -118,84 +49,12 @@ div.draft-notice {
   p {color: red}
 }
 
-blockquote {
-  /* margin-left: 3em; */
-  border-left: 2px solid grey;
-  padding-left: 1em;
-  font-style: italic;
-  color: $dk-purple;
-}
-
-.clear {
-  clear: both;
-}
-
 .clickable {
   text-decoration: underline;
   cursor: pointer;
 }
 
-@mixin sidebar-offset {
-  width: 20em;
-  float: right;
-  margin: 1em -15em 1em 2em;
-}
 
 
 
-@mixin tag-button {
-  background: $tw-green3;
-  color: white;
-  font-family: $sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 5px;
-  border-radius: 5px;
-  margin: 2px;
-  white-space: nowrap;
-  &:hover {
-    background: $tw-green2;
-  }
-}
-
-@mixin span-button {
-  color: darken($light-gray-background, 60%);
-  font-family: $sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 14px;
-  padding: 5px;
-  border-radius: 5px;
-  margin: 2px;
-  white-space: nowrap;
-  background: linear-gradient($light-gray-background, darken($light-gray-background, 30%));
-  cursor: pointer;
-  border: thin solid black;
-
-  &:hover {
-    background: $light-gray-background;
-  }
-}
-
-.shares {
-  .label {
-    margin-right: 1em;
-    color: $tw-green3;    
-  }
-  .icons {
-    float: left;
-    width: 40%;
-  }
-  .comment {
-    font-size: 80%;
-    color: $tw-green3;
-    float: left;
-    width: 60%;
-    margin-top: 0;
-  }
-  img {
-    height: 16px;
-    margin-right: 10px;
-  }
-}
+/* ................................................................ */

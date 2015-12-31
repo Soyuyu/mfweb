@@ -19,9 +19,9 @@ class Site
     load_catalog
     return @catalog
   end
-  def skeleton
-    load_skeleton
-    return @skeleton
+  def framing
+    load_framing
+    return @framing
   end
   def author_server
     @author_server ||= load_authors
@@ -50,7 +50,7 @@ class Site
   end
 
   # hook methods
-  def load_skeleton; end
+  def load_framing; end
   def load_catalog; end
   def load_authors; end
 end

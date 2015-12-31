@@ -16,6 +16,12 @@ end
 
 #----------------------------------------------------------------
 
+def render_sass src, target, options = {}
+  defaults = {load_paths: CSS_PATHS, syntax: :scss}
+  sass = Sass::Engine.new(File.read(src), defaults.merge(options))
+  File.open(target, 'w') {|out| out << sass.render}
+end
+
 def sassTask srcGlob, relativeTargetDir, taskSymbol, base_deps = []
   FileList[srcGlob].each do |src|
     srcDir = src.pathmap "%d"
@@ -37,7 +43,7 @@ def sassTask srcGlob, relativeTargetDir, taskSymbol, base_deps = []
   end
 end
 
-def xslTask src, relativeTargetDir, taskSymbol, style, css = 'global.css'
+def xslTask src, relativeTargetDir, taskSymbol, style, css: 'global.css'
   targetDir = BUILD_DIR + relativeTargetDir
   target = File.join(targetDir, File.basename(src, '.xml') + '.html')
   Rake::Task[taskSymbol].prerequisites << target
@@ -70,21 +76,21 @@ def copyGraphicsTask srcDir, targetDirSuffix, taskSymbol
   end
 end
 
-def markdown_task src, relativeTargetDir, taskSymbol, title, skeleton = nil
+def markdown_task src, relativeTargetDir, taskSymbol, title, framing = nil
   targetDir = BUILD_DIR + relativeTargetDir
   target = File.join(targetDir, src.pathmap('%n.html'))
   Rake::Task[taskSymbol].prerequisites << target
   file target => [src] do |t|
-    skeleton ||= Mfweb::Core::Site.skeleton.with_css('/global.css')
-    build_markdown src, target, skeleton, title
+    framing ||= Mfweb::Core::Site.framing.with_css('/global.css')
+    build_markdown src, target, framing, title
   end
 end
 
 
-def build_markdown src, target, skeleton, title
+def build_markdown src, target, framing, title
   puts "kramdown #{src} -> #{target}"
   require 'kramdown'
-  skeleton.emit_file(target, title) do |html|
+  framing.emit_file(target, title) do |html|
     html << Kramdown::Document.new(File.read(src)).to_html
   end
 end
@@ -98,7 +104,7 @@ class SimpleArticleBuilder
       target = src.pathmap(BUILD_DIR + 'articles/%n.html')
       file target => [src] + @deps do |t|
         maker = Mfweb::Article::ArticleMaker.new( t.prerequisites[0], 
-                                                  t.name, skeleton)
+                                                  t.name, framing)
         maker.bib_server = Mfweb::Article::Bibliography.new src
         maker.code_server = Mfweb::Core::CodeServer.new 'articles/simple/code/'   
         maker.footnote_server = Mfweb::Article::FootnoteServer.new src
@@ -122,8 +128,8 @@ class SimpleArticleBuilder
   def customize_maker maker, src
     #hook
   end
-  def skeleton
-    Mfweb::Core::Site.skeleton.with_css('article.css')
+  def framing
+    Mfweb::Core::Site.framing.with_css('article.css')
   end
 end
 

@@ -17,3 +17,8 @@
   @include icon-fontawesome("\f05a");
 }
 
+.icon-close:before {
+  @include icon-fontawesome("\f05c");
+}
+
+

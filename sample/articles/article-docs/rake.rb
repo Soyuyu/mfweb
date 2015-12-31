@@ -1,10 +1,10 @@
 FileList['articles/article-docs/article-docs.xml'].each do |src|
 	target = File.join(BUILD_DIR + 'articles', 'article-docs.html')
 	file target => [src] do
-    skeleton = Mfweb::Core::Site.skeleton.with_css('doc.css')
+    framing = Mfweb::Core::Site.framing.with_css('doc.css')
     transformer = './articles/article-docs/doc.rb'
     require transformer
-		maker = Mfweb::Article::ArticleMaker.new(src, target, skeleton, DocTr)
+		maker = Mfweb::Article::ArticleMaker.new(src, target, framing, DocTr)
 		maker.code_server = Mfweb::Core::CodeServer.new 'articles/article-docs/code/'
     maker.img_out_dir = 'article-docs'
     maker.run

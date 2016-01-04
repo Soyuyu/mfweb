@@ -97,12 +97,8 @@ module Mfweb::Article
       return if trans.empty?
       @html.div('translations') do
         @html.b {@html.text "Translations: "}
-        trans.each do |t|
-          @html.a_ref(t['url']) do
-            @html.text t['language']
-          end
-          @html.text dot_sep
-        end
+        links = trans.map {|t| HtmlEmitter::Link.new(t['url'], t['language'])}
+        @html << links.map(&:to_html).join(dot_sep)
       end
     end
     

@@ -236,6 +236,17 @@ class HtmlEmitter
       element_block "meta", {name: name, content: content}
     end
   end
+  class Link
+    def initialize href, text
+      @href = href
+      @text = text
+    end
+    def to_html
+      out = HtmlEmitter.new
+      out.a_ref(@href){out.text @text}
+      return out.out
+    end    
+  end
 end
 
 class LinkFixingEmitter < DelegateClass(HtmlEmitter)

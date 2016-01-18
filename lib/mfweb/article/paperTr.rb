@@ -425,7 +425,7 @@ class PaperTransformer < Mfweb::Core::Transformer
   def handle_future_installment anElement
     @html.div('next-installment') {
       @html.p {apply(anElement.at_css('desc'))}
-      emit_watch_further
+      emit_watch_further unless "hide" == anElement['default-watch']
     }
   end
 

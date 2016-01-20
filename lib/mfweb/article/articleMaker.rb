@@ -15,6 +15,7 @@ class ArticleMaker < Mfweb::Core::Maker
     @refactoring_server = RefactoringServer.new
     @code_dir = './'
     @img_out_dir = nil
+    @show_all_installments = false
   end
 
 
@@ -47,7 +48,7 @@ class ArticleMaker < Mfweb::Core::Maker
   end
 
   def draft?
-    @is_draft
+    @is_draft || @show_all_installments
   end
 
   def authors
@@ -59,6 +60,7 @@ class ArticleMaker < Mfweb::Core::Maker
   end
 
   def render_body
+    flatten_future_installments if @show_all_installments
     @transformer.render
   end
 
@@ -165,6 +167,18 @@ class ArticleMaker < Mfweb::Core::Maker
 
   end
 
+
+  def show_all_installments
+    @show_all_installments = true
+  end
+
+  def flatten_future_installments
+    @root.css('future-installment').each do |fi|
+      fi.children
+        .reject{|e| 'installment-description' == e.name}
+        .each {|e| e.parent = fi.parent}
+    end
+  end
   
 end
 

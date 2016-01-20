@@ -424,18 +424,8 @@ class PaperTransformer < Mfweb::Core::Transformer
 
   def handle_future_installment anElement
     @html.div('next-installment') {
-      @html.p {apply(anElement.at_css('desc'))}
-      emit_watch_further unless "hide" == anElement['default-watch']
+      @html.p {apply(anElement.at_css('installment-description'))}
     }
-  end
-
-  def emit_watch_further
-    @html.p do
-      @html.text "To know when I publish further installments follow my "
-      @html.a_ref("/feed.atom") {@html.text "RSS feed"}
-      @html.text " or "
-      @html.a_ref("http://www.twitter.com/martinfowler") {@html.text "twitter stream"}
-    end
   end
 
   def handle_installment_target anElement

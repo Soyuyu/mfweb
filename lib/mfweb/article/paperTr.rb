@@ -360,7 +360,7 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
 
   def handle_display_footnotes anElement
-    return if @root.css('footnote').empty?
+    return if footnote_server.references.empty?
     @html.div('footnote-list') do
       @html.h(2){@html << "Footnotes"}
       footnote_server.references.each do |key|

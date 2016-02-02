@@ -2,7 +2,7 @@ module Mfweb::Core
 
   class Maker
     include FileUtils
-    attr_accessor :transformer_class, :transformer
+    attr_accessor :transformer_class, :transformer, :out_file
     def initialize infile, outfile, transformerClass, framing
       @in_file = infile
       @out_file = outfile

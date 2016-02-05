@@ -11,6 +11,7 @@ module Mfweb::Article
       out = outfile || default_outfile(infile)
       super infile, out
       @img_out_dir = basename
+      @js_out_dir = basename
       @code_server = Mfweb::Core::CodeServer.new(input_dir('code'))
       @js_components = []
     end
@@ -74,6 +75,9 @@ module Mfweb::Article
     def build_js
       return unless custom_js?
       install base_js, output_dir(js_output)
+      js_target = output_dir(@js_out_dir)
+      mkdir_p js_target
+      Dir[input_dir('js/*')].each{|p| install p, js_target}      
     end
 
     def js_imports

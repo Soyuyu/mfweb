@@ -96,5 +96,12 @@ module Mfweb::Article
       @refactoring_server = RefactoringServer.new('refactoring/entries')
       return self
     end
+
+    def full_copy_maker out_file
+      result = self.dup
+      result.out_file = out_file
+      result.show_all_installments
+      return result
+    end
   end
 end

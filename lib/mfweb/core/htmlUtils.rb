@@ -94,10 +94,10 @@ module HtmlUtils
   end
 
   def amazon_pre asin
-    %[<a href = "http://www.amazon.com/gp/product/#{asin}?ie=UTF8&amp;tag=martinfowlerc-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=#{asin}">]
+    %[<a href = "https://www.amazon.com/gp/product/#{asin}?ie=UTF8&amp;tag=martinfowlerc-20&amp;linkCode=as2&amp;camp=1789&amp;creative=9325&amp;creativeASIN=#{asin}">]
   end
   def amazon_post 
-    '</a><img src="http://www.assoc-amazon.com/e/ir?t=martinfowlerc-20&amp;l=as2&amp;o=1&amp;a=0321601912" width="1" height="1" border="0" alt="" style="width: 1px !important; height: 1px !important; border:none !important; margin:0px !important;"/>'
+    '</a><img src="https://www.assoc-amazon.com/e/ir?t=martinfowlerc-20&amp;l=as2&amp;o=1&amp;a=0321601912" width="1" height="1" border="0" alt="" style="width: 1px !important; height: 1px !important; border:none !important; margin:0px !important;"/>'
   end
 
 def informit isbn, text

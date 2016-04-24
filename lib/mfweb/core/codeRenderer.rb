@@ -9,7 +9,7 @@ module Mfweb::Core
     end
     
     def call
-      leading = heading ? 2 : 0
+      leading = (@anElement['indent'] || (heading ? 2 : 0)).to_i
       body = Indenter.new(@fragment.result.gsub("\t", "  ")).leading(leading)
       @html.p('code-label') {@html.text heading} if heading
       attr = @anElement['cssClass'] ? {class: @anElement['cssClass']} : {}

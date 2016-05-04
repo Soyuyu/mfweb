@@ -41,7 +41,7 @@ module HtmlUtils
   end
 
   def custom_banner args
-    photo_fn = args[:photo_fn] || 'banner.png'
+    photo_fn = args[:photo_fn] || '/banner.png'
     output = StringIO.new
     template_file = File.join(site_root, 'gen/banner.html.erb')
     output << ERB.new(File.read(template_file)).result(binding)
@@ -57,16 +57,16 @@ module HtmlUtils
     m = lambda {|regexp| tags.any? {|t| t.match(regexp)}}
     return case
            when m.call(/noSQL/), m.call(/database/)
-             '../img/mesa.png'
-           when m.call(/refactoring/) then '../img/tate.png'
+             '/img/mesa.png'
+           when m.call(/refactoring/) then '/img/tate.png'
            when m.call(/domain specific language/) 
-             '../img/ironbridge.jpg'
-           when m.call(/bad thing/) then '../img/croc.png'
-           when m.call(/agile/) then '../img/poetta.png'
-           when m.call(/extreme programming/) then '../img/poetta.png'
-           when m.call(/design/) then '../img/zakim.png'
-           when m.call(/architecture/) then '../img/zakim.png'
-           else 'banner.png'
+             '/img/ironbridge.jpg'
+           when m.call(/bad thing/) then '/img/croc.png'
+           when m.call(/agile/) then '/img/poetta.png'
+           when m.call(/extreme programming/) then '/img/poetta.png'
+           when m.call(/design/) then '/img/zakim.png'
+           when m.call(/architecture/) then '/img/zakim.png'
+           else '/banner.png'
            end
   end
 

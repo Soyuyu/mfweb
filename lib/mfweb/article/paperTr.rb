@@ -60,9 +60,6 @@ class PaperTransformer < Mfweb::Core::Transformer
     render_revision_history
   end
 
-  def title_bar_text
-    return @root.at_xpath('/paper/title').text
-  end
 
   def front_matter_transformer
     "short" == @root['style'] ? ShortFrontMatterTransformer : FrontMatterTransformer

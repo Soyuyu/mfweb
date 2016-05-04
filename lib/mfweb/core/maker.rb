@@ -2,8 +2,8 @@ module Mfweb::Core
 
   class Maker
     include FileUtils
-    attr_accessor :transformer_class, :transformer, :out_file
-    def initialize infile, outfile, transformerClass, framing
+    attr_accessor :transformer_class, :transformer, :out_file, :title, :framing
+    def initialize infile, outfile, transformerClass = nil, framing = nil
       @in_file = infile
       @out_file = outfile
       @transformer_class = transformerClass
@@ -17,7 +17,7 @@ module Mfweb::Core
 
     def render
       mkdir_p output_dir, verbose: false
-      @framing.emit(@html, @transformer.title_bar_text, 
+      framing.emit(@html, title_bar_text, 
         meta_emitter: metadata_emitter) do |html|
         render_body
       end
@@ -79,6 +79,19 @@ module Mfweb::Core
 
     def img_srcs
       img_file_exts.flat_map {|ext| Dir[input_dir('img/*.' + ext)] }
+    end
+
+    def title_bar_text
+      title
+    end
+
+    def title
+      return case
+             when @title then @title
+             when @root['title'] then @root['title']
+             when @root.at_xpath('/*/title') then @root.at_xpath('/*/title').text
+             else ""
+             end
     end
 
   end

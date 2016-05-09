@@ -28,6 +28,7 @@ class ArticleMaker < Mfweb::Core::Maker
     @refactoring_server.load
     @bib_server.load
     resolve_includes @root
+    check_validity
     @framing ||= default_framing
     @framing = @framing.as_draft if draft?
   end
@@ -37,6 +38,19 @@ class ArticleMaker < Mfweb::Core::Maker
       .with_css(css_output)
       .with_banner_for_tags(tags)
       .with_added_js(js_imports)
+  end
+
+  def check_validity
+    problems = []
+    check_footnotes problems
+    fail problems.join("\n") unless problems.empty?
+  end
+
+  def check_footnotes note
+    if (not @root.css('footRef').empty?) and
+        @root.css('display-footnotes').empty?
+      note << "Footnotes present but display tag is missing"
+    end
   end
   
   def css_output

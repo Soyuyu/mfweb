@@ -21,7 +21,12 @@ module Mfweb::Core
 
     def emit_code_body body
       if @anElement.kind_of? Nokogiri::XML::Element and has_highlights?
-        @html << highlighted_code(body)
+        begin
+          @html << highlighted_code(body)
+        rescue
+          @html.error("problem with code highlighting\n%s\n" % $! )
+          @html.cdata(body)
+        end
       else
         @html.cdata(body)
       end

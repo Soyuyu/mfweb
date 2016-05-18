@@ -110,6 +110,7 @@ class ArticleMaker < Mfweb::Core::Maker
     case
     when nil == path then @img_out_dir || "."
     when path.start_with?('/') then path
+    when "." == @img_out_dir then path
     when @img_out_dir then File.join(@img_out_dir, path)
     else path
     end
@@ -135,7 +136,16 @@ class ArticleMaker < Mfweb::Core::Maker
     Mfweb::Core::Site.target_to_url(@out_file)
   end
   def local_url
-     Mfweb::Core::Site.target_to_local_url(@out_file)
+    Mfweb::Core::Site.target_to_local_url(@out_file)
+  end
+  def img_url path
+    return case
+           when path.start_with?('/') then Mfweb::Core::Site.url_path(path)
+           when url.end_with?('.html')
+             File.join(File.dirname(url), img_out_dir(path))
+           else
+             File.join(url, img_out_dir(path))
+           end
   end
   def title
     case @root.name

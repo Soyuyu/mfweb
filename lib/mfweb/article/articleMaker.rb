@@ -4,7 +4,8 @@ require 'rake/ext/string'
 module Mfweb::Article
 class ArticleMaker < Mfweb::Core::Maker
   attr_accessor :pattern_server, :code_server, :bib_server, :framing,
-  :footnote_server, :catalog, :author_server, :refactoring_server, :transformer_class
+  :footnote_server, :catalog, :author_server, :refactoring_server,
+  :transformer_class, :code_renderer
   def initialize infile, outfile, framing = nil, transformerClass = nil
     @author_server = Mfweb::Core::Site.author_server
     super(infile, outfile, transformerClass, framing)
@@ -16,6 +17,7 @@ class ArticleMaker < Mfweb::Core::Maker
     @code_dir = './'
     @img_out_dir = nil
     @should_show_all_installments = false
+    @code_renderer = Mfweb::Core::CodeRenderer
   end
 
 

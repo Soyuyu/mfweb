@@ -292,7 +292,8 @@ class PaperTransformer < Mfweb::Core::Transformer
   end
 
   def handle_insertCode anElement
-    @maker.code_server.render_insertCode anElement, @html, tr: self
+    @maker.code_server.render_insertCode(anElement, @html,
+      tr: self, renderer: @maker.code_renderer)
   end
 
   def handle_author anElement

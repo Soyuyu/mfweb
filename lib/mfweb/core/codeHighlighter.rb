@@ -67,12 +67,14 @@ module Mfweb::Core
       @data.css('highlight-insert')
     end
     def apply_inserts lines
-      highlight_inserts.reduce(lines) do |acc, element|
-        lines.map do |line|
-          Regexp.new(element['line']).match(line) ? perform_insert(line, element) : line
-        end
-      end
+      lines.map{|line| insert_line line}
     end
+    def insert_line line
+      highlight_inserts
+        .select{|element| Regexp.new(element['line']).match(line)}
+        .reduce(line){|acc, element| perform_insert(line, element)}
+    end
+    
     def perform_insert line, element
       m = Regexp.new(element['after']).match(line)
       raise "unable to match <#{element['after']}>" unless m

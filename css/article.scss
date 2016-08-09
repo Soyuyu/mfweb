@@ -169,19 +169,24 @@ body {
 
   pre {
     font-size: 90%;
-  }
+ 
+    span.highlight {
+      color:$tw-pink;  
+    }
 
-  pre span.highlight {
-    color:$tw-pink;  
-  }
+    span.deleted, pre.deleted {
+      color:$tw-pink; 
+      text-decoration: line-through;
+    }
 
-  pre span.deleted, pre.deleted {
-    color:$tw-pink; 
-    text-decoration: line-through;
-  }
+    span.suffix {
+      font-style: italic;
+    }
 
-  pre span.suffix {
-    font-style: italic;
+    span.lnum {
+      color: $tw-earth2;
+    }
+
   }
 
   p.code-label {

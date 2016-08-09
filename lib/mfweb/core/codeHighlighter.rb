@@ -22,7 +22,17 @@ module Mfweb::Core
       @data.css('highlight-range')
     end
     def call
-      add_suffix(apply_inserts(apply_highlights(apply_ranges(@fragment.lines)))).join
+      pipeline= [
+        ->(a) {apply_ranges a},
+        ->(a) {apply_highlights a},
+        ->(a) {apply_inserts a},
+        ->(a) {apply_line_numbers a},
+        ->(a) {add_suffix a},
+        ->(a) {a.join}]
+      return pipeline.reduce(@fragment.lines) {|acc, f| f.call(acc)}
+    end
+    def pipeline(aList, *functions)
+      functions.reduce(aList) { |acc, f| f.call(acc)}
     end
     def apply_ranges lines
       highlight_ranges.reduce(lines){|acc, each| apply_one_range(acc, each)}
@@ -84,6 +94,10 @@ module Mfweb::Core
     def insert_text element
       cdata = element.children.detect{|e| e.cdata?}
       return cdata ? cdata.text : element.text
+    end
+    def apply_line_numbers lines
+      return lines unless "true" == @data['line-numbers']
+      return lines.map.with_index{|s, i| %(<span class = "lnum">%2d</span> %s) % [i,s]}
     end
     def add_suffix lines
       lines << @data.css('suffix').map do |e|

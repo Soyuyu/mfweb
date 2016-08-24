@@ -88,7 +88,11 @@ class BibRef
     false
   end
   def cite
-    return @xml.xpath('cite').first ? @xml.xpath('cite').first.text : "[#{name}]"
+    case
+    when @xml['cite'] then @xml['cite']
+    when @xml.at_css('cite') then @xml.at_css('cite').text
+    else "[#{name}]"
+    end
   end
   def link_around htmlEmitter, aCiteElement = nil, &block
     case 

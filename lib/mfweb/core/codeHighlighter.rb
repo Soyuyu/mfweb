@@ -97,7 +97,7 @@ module Mfweb::Core
     end
     def apply_line_numbers lines
       return lines unless "true" == @data['line-numbers']
-      return lines.map.with_index{|s, i| %(<span class = "lnum">%2d</span> %s) % [i,s]}
+      return lines.map.with_index{|s, i| %(<span class = "lnum">%2d</span> %s) % [i + 1,s]}
     end
     def add_suffix lines
       lines << @data.css('suffix').map do |e|

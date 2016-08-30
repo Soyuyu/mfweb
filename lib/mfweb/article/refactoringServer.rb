@@ -37,6 +37,9 @@ module Mfweb::Article
     def url
       "http://refactoring.com/catalog/%s.html" % key
     end
+    def missing?
+      false
+    end
     
   end
 
@@ -45,5 +48,8 @@ module Mfweb::Article
       "**** Missing Refactoring ****"
     end
     def url; ""; end
+    def missing?
+      true
+    end
   end
 end

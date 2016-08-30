@@ -194,6 +194,9 @@ class PaperTransformer < Mfweb::Core::Transformer
   def handle_refactoring anElement
     r = @maker.refactoring_server.find(anElement['key'])
     @html.a_ref(r.url) {@html.text r.name}
+    if r.missing?
+      log.warn("missing refactoring %s in %s" % [anElement['key'], "foo"])
+    end
   end
   def handle_blikiRef anElement
     name = anElement['name']

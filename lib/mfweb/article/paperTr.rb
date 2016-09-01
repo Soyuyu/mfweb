@@ -219,6 +219,23 @@ class PaperTransformer < Mfweb::Core::Transformer
       @html.p {apply anElement}
     end
   end
+  def handle_book_sidebar anElement
+    img_src = @maker.img_out_dir(anElement['img'])
+    @html.div('book-sidebar') do
+      case
+      when anElement['isbn'] 
+        @html.amazon(anElement['isbn']) do
+          @html.img(img_src, class: 'cover')
+        end
+      when anElement['url']
+        @html.a_ref(anElement['url']) {@html.img(img_src, class: 'cover')}
+      else
+        raise "need isbn or url"
+      end
+      apply anElement
+     end
+  end
+
   def handle_img anElement
     attrs = attribute_hash anElement
     attrs['src'] = @maker.img_out_dir(anElement['src'])

@@ -235,6 +235,21 @@ body {
     i {font-weight: bold;}
   }
 
+  div.book-sidebar {
+    float: right;
+    width: 220px;
+    background-color: $side-color;
+    margin-right: -300px;
+    font-size: 80%;
+    padding: 10px;
+    border: thin solid $tw-earth1;
+    img.cover {
+      width: 130px;
+      margin-left: 35px;
+    }
+  }
+
+
   .tweet-sidebar {
     @include sidebar-offset;
   }
